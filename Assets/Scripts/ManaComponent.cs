@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 
-public class ManaComponent : MeterComponent {
-	public override Color MeterColor => Color.blue;
+namespace DungeonRaid.Collections {
+	public class ManaComponent : MeterComponent {
+		public override Color MeterColor => Color.blue;
+	}
 }
