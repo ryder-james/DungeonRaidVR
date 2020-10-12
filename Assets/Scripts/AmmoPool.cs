@@ -1,19 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class AmmoPool : MonoBehaviour {
-	[SerializeField] private string ammoType = "";
-	[SerializeField] private float maxAmmo = 10;
+namespace DungeonRaid.Collections {
+	public class AmmoPool : MonoBehaviour {
+		[SerializeField] private string ammoType = "";
+		[SerializeField] private float maxAmmo = 10;
 
-	private float ammoCount;
+		private float ammoCount;
 
-	public float AmmoCount {
-		get => ammoCount;
-		set { ammoCount = Mathf.Clamp(value, 0, maxAmmo); }
-	}
+		public float AmmoCount {
+			get => ammoCount;
+			set { ammoCount = Mathf.Clamp(value, 0, maxAmmo); }
+		}
 
-	private void Awake() {
-		AmmoCount = maxAmmo;
+		private void Awake() {
+			AmmoCount = maxAmmo;
+		}
 	}
 }
