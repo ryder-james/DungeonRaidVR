@@ -26,12 +26,14 @@ namespace DungeonRaid.Characters {
 		}
 
 		public void UpdateMeter(string meterName, float amount) {
-			foreach (MeterComponent meter in meters) {
-				if (meter.MeterName == meterName) {
-					meter.Value += amount;
-					break;
-				}
+			MeterComponent meter = FindMeter(meterName);
+			if (meter != null) {
+				meter.Value += amount;
 			}
+		}
+
+		public MeterComponent FindMeter(string meterName) {
+			return meters.Where(m => m.MeterName == meterName).First();
 		}
 
 		protected abstract float CalculateHealth(int heroCount);
