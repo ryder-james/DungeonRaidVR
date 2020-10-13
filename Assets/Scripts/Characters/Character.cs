@@ -16,12 +16,22 @@ namespace DungeonRaid.Characters {
 				if (meter.MeterName == "Health") {
 					meter.MaxValue = CalculateHealth(GameObject.FindGameObjectsWithTag("Hero").Count());
 					meter.Value = meter.MaxValue;
+					break;
 				}
 			}
 		}
 
 		protected virtual void Update() {
 
+		}
+
+		public void UpdateMeter(string meterName, float amount) {
+			foreach (MeterComponent meter in meters) {
+				if (meter.MeterName == meterName) {
+					meter.Value += amount;
+					break;
+				}
+			}
 		}
 
 		protected abstract float CalculateHealth(int heroCount);
