@@ -13,7 +13,7 @@ namespace DungeonRaid.Characters {
 
 		protected virtual void Start() {
 			foreach (MeterComponent meter in meters) {
-				if (meter.GetType() == typeof(HealthComponent)) {
+				if (meter.MeterName == "Health") {
 					meter.MaxValue = CalculateHealth(GameObject.FindGameObjectsWithTag("Hero").Count());
 					meter.Value = meter.MaxValue;
 				}
