@@ -6,8 +6,9 @@ using DungeonRaid.Effects;
 using DungeonRaid.Characters;
 using DungeonRaid.Characters.Abilities;
 
-[CreateAssetMenu(fileName = "Ability", menuName = "Dungeon Raid/Ability")]
 public abstract class Ability : ScriptableObject {
+	protected const string AbilityMenuPrefix = "Dungeon Raid/Abilities/";
+
 	[SerializeField] private Cost[] costs = null;
 	[SerializeField] private Effect[] effects = null;
 
