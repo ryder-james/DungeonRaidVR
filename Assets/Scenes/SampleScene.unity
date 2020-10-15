@@ -552,13 +552,17 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2028285414}
+  - component: {fileID: 2028285417}
+  - component: {fileID: 2028285418}
+  - component: {fileID: 2028285420}
   - component: {fileID: 2028285415}
   - component: {fileID: 2028285416}
   - component: {fileID: 2028285413}
   - component: {fileID: 2028285412}
+  - component: {fileID: 2028285419}
   m_Layer: 0
-  m_Name: Hero
-  m_TagString: Untagged
+  m_Name: Fighter
+  m_TagString: Hero
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -687,7 +691,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 674e7f3d759b6844aaad8eab22867566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  hero: {fileID: 2028285417}
 --- !u!54 &2028285416
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -704,3 +708,69 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &2028285417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028285411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd91dbd019f31e41927d62a8a4adc5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modelDataPrefab: {fileID: 0}
+  hpMod: 1.2
+  meters:
+  - {fileID: 2028285418}
+  - {fileID: 2028285420}
+  ammoPools: []
+  speed: 3
+  weapon: {fileID: 0}
+  abilities:
+  - {fileID: 11400000, guid: b41abdd681aa41a42a8bc46786ad945d, type: 2}
+--- !u!114 &2028285418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028285411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05976175de0d2b34d8a9ece473c928a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meterName: Health
+  meterColor: {r: 1, g: 0, b: 0, a: 1}
+  maxValue: 100
+  rechargeRate: 0
+--- !u!114 &2028285419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028285411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b36a3f7a1ad78b54c850e2393e6a6b64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2028285420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028285411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05976175de0d2b34d8a9ece473c928a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meterName: Energy
+  meterColor: {r: 1, g: 0.80092657, b: 0, a: 1}
+  maxValue: 20
+  rechargeRate: 0.5

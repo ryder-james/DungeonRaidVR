@@ -42,7 +42,7 @@ namespace DungeonRaid.Characters {
 		}
 
 		public MeterComponent FindMeter(string meterName) {
-			return meters.Where(m => m.MeterName == meterName).First();
+			return meters.Where(m => m.MeterName == meterName).FirstOrDefault();
 		}
 
 		public bool HasMeter(string meterName) {
@@ -57,7 +57,7 @@ namespace DungeonRaid.Characters {
 		}
 
 		public AmmoPool FindAmmoPool(string ammoName) {
-			return ammoPools.Where(p => p.name == ammoName).First();
+			return ammoPools.Where(p => p.name == ammoName).FirstOrDefault();
 		}
 
 		public bool HasAmmoPool(string ammoName) {
