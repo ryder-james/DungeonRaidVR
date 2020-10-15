@@ -1,19 +1,23 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class HeroController : MonoBehaviour {
-	[SerializeField] private float speed = 1;
+using DungeonRaid.Characters.Heroes;
 
-	private Rigidbody body;
+[RequireComponent(typeof(BodyMover))]
+public class HeroController : MonoBehaviour {
+	[SerializeField] private Hero hero = null;
+
 	private Vector2 movementInput, lookInput;
 
+	public BodyMover Mover { get; private set; }
+
 	private void Start() {
-		body = GetComponent<Rigidbody>();
+		Mover = GetComponent<BodyMover>();
 	}
 
 	private void Update() {
 		Aim(lookInput);
-		Move(new Vector3(movementInput.x, 0, movementInput.y));
+		Mover.MoveToward(new Vector3(movementInput.x, 0, movementInput.y), hero.Speed);
 	}
 
 	public void OnMove(InputValue value) {
@@ -24,13 +28,8 @@ public class HeroController : MonoBehaviour {
 		lookInput = value.Get<Vector2>();
 	}
 
-	private void Move(Vector3 direction) {
-		if (direction.magnitude > 0) {
-			body.velocity = transform.rotation * (Vector3.ClampMagnitude(direction, 1) * speed * 5);
-			body.velocity = Vector3.ClampMagnitude(body.velocity, speed * 5);
-		} else {
-			body.velocity = Vector3.zero;
-		}
+	public void OnFire(InputValue value) {
+		hero.UseAbility(0);
 	}
 
 	private void Aim(Vector2 direction) {

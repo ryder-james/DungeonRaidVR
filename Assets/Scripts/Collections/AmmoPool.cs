@@ -12,6 +12,8 @@ namespace DungeonRaid.Collections {
 			set { ammoCount = Mathf.Clamp(value, 0, maxAmmo); }
 		}
 
+		public string AmmoType { get => ammoType; set => ammoType = value; }
+
 		private void Awake() {
 			AmmoCount = maxAmmo;
 		}

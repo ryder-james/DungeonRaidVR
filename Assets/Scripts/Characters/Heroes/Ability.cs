@@ -23,6 +23,10 @@ public abstract class Ability : ScriptableObject {
 	public Character Owner { get; set; }
 	public DurationType DurationType { get => durationType; set => durationType = value; }
 
+	protected Effect[] Effects { get => effects; set => effects = value; }
+	protected float Duration { get => duration; set => duration = value; }
+	protected float MaxChannelTime { get => maxChannelTime; set => maxChannelTime = value; }
+
 	public bool CanCast() {
 		bool canCast = true;
 
