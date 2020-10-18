@@ -3,7 +3,7 @@ using UnityEngine;
 
 using DungeonRaid.Characters;
 
-namespace DungeonRaid.Effects.StatusEffects {
+namespace DungeonRaid.Abilities.Effects.StatusEffects {
 	public abstract class StatusEffect : Effect {
 		protected const string StatusEffectMenuPrefix = EffectMenuPrefix + "Status Effects/";
 

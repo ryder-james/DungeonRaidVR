@@ -2,27 +2,25 @@
 
 using DungeonRaid.Characters;
 using DungeonRaid.Characters.Heroes;
-using Assets.Scripts.Characters.Heroes;
 
-namespace DungeonRaid.Effects.StatusEffects {
-	
+namespace DungeonRaid.Abilities.Effects.StatusEffects {
 	[CreateAssetMenu(fileName = "AttackSpeedChange", menuName = StatusEffectMenuPrefix + "Attack Speed Change")]
 	public class AttackSpeedChangeStatusEffect : StatusEffect {
-		[SerializeField] private ChangeType changeType = ChangeType.Add;
+		[SerializeField] private StatChangeType changeType = StatChangeType.Add;
 		[SerializeField, Min(0.0001f)] private float amount = 1;
 
 		protected override void StartEffect(Character target) {
 			switch (changeType) {
-			case ChangeType.Add:
+			case StatChangeType.Add:
 				(target as Hero).AttackSpeed += amount;
 				break;
-			case ChangeType.Subtract:
+			case StatChangeType.Subtract:
 				(target as Hero).AttackSpeed -= amount;
 				break;
-			case ChangeType.Multiply:
+			case StatChangeType.Multiply:
 				(target as Hero).AttackSpeed *= amount;
 				break;
-			case ChangeType.Divide:
+			case StatChangeType.Divide:
 				(target as Hero).AttackSpeed /= amount;
 				break;
 			default:
@@ -32,16 +30,16 @@ namespace DungeonRaid.Effects.StatusEffects {
 
 		protected override void StopEffect(Character target) {
 			switch (changeType) {
-			case ChangeType.Add:
+			case StatChangeType.Add:
 				(target as Hero).AttackSpeed -= amount;
 				break;
-			case ChangeType.Subtract:
+			case StatChangeType.Subtract:
 				(target as Hero).AttackSpeed += amount;
 				break;
-			case ChangeType.Multiply:
+			case StatChangeType.Multiply:
 				(target as Hero).AttackSpeed /= amount;
 				break;
-			case ChangeType.Divide:
+			case StatChangeType.Divide:
 				(target as Hero).AttackSpeed *= amount;
 				break;
 			default:

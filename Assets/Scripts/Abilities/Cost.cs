@@ -1,10 +1,13 @@
 ﻿using System;
+
 using UnityEngine;
 
 using Sirenix.OdinInspector;
-using DungeonRaid.Collections;
 
-namespace DungeonRaid.Characters.Abilities {
+using DungeonRaid.Collections;
+using DungeonRaid.Characters;
+
+namespace DungeonRaid.Abilities {
 	[Serializable]
 	public struct Cost {
 		[SerializeField] private CostType type;

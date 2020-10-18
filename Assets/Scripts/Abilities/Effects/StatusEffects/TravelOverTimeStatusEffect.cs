@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 
+using DungeonRaid.Input;
 using DungeonRaid.Characters;
 using DungeonRaid.Characters.Heroes;
 
-namespace DungeonRaid.Effects.StatusEffects {
+namespace DungeonRaid.Abilities.Effects.StatusEffects {
 	[CreateAssetMenu(fileName = "TravelOverTime", menuName = StatusEffectMenuPrefix + "Travel Over Time")]
 	public class TravelOverTimeStatusEffect : StatusEffect {
 		[SerializeField] private float distance = 5;

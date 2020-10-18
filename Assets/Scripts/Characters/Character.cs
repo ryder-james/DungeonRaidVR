@@ -1,9 +1,9 @@
 ﻿using System.Linq;
+
 using UnityEngine;
 
 using DungeonRaid.Collections;
-using DungeonRaid.Characters.Abilities;
-using System.Collections.Generic;
+using DungeonRaid.Abilities;
 
 namespace DungeonRaid.Characters {
 	public abstract class Character : MonoBehaviour {

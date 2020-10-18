@@ -1,7 +1,11 @@
-﻿using DungeonRaid.Collections;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
+
+using DungeonRaid.Collections;
+using DungeonRaid.Abilities;
+using DungeonRaid.Input;
 
 namespace DungeonRaid.Characters.Heroes {
 	[RequireComponent(typeof(HeroController))]
