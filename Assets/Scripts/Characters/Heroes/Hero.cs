@@ -24,6 +24,8 @@ namespace DungeonRaid.Characters.Heroes {
 			}
 		}
 
+		public bool IsAttacking { get; set; } = false;
+
 		private readonly List<Ability> onCooldown = new List<Ability>();
 
 		private float fixedAttackDelay, attackDelay;
@@ -45,12 +47,8 @@ namespace DungeonRaid.Characters.Heroes {
 			base.Update();
 
 			attackDelay -= Time.deltaTime;
-		}
-
-		public void Attack() {
-			if (attackDelay <= 0) {
-				weapon.Attack();
-				attackDelay = fixedAttackDelay;
+			if (IsAttacking) {
+				Attack();
 			}
 		}
 
@@ -73,6 +71,13 @@ namespace DungeonRaid.Characters.Heroes {
 
 		protected override float CalculateHealth(int heroCount) {
 			return 1;
+		}
+
+		private void Attack() {
+			if (attackDelay <= 0) {
+				weapon.Attack();
+				attackDelay = fixedAttackDelay;
+			}
 		}
 
 		private IEnumerator RunCooldown(Ability ability) {

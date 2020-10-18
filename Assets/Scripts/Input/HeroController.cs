@@ -20,17 +20,20 @@ public class HeroController : MonoBehaviour {
 
 	private void Update() {
 		Aim(lookInput);
-		Mover.MoveToward(movementInput, hero.Speed);
-		if (movementInput.magnitude != 0) {
-			Direction = movementInput.normalized;
+
+		Vector3 move = new Vector3(movementInput.x, 0, movementInput.y);
+
+		Mover.MoveToward(move, hero.Speed);
+		if (move.magnitude != 0) {
+			Direction = move.normalized;
 		} else {
 			Direction = transform.forward;
 		}
 	}
 
 	public void OnMove(InputValue value) {
-		Vector2 input = value.Get<Vector2>();
-		movementInput = new Vector3(input.x, 0, input.y);
+		Debug.Log("on move");
+		movementInput = value.Get<Vector2>();
 	}
 
 	public void OnLook(InputValue value) {
@@ -38,7 +41,8 @@ public class HeroController : MonoBehaviour {
 	}
 
 	public void OnAttack(InputValue _) {
-		hero.Attack();
+		Debug.Log("start/end attacking");
+		hero.IsAttacking = !hero.IsAttacking;
 	}
 
 	public void OnAbilityOne(InputValue _) {
