@@ -20,8 +20,11 @@ public abstract class Ability : ScriptableObject {
 	[ShowIf("DurationType", DurationType.Channeled)]
 	[SerializeField] private float maxChannelTime = 0;
 
+	[SerializeField, Min(0)] private float cooldown = 1;
+
 	public Character Owner { get; set; }
 	public DurationType DurationType { get => durationType; set => durationType = value; }
+	public float Cooldown { get => cooldown; private set => cooldown = value; }
 
 	protected Effect[] Effects { get => effects; set => effects = value; }
 	protected float Duration { get => duration; set => duration = value; }
@@ -44,6 +47,9 @@ public abstract class Ability : ScriptableObject {
 		bool canCast = CanCast();
 
 		if (canCast) {
+			foreach (Cost cost in costs) {
+				Owner.PayCost(cost);
+			}
 			TargetCast();
 		}
 

@@ -31,5 +31,15 @@ namespace DungeonRaid.Collections {
 		private void Awake() {
 			Value = MaxValue;
 		}
+
+		private void Start() {
+			InvokeRepeating(nameof(Recharge), 1, 1);
+		}
+
+		public void Recharge() {
+			if (IsRecharging) {
+				Value += rechargeRate;
+			}
+		}
 	}
 }

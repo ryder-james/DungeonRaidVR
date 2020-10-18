@@ -7,21 +7,30 @@ using DungeonRaid.Characters.Heroes;
 public class HeroController : MonoBehaviour {
 	[SerializeField] private Hero hero = null;
 
-	private Vector2 movementInput, lookInput;
+	private Vector2 lookInput;
+	private Vector3 movementInput;
 
 	public BodyMover Mover { get; private set; }
+	public Vector3 Direction { get; private set; }
 
 	private void Start() {
 		Mover = GetComponent<BodyMover>();
+		Direction = transform.forward;
 	}
 
 	private void Update() {
 		Aim(lookInput);
-		Mover.MoveToward(new Vector3(movementInput.x, 0, movementInput.y), hero.Speed);
+		Mover.MoveToward(movementInput, hero.Speed);
+		if (movementInput.magnitude != 0) {
+			Direction = movementInput.normalized;
+		} else {
+			Direction = transform.forward;
+		}
 	}
 
 	public void OnMove(InputValue value) {
-		movementInput = value.Get<Vector2>();
+		Vector2 input = value.Get<Vector2>();
+		movementInput = new Vector3(input.x, 0, input.y);
 	}
 
 	public void OnLook(InputValue value) {
@@ -29,7 +38,7 @@ public class HeroController : MonoBehaviour {
 	}
 
 	public void OnFire(InputValue value) {
-		hero.UseAbility(0);
+		hero.Cast(0);
 	}
 
 	private void Aim(Vector2 direction) {

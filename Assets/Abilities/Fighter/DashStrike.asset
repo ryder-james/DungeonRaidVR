@@ -24,3 +24,4 @@ MonoBehaviour:
   durationType: 0
   duration: 0
   maxChannelTime: 0
+  cooldown: 2
