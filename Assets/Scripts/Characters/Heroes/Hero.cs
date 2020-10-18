@@ -6,11 +6,14 @@ namespace DungeonRaid.Characters.Heroes {
 	[RequireComponent(typeof(HeroController))]
 	public class Hero : Character {
 		[SerializeField] private float speed = 1;
-		[SerializeField] private GameObject weapon = null;
+		[SerializeField] private float attackSpeed = 1;
+		[SerializeField] private Weapon weapon = null;
 		[SerializeField] private Ability[] abilities = null;
 
 		public HeroController Controller { get; private set; }
-		public float Speed { get => speed; set => speed = value; }
+
+		public float Speed { get => speed; set => speed = Mathf.Max(value, 0); }
+		public float AttackSpeed { get => attackSpeed; set => attackSpeed = Mathf.Max(value, 0); }
 
 		private readonly List<Ability> onCooldown = new List<Ability>();
 
