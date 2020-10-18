@@ -17,29 +17,27 @@ namespace DungeonRaid.Characters.Abilities {
 
 		[SerializeField] private float amount;
 
-		public Cost(CostType type, string costName, float amount) {
-			this.type = type;
-			this.meterName = costName;
-			this.ammoName = costName;
-			this.amount = amount;
-		}
+		public CostType Type { get => type; set => type = value; }
+		public string AmmoName { get => ammoName; set => ammoName = value; }
+		public string MeterName { get => meterName; set => meterName = value; }
+		public float Amount { get => amount; set => amount = value; }
 
 		public bool CheckCharacterCanAfford(Character target) {
 			bool canAfford;
 
-			switch (type) {
+			switch (Type) {
 			case CostType.Stat:
-				MeterComponent meter = target.FindMeter(meterName);
+				MeterComponent meter = target.FindMeter(MeterName);
 				if (meter != null) {
-					canAfford = meter.Value >= amount;
+					canAfford = meter.Value >= Amount;
 				} else {
 					canAfford = false;
 				}
 				break;
 			case CostType.Ammo:
-				AmmoPool pool = target.FindAmmoPool(ammoName);
+				AmmoPool pool = target.FindAmmoPool(AmmoName);
 				if (pool != null) {
-					canAfford = pool.AmmoCount >= amount;
+					canAfford = pool.AmmoCount >= Amount;
 				} else {
 					canAfford = false;
 				}
@@ -56,12 +54,12 @@ namespace DungeonRaid.Characters.Abilities {
 			bool canPay = CheckCharacterCanAfford(target);
 
 			if (canPay) {
-				switch (type) {
+				switch (Type) {
 				case CostType.Stat:
-					target.UpdateMeter(meterName, -amount);
+					target.UpdateMeter(MeterName, -Amount);
 					break;
 				case CostType.Ammo:
-					target.UpdateAmmoPool(ammoName, -amount);
+					target.UpdateAmmoPool(AmmoName, -Amount);
 					break;
 				default:
 					canPay = false;

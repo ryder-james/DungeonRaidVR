@@ -1,22 +1,38 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class HeroController : MonoBehaviour {
-	[SerializeField] private float speed = 1;
+using DungeonRaid.Characters.Heroes;
 
-	private Rigidbody body;
-	private Vector2 movementInput, lookInput;
+[RequireComponent(typeof(BodyMover))]
+public class HeroController : MonoBehaviour {
+	[SerializeField] private Hero hero = null;
+
+	private Vector2 lookInput;
+	private Vector3 movementInput;
+
+	public BodyMover Mover { get; private set; }
+	public Vector3 Direction { get; private set; }
 
 	private void Start() {
-		body = GetComponent<Rigidbody>();
+		Mover = GetComponent<BodyMover>();
+		Direction = transform.forward;
 	}
 
 	private void Update() {
 		Aim(lookInput);
-		Move(new Vector3(movementInput.x, 0, movementInput.y));
+
+		Vector3 move = new Vector3(movementInput.x, 0, movementInput.y);
+
+		Mover.MoveToward(move, hero.Speed);
+		if (move.magnitude != 0) {
+			Direction = move.normalized;
+		} else {
+			Direction = transform.forward;
+		}
 	}
 
 	public void OnMove(InputValue value) {
+		Debug.Log("on move");
 		movementInput = value.Get<Vector2>();
 	}
 
@@ -24,13 +40,21 @@ public class HeroController : MonoBehaviour {
 		lookInput = value.Get<Vector2>();
 	}
 
-	private void Move(Vector3 direction) {
-		if (direction.magnitude > 0) {
-			body.velocity = transform.rotation * (Vector3.ClampMagnitude(direction, 1) * speed * 5);
-			body.velocity = Vector3.ClampMagnitude(body.velocity, speed * 5);
-		} else {
-			body.velocity = Vector3.zero;
-		}
+	public void OnAttack(InputValue _) {
+		Debug.Log("start/end attacking");
+		hero.IsAttacking = !hero.IsAttacking;
+	}
+
+	public void OnAbilityOne(InputValue _) {
+		hero.Cast(0);
+	}
+
+	public void OnAbilityTwo(InputValue _) {
+		hero.Cast(1);
+	}
+
+	public void OnAbilityThree(InputValue _) {
+		hero.Cast(2);
 	}
 
 	private void Aim(Vector2 direction) {

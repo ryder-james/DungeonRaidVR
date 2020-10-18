@@ -11,12 +11,17 @@ namespace DungeonRaid.Collections {
 		[SerializeField] protected float rechargeRate = 0;
 
 		public bool IsRecharging { get; set; } = true;
+		public bool IsLocked { get; set; } = false;
 
 		private float value;
 
 		public float Value {
 			get => value;
-			set { this.value = Mathf.Clamp(value, 0, MaxValue); }
+			set { 
+				if (!IsLocked) {
+					this.value = Mathf.Clamp(value, 0, MaxValue);
+				}
+			}
 		}
 
 		public float MaxValue { get => maxValue; set => maxValue = value; }
@@ -25,6 +30,16 @@ namespace DungeonRaid.Collections {
 
 		private void Awake() {
 			Value = MaxValue;
+		}
+
+		private void Start() {
+			InvokeRepeating(nameof(Recharge), 1, 1);
+		}
+
+		public void Recharge() {
+			if (IsRecharging) {
+				Value += rechargeRate;
+			}
 		}
 	}
 }

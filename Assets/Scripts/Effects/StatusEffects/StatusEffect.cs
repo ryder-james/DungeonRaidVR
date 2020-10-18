@@ -7,15 +7,52 @@ namespace DungeonRaid.Effects.StatusEffects {
 	public abstract class StatusEffect : Effect {
 		protected const string StatusEffectMenuPrefix = EffectMenuPrefix + "Status Effects/";
 
-		[SerializeField] private float duration = 1;
+		[SerializeField] protected float duration = 1;
+
+		public bool IsRunning { get; set; }
 
 		public override sealed void Apply(Character target) {
 			StatusEffectComponent effect = target.gameObject.AddComponent<StatusEffectComponent>();
 			effect.Begin(this, target, duration);
 		}
 
+		protected void InvokeRepeating(Character target, System.Action<Character> callback, float interval = 1) {
+			RepeatingEffectComponent behaviour = target.gameObject.AddComponent<RepeatingEffectComponent>();
+			behaviour.Begin(this, target, callback, interval);
+		}
+
 		protected abstract void StartEffect(Character target);
 		protected abstract void StopEffect(Character target);
+
+		private class RepeatingEffectComponent : MonoBehaviour {
+			private StatusEffect Caller { get; set; }
+			private Character Target { get; set; }
+			public System.Action<Character> Callback { get; set; }
+			private float Interval { get; set; }
+
+			public void Begin(StatusEffect caller, Character target, System.Action<Character> callback, float interval) {
+				Caller = caller;
+				Target = target;
+				Callback = callback;
+				Interval = interval;
+				StartCoroutine(nameof(RunAsync));
+			}
+
+			private IEnumerator RunAsync() {
+				yield return new WaitUntil(() => Caller.IsRunning);
+
+				while (Caller.IsRunning) {
+					Callback(Target);
+					if (Interval > 0) {
+						yield return new WaitForSeconds(Interval);
+					} else {
+						yield return new WaitForEndOfFrame();
+					}
+				}
+
+				Destroy(this);
+			}
+		}
 
 		// This whole thing is gross. Find an alternative if possible.
 		private class StatusEffectComponent : MonoBehaviour {
@@ -23,13 +60,18 @@ namespace DungeonRaid.Effects.StatusEffects {
 			private Character Target { get; set; }
 
 			public void Begin(StatusEffect caller, Character target, float duration) {
+				Caller = caller;
+				Target = target;
 				StartCoroutine(nameof(ApplyAsync), duration);
+				Caller.IsRunning = true;
 			}
 
 			private IEnumerator ApplyAsync(float duration) {
 				Caller.StartEffect(Target);
 				yield return new WaitForSeconds(duration);
 				Caller.StopEffect(Target);
+				Caller.IsRunning = false;
+
 				Destroy(this);
 			}
 		}
