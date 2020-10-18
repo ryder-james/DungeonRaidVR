@@ -34,7 +34,7 @@ public abstract class Ability : ScriptableObject {
 		bool canCast = true;
 
 		foreach (Cost cost in costs) {
-			if (!Owner.CanAfford(cost)) {
+			if (Owner == null || !Owner.CanAfford(cost)) {
 				canCast = false;
 				break;
 			}
