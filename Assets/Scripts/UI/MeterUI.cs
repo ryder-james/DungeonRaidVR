@@ -7,13 +7,15 @@ namespace DungeonRaid.UI {
 	public class MeterUI : MonoBehaviour {
 		[SerializeField] private Slider slider = null;
 
-		public MeterComponent Meter { get; set; }
-
-		private void Awake() {
-			Meter.OnValueChanged += UpdateSlider;
+		public bool RightToLeft {
+			get => slider.direction == Slider.Direction.RightToLeft;
+			set => slider.direction = value ? Slider.Direction.RightToLeft : Slider.Direction.LeftToRight;
 		}
 
+		public MeterComponent Meter { get; set; }
+
 		private void Start() {
+			Meter.OnValueChanged += UpdateSlider;
 			slider.fillRect.GetComponent<Image>().color = Meter.Color;
 		}
 

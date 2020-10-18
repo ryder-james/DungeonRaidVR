@@ -7,6 +7,7 @@ namespace DungeonRaid.UI {
 	public class HeroHUD : MonoBehaviour {
 		[SerializeField] private Transform meters = null;
 		[SerializeField] private GameObject meterUIPrefab = null;
+		[SerializeField] private bool onRightSide = false;
 
 		public Hero Hero { get; private set; }
 
@@ -14,8 +15,10 @@ namespace DungeonRaid.UI {
 			Hero = hero;
 
 			foreach (MeterComponent meter in hero.Meters) {
+				Debug.Log("created");
 				MeterUI ui = Instantiate(meterUIPrefab, meters.transform).GetComponent<MeterUI>();
 				ui.Meter = meter;
+				ui.RightToLeft = onRightSide;
 			}
 		}
 	}
