@@ -6,21 +6,35 @@ namespace DungeonRaid.Characters.Heroes {
 	[RequireComponent(typeof(HeroController))]
 	public class Hero : Character {
 		[SerializeField] private float speed = 1;
-		[SerializeField] private float attackSpeed = 1;
+		[SerializeField] private float attacksPerSecond = 1;
 		[SerializeField] private Weapon weapon = null;
 		[SerializeField] private Ability[] abilities = null;
 
 		public HeroController Controller { get; private set; }
 
 		public float Speed { get => speed; set => speed = Mathf.Max(value, 0); }
-		public float AttackSpeed { get => attackSpeed; set => attackSpeed = Mathf.Max(value, 0); }
+		public float AttackSpeed { 
+			get => attacksPerSecond;
+			set { 
+				attacksPerSecond = Mathf.Max(value, 0);
+				fixedAttackDelay = 1 / attacksPerSecond;
+				if (attackDelay > fixedAttackDelay) {
+					attackDelay = fixedAttackDelay;
+				}
+			}
+		}
 
 		private readonly List<Ability> onCooldown = new List<Ability>();
+
+		private float fixedAttackDelay, attackDelay;
 
 		protected override void Start() {
 			base.Start();
 
 			Controller = GetComponent<HeroController>();
+
+			fixedAttackDelay = 1 / attacksPerSecond;
+			attackDelay = 0;
 
 			foreach (Ability ability in abilities) {
 				ability.Owner = this;
@@ -29,6 +43,15 @@ namespace DungeonRaid.Characters.Heroes {
 
 		protected override void Update() {
 			base.Update();
+
+			attackDelay -= Time.deltaTime;
+		}
+
+		public void Attack() {
+			if (attackDelay <= 0) {
+				weapon.Attack();
+				attackDelay = fixedAttackDelay;
+			}
 		}
 
 		public bool Cast(int index) {

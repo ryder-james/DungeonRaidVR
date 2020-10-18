@@ -37,8 +37,20 @@ public class HeroController : MonoBehaviour {
 		lookInput = value.Get<Vector2>();
 	}
 
-	public void OnFire(InputValue value) {
+	public void OnAttack(InputValue _) {
+		hero.Attack();
+	}
+
+	public void OnAbilityOne(InputValue _) {
 		hero.Cast(0);
+	}
+
+	public void OnAbilityTwo(InputValue _) {
+		hero.Cast(1);
+	}
+
+	public void OnAbilityThree(InputValue _) {
+		hero.Cast(2);
 	}
 
 	private void Aim(Vector2 direction) {
