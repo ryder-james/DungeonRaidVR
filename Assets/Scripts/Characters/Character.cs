@@ -3,6 +3,7 @@ using UnityEngine;
 
 using DungeonRaid.Collections;
 using DungeonRaid.Characters.Abilities;
+using System.Collections.Generic;
 
 namespace DungeonRaid.Characters {
 	public abstract class Character : MonoBehaviour {
@@ -31,7 +32,7 @@ namespace DungeonRaid.Characters {
 		}
 
 		protected virtual void Update() {
-
+			
 		}
 
 		public void UpdateMeter(string meterName, float amount) {

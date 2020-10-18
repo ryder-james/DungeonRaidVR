@@ -11,7 +11,8 @@ namespace DungeonRaid.Effects.StatusEffects {
 		protected override void StartEffect(Character target) {
 			(target as Hero).Controller.Mover.Manual = true;
 			InvokeRepeating(target, t => {
-				(t as Hero).Controller.Mover.MoveToward(t.transform.forward, distance / BodyMover.SpeedMultiplier / duration);
+				HeroController controller = (t as Hero).Controller;
+				controller.Mover.MoveToward(controller.Direction, distance / BodyMover.SpeedMultiplier / duration);
 			}, 0);
 		}
 

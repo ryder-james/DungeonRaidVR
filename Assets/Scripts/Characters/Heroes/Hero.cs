@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace DungeonRaid.Characters.Heroes {
 	[RequireComponent(typeof(HeroController))]
@@ -10,6 +12,8 @@ namespace DungeonRaid.Characters.Heroes {
 		public HeroController Controller { get; private set; }
 		public float Speed { get => speed; set => speed = value; }
 
+		private readonly List<Ability> onCooldown = new List<Ability>();
+
 		protected override void Start() {
 			base.Start();
 
@@ -20,12 +24,35 @@ namespace DungeonRaid.Characters.Heroes {
 			}
 		}
 
-		public void UseAbility(int index) {
-			abilities[index].Cast();
+		protected override void Update() {
+			base.Update();
+		}
+
+		public bool Cast(int index) {
+			if (index >= 0 && index < abilities.Length) {
+				return Cast(abilities[index]);
+			}
+
+			return false;
+		}
+
+		public bool Cast(Ability ability) {
+			if (onCooldown.Contains(ability)) {
+				return false;
+			}
+
+			StartCoroutine(nameof(RunCooldown), ability);
+			return ability.Cast();
 		}
 
 		protected override float CalculateHealth(int heroCount) {
 			return 1;
+		}
+
+		private IEnumerator RunCooldown(Ability ability) {
+			onCooldown.Add(ability);
+			yield return new WaitForSeconds(ability.Cooldown);
+			onCooldown.Remove(ability);
 		}
 	}
 }
