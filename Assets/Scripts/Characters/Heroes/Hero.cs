@@ -30,7 +30,6 @@ namespace DungeonRaid.Characters.Heroes {
 		}
 
 		public bool IsAttacking { get; set; } = false;
-		public IEnumerable<MeterComponent> Meters { get; internal set; }
 
 		private readonly List<Ability> onCooldown = new List<Ability>();
 

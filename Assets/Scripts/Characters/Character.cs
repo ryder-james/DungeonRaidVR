@@ -10,19 +10,21 @@ namespace DungeonRaid.Characters {
 		[SerializeField] protected GameObject modelDataPrefab = null;
 		[Space]
 		[SerializeField] protected float hpMod = 1;
-		[SerializeField] protected MeterComponent[] meters = null;
+		[SerializeField] private MeterComponent[] meters = null;
 		[SerializeField] protected AmmoPool[] ammoPools = null;
 
+		public MeterComponent[] Meters { get => meters; private set => meters = value; }
+
 		protected virtual void Start() {
-			if (meters == null) {
-				meters = new MeterComponent[0];
+			if (Meters == null) {
+				Meters = new MeterComponent[0];
 			}
 
 			if (ammoPools == null) {
 				ammoPools = new AmmoPool[0];
 			}
 			
-			foreach (MeterComponent meter in meters) {
+			foreach (MeterComponent meter in Meters) {
 				if (meter.MeterName == "Health") {
 					meter.MaxValue = CalculateHealth(GameObject.FindGameObjectsWithTag("Hero").Count());
 					meter.Value = meter.MaxValue;
@@ -43,7 +45,7 @@ namespace DungeonRaid.Characters {
 		}
 
 		public MeterComponent FindMeter(string meterName) {
-			return meters.Where(m => m.MeterName == meterName).FirstOrDefault();
+			return Meters.Where(m => m.MeterName == meterName).FirstOrDefault();
 		}
 
 		public bool HasMeter(string meterName) {
