@@ -10,12 +10,10 @@ namespace DungeonRaid.UI {
 		private int heroCount = 0;
 
 		public void OnPlayerJoined(PlayerInput obj) {
-			Debug.Log("joined");
 			AddHero(obj.GetComponent<Hero>());
 		}
 
 		private void AddHero(Hero hero) {
-			Debug.Log(hero);
 			heroHUDs[heroCount].SetHero(hero);
 
 			heroCount++;

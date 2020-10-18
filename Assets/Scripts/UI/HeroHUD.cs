@@ -15,7 +15,6 @@ namespace DungeonRaid.UI {
 			Hero = hero;
 
 			foreach (MeterComponent meter in hero.Meters) {
-				Debug.Log("created");
 				MeterUI ui = Instantiate(meterUIPrefab, meters.transform).GetComponent<MeterUI>();
 				ui.Meter = meter;
 				ui.RightToLeft = onRightSide;

@@ -45,13 +45,9 @@ namespace DungeonRaid.Collections {
 			Value = MaxValue;
 		}
 
-		private void Start() {
-			InvokeRepeating(nameof(Recharge), 1, 1);
-		}
-
-		public void Recharge() {
+		private void Update() {
 			if (IsRecharging) {
-				Value += rechargeRate;
+				Value += rechargeRate * Time.deltaTime;
 			}
 		}
 	}

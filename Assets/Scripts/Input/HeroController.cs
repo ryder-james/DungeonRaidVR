@@ -33,7 +33,6 @@ namespace DungeonRaid.Input {
 		}
 
 		public void OnMove(InputValue value) {
-			Debug.Log("on move");
 			movementInput = value.Get<Vector2>();
 		}
 
@@ -42,7 +41,6 @@ namespace DungeonRaid.Input {
 		}
 
 		public void OnAttack(InputValue _) {
-			Debug.Log("start/end attacking");
 			hero.IsAttacking = !hero.IsAttacking;
 		}
 
