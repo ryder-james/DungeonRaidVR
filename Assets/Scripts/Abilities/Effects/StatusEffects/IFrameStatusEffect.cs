@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 using DungeonRaid.Characters;
 
-namespace DungeonRaid.Effects.StatusEffects {
+namespace DungeonRaid.Abilities.Effects.StatusEffects {
 	[CreateAssetMenu(fileName = "IFrames", menuName = StatusEffectMenuPrefix + "Invincibility")]
 	public class IFrameStatusEffect : StatusEffect {
 		protected override void StartEffect(Character target) {

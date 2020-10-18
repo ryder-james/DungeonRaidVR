@@ -1,22 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-using DungeonRaid.Characters.Heroes;
 using DungeonRaid.Collections;
+using DungeonRaid.Characters.Heroes;
 
-public class HeroHUD : MonoBehaviour {
-	[SerializeField] private Transform meters = null;
-	[SerializeField] private GameObject meterUIPrefab = null;
+namespace DungeonRaid.UI {
+	public class HeroHUD : MonoBehaviour {
+		[SerializeField] private Transform meters = null;
+		[SerializeField] private GameObject meterUIPrefab = null;
 
-	public Hero Hero { get; private set; }
+		public Hero Hero { get; private set; }
 
-	public void SetHero(Hero hero) {
-		Hero = hero;
+		public void SetHero(Hero hero) {
+			Hero = hero;
 
-		foreach (MeterComponent meter in hero.Meters) {
-			MeterUI ui = Instantiate(meterUIPrefab, meters.transform).GetComponent<MeterUI>();
-			ui.Meter = meter;
+			foreach (MeterComponent meter in hero.Meters) {
+				MeterUI ui = Instantiate(meterUIPrefab, meters.transform).GetComponent<MeterUI>();
+				ui.Meter = meter;
+			}
 		}
 	}
 }

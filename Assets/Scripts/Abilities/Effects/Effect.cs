@@ -2,7 +2,7 @@
 
 using DungeonRaid.Characters;
 
-namespace DungeonRaid.Effects {
+namespace DungeonRaid.Abilities.Effects {
 	public abstract class Effect : ScriptableObject {
 		protected const string EffectMenuPrefix = "Dungeon Raid/Effects/";
 

@@ -3,61 +3,63 @@ using UnityEngine.InputSystem;
 
 using DungeonRaid.Characters.Heroes;
 
-[RequireComponent(typeof(BodyMover))]
-public class HeroController : MonoBehaviour {
-	[SerializeField] private Hero hero = null;
+namespace DungeonRaid.Input {
+	[RequireComponent(typeof(BodyMover))]
+	public class HeroController : MonoBehaviour {
+		[SerializeField] private Hero hero = null;
 
-	private Vector2 lookInput;
-	private Vector3 movementInput;
+		private Vector2 lookInput;
+		private Vector3 movementInput;
 
-	public BodyMover Mover { get; private set; }
-	public Vector3 Direction { get; private set; }
+		public BodyMover Mover { get; private set; }
+		public Vector3 Direction { get; private set; }
 
-	private void Start() {
-		Mover = GetComponent<BodyMover>();
-		Direction = transform.forward;
-	}
-
-	private void Update() {
-		Aim(lookInput);
-
-		Vector3 move = new Vector3(movementInput.x, 0, movementInput.y);
-
-		Mover.MoveToward(move, hero.Speed);
-		if (move.magnitude != 0) {
-			Direction = move.normalized;
-		} else {
+		private void Start() {
+			Mover = GetComponent<BodyMover>();
 			Direction = transform.forward;
 		}
-	}
 
-	public void OnMove(InputValue value) {
-		Debug.Log("on move");
-		movementInput = value.Get<Vector2>();
-	}
+		private void Update() {
+			Aim(lookInput);
 
-	public void OnLook(InputValue value) {
-		lookInput = value.Get<Vector2>();
-	}
+			Vector3 move = new Vector3(movementInput.x, 0, movementInput.y);
 
-	public void OnAttack(InputValue _) {
-		Debug.Log("start/end attacking");
-		hero.IsAttacking = !hero.IsAttacking;
-	}
+			Mover.MoveToward(move, hero.Speed);
+			if (move.magnitude != 0) {
+				Direction = move.normalized;
+			} else {
+				Direction = transform.forward;
+			}
+		}
 
-	public void OnAbilityOne(InputValue _) {
-		hero.Cast(0);
-	}
+		public void OnMove(InputValue value) {
+			Debug.Log("on move");
+			movementInput = value.Get<Vector2>();
+		}
 
-	public void OnAbilityTwo(InputValue _) {
-		hero.Cast(1);
-	}
+		public void OnLook(InputValue value) {
+			lookInput = value.Get<Vector2>();
+		}
 
-	public void OnAbilityThree(InputValue _) {
-		hero.Cast(2);
-	}
+		public void OnAttack(InputValue _) {
+			Debug.Log("start/end attacking");
+			hero.IsAttacking = !hero.IsAttacking;
+		}
 
-	private void Aim(Vector2 direction) {
-		// TODO
+		public void OnAbilityOne(InputValue _) {
+			hero.Cast(0);
+		}
+
+		public void OnAbilityTwo(InputValue _) {
+			hero.Cast(1);
+		}
+
+		public void OnAbilityThree(InputValue _) {
+			hero.Cast(2);
+		}
+
+		private void Aim(Vector2 direction) {
+			// TODO
+		}
 	}
 }
