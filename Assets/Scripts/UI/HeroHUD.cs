@@ -13,7 +13,7 @@ namespace DungeonRaid.UI {
 		[SerializeField] private GameObject meterUIPrefab = null;
 		[SerializeField] private GameObject reticle = null;
 		[SerializeField] private Color color = Color.white;
-		[SerializeField] private Canvas canvas = null;
+		[SerializeField] private Camera cam = null;
 
 		public Hero Hero { get; private set; }
 		public Vector2 ReticlePoint {
@@ -38,11 +38,17 @@ namespace DungeonRaid.UI {
 		}
 
 		public void MoveReticle(Vector2 moveVector) {
-			reticle.transform.localPosition = (Vector2) reticle.transform.localPosition + moveVector * reticleSpeed;
-			Vector3 viewPos = Camera.main.WorldToViewportPoint(reticle.transform.position);
+			Vector2 newPos = (Vector2) reticle.transform.localPosition + moveVector * reticleSpeed;
+			SetReticlePosition(newPos);
+		}
+
+		public void SetReticlePosition(Vector2 newPosition) {
+			reticle.transform.localPosition = newPosition;
+
+			Vector3 viewPos = cam.WorldToViewportPoint(reticle.transform.position);
 			viewPos.x = Mathf.Clamp01(viewPos.x);
 			viewPos.y = Mathf.Clamp01(viewPos.y);
-			reticle.transform.position = Camera.main.ViewportToWorldPoint(viewPos);
+			reticle.transform.position = cam.ViewportToWorldPoint(viewPos);
 		}
 	}
 }

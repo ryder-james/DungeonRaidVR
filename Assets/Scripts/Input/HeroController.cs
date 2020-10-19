@@ -16,6 +16,8 @@ namespace DungeonRaid.Input {
 		public Vector3 Direction { get; private set; }
 		public HeroHUD HUD { get; set; }
 
+		private bool usingMouse = false;
+
 		private void Start() {
 			Mover = GetComponent<BodyMover>();
 			Direction = transform.forward;
@@ -42,6 +44,11 @@ namespace DungeonRaid.Input {
 			lookInput = value.Get<Vector2>();
 		}
 
+		public void OnAimExact(InputValue value) {
+			usingMouse = true;
+			lookInput = value.Get<Vector2>();
+		}
+
 		public void OnAttack(InputValue _) {
 			hero.IsAttacking = !hero.IsAttacking;
 		}
@@ -60,7 +67,14 @@ namespace DungeonRaid.Input {
 
 		private void Aim(Vector2 direction) {
 			if (HUD != null) {
-				HUD.MoveReticle(direction);
+				if (usingMouse) {
+					Vector3 viewPoint = Camera.main.ScreenToViewportPoint(direction);
+					Vector3 worldPoint = Camera.main.ViewportToWorldPoint(viewPoint);
+					Debug.Log(viewPoint);
+					HUD.SetReticlePosition(worldPoint);
+				} else {
+					HUD.MoveReticle(direction);
+				}
 			}
 		}
 	}

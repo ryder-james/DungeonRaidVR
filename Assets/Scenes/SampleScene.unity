@@ -811,7 +811,7 @@ MonoBehaviour:
     type: 3}
   reticle: {fileID: 470968362}
   color: {r: 1, g: 1, b: 1, a: 1}
-  canvas: {fileID: 1609476966}
+  cam: {fileID: 963194227}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1265,7 +1265,7 @@ MonoBehaviour:
     type: 3}
   reticle: {fileID: 436155592}
   color: {r: 1, g: 1, b: 1, a: 1}
-  canvas: {fileID: 1609476966}
+  cam: {fileID: 963194227}
 --- !u!1 &1272835971
 GameObject:
   m_ObjectHideFlags: 0
@@ -1385,7 +1385,7 @@ MonoBehaviour:
     type: 3}
   reticle: {fileID: 717084225}
   color: {r: 1, g: 1, b: 1, a: 1}
-  canvas: {fileID: 1609476966}
+  cam: {fileID: 963194227}
 --- !u!1 &1359102235
 GameObject:
   m_ObjectHideFlags: 0
@@ -1442,7 +1442,7 @@ MonoBehaviour:
     type: 3}
   reticle: {fileID: 630785196}
   color: {r: 0, g: 0.44420838, b: 1, a: 1}
-  canvas: {fileID: 1609476966}
+  cam: {fileID: 963194227}
 --- !u!1 &1515720294
 GameObject:
   m_ObjectHideFlags: 0
