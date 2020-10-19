@@ -2,6 +2,7 @@
 using UnityEngine.InputSystem;
 
 using DungeonRaid.Characters.Heroes;
+using DungeonRaid.UI;
 
 namespace DungeonRaid.Input {
 	[RequireComponent(typeof(BodyMover))]
@@ -13,6 +14,7 @@ namespace DungeonRaid.Input {
 
 		public BodyMover Mover { get; private set; }
 		public Vector3 Direction { get; private set; }
+		public HeroHUD HUD { get; set; }
 
 		private void Start() {
 			Mover = GetComponent<BodyMover>();
@@ -36,7 +38,7 @@ namespace DungeonRaid.Input {
 			movementInput = value.Get<Vector2>();
 		}
 
-		public void OnLook(InputValue value) {
+		public void OnAim(InputValue value) {
 			lookInput = value.Get<Vector2>();
 		}
 
@@ -57,7 +59,9 @@ namespace DungeonRaid.Input {
 		}
 
 		private void Aim(Vector2 direction) {
-			// TODO
+			if (HUD != null) {
+				HUD.MoveReticle(direction);
+			}
 		}
 	}
 }

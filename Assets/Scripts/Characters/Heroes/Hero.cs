@@ -35,10 +35,12 @@ namespace DungeonRaid.Characters.Heroes {
 
 		private float fixedAttackDelay, attackDelay;
 
+		private void Awake() {
+			Controller = GetComponent<HeroController>();
+		}
+
 		protected override void Start() {
 			base.Start();
-
-			Controller = GetComponent<HeroController>();
 
 			fixedAttackDelay = 1 / attacksPerSecond;
 			attackDelay = 0;
