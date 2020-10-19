@@ -282,6 +282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hero: {fileID: 8639554464805647244}
+  input: {fileID: 8639554464805647233}
 --- !u!54 &8639554464805647245
 Rigidbody:
   m_ObjectHideFlags: 0

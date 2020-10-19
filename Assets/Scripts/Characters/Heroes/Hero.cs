@@ -16,6 +16,8 @@ namespace DungeonRaid.Characters.Heroes {
 		[SerializeField] private Ability[] abilities = null;
 
 		public HeroController Controller { get; private set; }
+		public Character TargetCharacter { get; set; }
+		public Vector3 TargetPoint { get; set; }
 
 		public float Speed { get => speed; set => speed = Mathf.Max(value, 0); }
 		public float AttackSpeed { 
