@@ -54,24 +54,29 @@ namespace DungeonRaid.Input {
 		}
 
 		public void OnAbilityOne(InputValue _) {
-			hero.Cast(0);
+			Cast(0);
 		}
 
 		public void OnAbilityTwo(InputValue _) {
-			hero.Cast(1);
+			Cast(1);
 		}
 
 		public void OnAbilityThree(InputValue _) {
-			hero.Cast(2);
+			Cast(2);
+		}
+
+		private void Cast(int index) {
+			if (hero.Cast(index)) {
+				HUD.CastAbility(index);
+			}
 		}
 
 		private void Aim(Vector2 direction) {
 			if (HUD != null) {
 				if (usingMouse) {
-					Vector3 viewPoint = Camera.main.ScreenToViewportPoint(direction);
-					Vector3 worldPoint = Camera.main.ViewportToWorldPoint(viewPoint);
-					Debug.Log(viewPoint);
-					HUD.SetReticlePosition(worldPoint);
+					Ray r = Camera.main.ScreenPointToRay(direction);
+					Debug.DrawRay(r.origin, r.direction * 10, Color.red);
+					HUD.SetReticlePosition(direction);
 				} else {
 					HUD.MoveReticle(direction);
 				}

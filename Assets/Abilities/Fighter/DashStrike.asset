@@ -25,3 +25,4 @@ MonoBehaviour:
   duration: 0
   maxChannelTime: 0
   cooldown: 2
+  icon: {fileID: 21300000, guid: 8f21cf4531f7d91478a51e41f4c7fb7c, type: 3}

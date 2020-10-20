@@ -6,6 +6,7 @@ using UnityEngine;
 using DungeonRaid.Collections;
 using DungeonRaid.Abilities;
 using DungeonRaid.Input;
+using System;
 
 namespace DungeonRaid.Characters.Heroes {
 	[RequireComponent(typeof(HeroController))]
@@ -18,6 +19,7 @@ namespace DungeonRaid.Characters.Heroes {
 		public HeroController Controller { get; private set; }
 		public Character TargetCharacter { get; set; }
 		public Vector3 TargetPoint { get; set; }
+		public Ability[] Abilities { get => abilities; set => abilities = value; }
 
 		public float Speed { get => speed; set => speed = Mathf.Max(value, 0); }
 		public float AttackSpeed { 
@@ -39,6 +41,13 @@ namespace DungeonRaid.Characters.Heroes {
 
 		private void Awake() {
 			Controller = GetComponent<HeroController>();
+
+			for (int i = 0; i < abilities.Length; i++) {
+				abilities[i] = Instantiate(abilities[i]);
+				abilities[i].Owner = this;
+			}
+
+			Initialized = true;
 		}
 
 		protected override void Start() {
@@ -46,10 +55,6 @@ namespace DungeonRaid.Characters.Heroes {
 
 			fixedAttackDelay = 1 / attacksPerSecond;
 			attackDelay = 0;
-
-			foreach (Ability ability in abilities) {
-				ability.Owner = this;
-			}
 		}
 
 		protected override void Update() {
@@ -61,9 +66,20 @@ namespace DungeonRaid.Characters.Heroes {
 			}
 		}
 
+		public bool TestTarget(Camera cam, Vector3 reticlePosition) {
+
+			return false;
+			//if (Physics.Raycast(ray, out RaycastHit hit, 300)) {
+			//	Debug.Log($"hit {hit.collider.name}");
+			//	return true;
+			//} else {
+			//	return false;
+			//}
+		}
+
 		public bool Cast(int index) {
-			if (index >= 0 && index < abilities.Length) {
-				return Cast(abilities[index]);
+			if (index >= 0 && index < Abilities.Length) {
+				return Cast(Abilities[index]);
 			}
 
 			return false;

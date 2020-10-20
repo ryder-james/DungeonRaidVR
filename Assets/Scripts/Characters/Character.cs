@@ -14,6 +14,7 @@ namespace DungeonRaid.Characters {
 		[SerializeField] protected AmmoPool[] ammoPools = null;
 
 		public MeterComponent[] Meters { get => meters; private set => meters = value; }
+		public bool Initialized { get; protected set; }
 
 		protected virtual void Start() {
 			if (Meters == null) {
