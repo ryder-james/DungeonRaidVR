@@ -22,10 +22,13 @@ namespace DungeonRaid.Abilities {
 
 		[SerializeField, Min(0)] private float cooldown = 1;
 
+		[SerializeField] private Sprite icon = null;
+
 		public Character Owner { get; set; }
 		public DurationType DurationType { get => durationType; set => durationType = value; }
 		public float Cooldown { get => cooldown; private set => cooldown = value; }
 
+		public Sprite Icon { get => icon; set => icon = value; }
 		protected Effect[] Effects { get => effects; set => effects = value; }
 		protected float Duration { get => duration; set => duration = value; }
 		protected float MaxChannelTime { get => maxChannelTime; set => maxChannelTime = value; }

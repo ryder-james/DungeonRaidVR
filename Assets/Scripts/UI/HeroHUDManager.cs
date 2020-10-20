@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+
+using UnityEngine;
 
 using DungeonRaid.Characters.Heroes;
 using UnityEngine.InputSystem;
@@ -10,10 +12,12 @@ namespace DungeonRaid.UI {
 		private int heroCount = 0;
 
 		public void OnPlayerJoined(PlayerInput obj) {
-			AddHero(obj.GetComponent<Hero>());
+			StartCoroutine(nameof(AddHero), obj.GetComponent<Hero>());
 		}
 
-		private void AddHero(Hero hero) {
+		private IEnumerator AddHero(Hero hero) {
+			yield return new WaitUntil(() => hero.Initialized);
+
 			heroHUDs[heroCount].SetHero(hero);
 
 			heroCount++;
