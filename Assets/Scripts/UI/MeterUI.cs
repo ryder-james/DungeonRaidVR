@@ -1,10 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+using Sirenix.OdinInspector;
+
 using DungeonRaid.Collections;
+using DungeonRaid.Characters.Bosses;
 
 namespace DungeonRaid.UI {
 	public class MeterUI : MonoBehaviour {
+		[SerializeField] private bool isBossMeter = false;
+		[SerializeField, ShowIf("isBossMeter")] private Boss boss = null;
 		[SerializeField] private Slider slider = null;
 
 		public bool RightToLeft {
@@ -15,6 +20,9 @@ namespace DungeonRaid.UI {
 		public MeterComponent Meter { get; set; }
 
 		private void Start() {
+			if (isBossMeter) {
+				Meter = boss.FindMeter("Health");
+			}
 			Meter.OnValueChanged += UpdateSlider;
 			slider.fillRect.GetComponent<Image>().color = Meter.Color;
 		}
