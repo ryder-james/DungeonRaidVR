@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   applyToCaster: 0
   targetMeterName: Health
-  amount: -2
+  type: 0
+  amount: 2

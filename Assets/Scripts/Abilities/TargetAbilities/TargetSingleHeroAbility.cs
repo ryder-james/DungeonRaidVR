@@ -3,7 +3,7 @@
 namespace DungeonRaid.Abilities {
 	[CreateAssetMenu(fileName = "TargetHero", menuName = AbilityMenuPrefix + "Target Hero")]
 	public class TargetSingleHeroAbility : Ability {
-		protected override void TargetCast() {
+		protected override bool TargetCast() {
 			throw new System.NotImplementedException();
 		}
 	}
