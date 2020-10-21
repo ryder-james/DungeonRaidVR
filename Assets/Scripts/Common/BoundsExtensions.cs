@@ -2,6 +2,10 @@
 
 namespace Common.Extensions {
 	public static class BoundsExtensions {
+		/**
+		 * Most of this code is lifted (with permission) from this answer board and modified to fit this use case
+		 * https://answers.unity.com/questions/49943/is-there-an-easy-way-to-get-on-screen-render-size.html
+		 */
 		public static Rect ToScreenSpace(this Bounds bounds, Camera cam, Canvas canvas = null) {
 			float scale = canvas == null ? 1 : canvas.scaleFactor;
 
@@ -23,8 +27,6 @@ namespace Common.Extensions {
 				min = Vector2.Min(min, v);
 				max = Vector2.Max(max, v);
 			}
-
-			//Debug.Log($"{min}, {max}");
 
 			return new Rect(min.x, min.y, max.x - min.x, max.y - min.y);
 		}
