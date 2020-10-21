@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Hero
   - Boss
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -15,10 +16,10 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - Ground
+  - Boss
+  - Hero
+  - Targetable
   - 
   - 
   - 

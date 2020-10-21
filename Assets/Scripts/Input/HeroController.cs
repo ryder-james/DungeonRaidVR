@@ -17,10 +17,12 @@ namespace DungeonRaid.Input {
 		public HeroHUD HUD { get; set; }
 
 		private bool usingMouse = false;
+		private Canvas canvas;
 
 		private void Start() {
 			Mover = GetComponent<BodyMover>();
 			Direction = transform.forward;
+			canvas = FindObjectOfType<Canvas>();
 		}
 
 		private void Update() {
@@ -74,9 +76,7 @@ namespace DungeonRaid.Input {
 		private void Aim(Vector2 direction) {
 			if (HUD != null) {
 				if (usingMouse) {
-					Ray r = Camera.main.ScreenPointToRay(direction);
-					Debug.DrawRay(r.origin, r.direction * 10, Color.red);
-					HUD.SetReticlePosition(direction);
+					//HUD.SetReticlePosition(Camera.main.ScreenToViewportPoint(direction));
 				} else {
 					HUD.MoveReticle(direction);
 				}

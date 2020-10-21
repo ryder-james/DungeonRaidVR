@@ -1,5 +1,49 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6976994020729694480
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1351499222379493530}
+  - component: {fileID: 2455634998618640638}
+  m_Layer: 11
+  m_Name: Target
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1351499222379493530
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6976994020729694480}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8639554464805647235}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &2455634998618640638
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6976994020729694480}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 4
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &8639554463600203991
 GameObject:
   m_ObjectHideFlags: 0
@@ -11,7 +55,7 @@ GameObject:
   - component: {fileID: 8639554463600203990}
   - component: {fileID: 8639554463600203984}
   - component: {fileID: 8639554463600203985}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +134,7 @@ GameObject:
   - component: {fileID: 8639554463925906136}
   - component: {fileID: 8639554463925906138}
   - component: {fileID: 8639554463925906139}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +221,7 @@ GameObject:
   - component: {fileID: 8639554464805647232}
   - component: {fileID: 8639554464805647233}
   - component: {fileID: 8639554464805647246}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Fighter
   m_TagString: Hero
   m_Icon: {fileID: 0}
@@ -196,6 +240,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8639554463925906136}
+  - {fileID: 1351499222379493530}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -223,6 +268,9 @@ MonoBehaviour:
   abilities:
   - {fileID: 11400000, guid: b41abdd681aa41a42a8bc46786ad945d, type: 2}
   - {fileID: 11400000, guid: 5aee0ab62c1c9d74fb095d129eedd21d, type: 2}
+  targetableLayers:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!114 &-6849890075513631553
 MonoBehaviour:
   m_ObjectHideFlags: 0
