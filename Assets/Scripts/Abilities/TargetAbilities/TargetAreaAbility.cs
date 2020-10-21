@@ -5,14 +5,16 @@ using DungeonRaid.Abilities.Effects;
 namespace DungeonRaid.Abilities {
 	[CreateAssetMenu(fileName = "TargetArea", menuName = AbilityMenuPrefix + "Target Area")]
 	public class TargetAreaAbility : Ability {
-		protected override void TargetCast() {
+		protected override bool TargetCast() {
 			foreach (Effect effect in Effects) {
 				if (effect.ApplyToCaster) {
 					effect.Apply(Owner);
 				} else {
-					effect.Apply(Owner);
+					//effect.Apply(Owner);
 				}
 			}
+
+			return true;
 		}
 	}
 }

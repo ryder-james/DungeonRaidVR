@@ -50,15 +50,18 @@ namespace DungeonRaid.Abilities {
 			bool canCast = CanCast();
 
 			if (canCast) {
-				foreach (Cost cost in costs) {
-					Owner.PayCost(cost);
+				if (TargetCast()) {
+					foreach (Cost cost in costs) {
+						Owner.PayCost(cost);
+					}
+				} else {
+					return false;
 				}
-				TargetCast();
 			}
 
 			return canCast;
 		}
 
-		protected abstract void TargetCast();
+		protected abstract bool TargetCast();
 	}
 }
