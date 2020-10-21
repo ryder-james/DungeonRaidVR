@@ -1,6 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
+
+using DungeonRaid.Abilities;
+using DungeonRaid.Input;
 
 namespace DungeonRaid.Characters.Heroes {
 	[RequireComponent(typeof(HeroController))]
@@ -9,8 +13,12 @@ namespace DungeonRaid.Characters.Heroes {
 		[SerializeField] private float attacksPerSecond = 1;
 		[SerializeField] private Weapon weapon = null;
 		[SerializeField] private Ability[] abilities = null;
+		[SerializeField] private LayerMask targetableLayers = 0;
 
 		public HeroController Controller { get; private set; }
+		public Character TargetCharacter { get; set; }
+		public Vector3? TargetPoint { get; set; }
+		public Ability[] Abilities { get => abilities; set => abilities = value; }
 
 		public float Speed { get => speed; set => speed = Mathf.Max(value, 0); }
 		public float AttackSpeed { 
@@ -30,17 +38,22 @@ namespace DungeonRaid.Characters.Heroes {
 
 		private float fixedAttackDelay, attackDelay;
 
+		private void Awake() {
+			Controller = GetComponent<HeroController>();
+
+			for (int i = 0; i < abilities.Length; i++) {
+				abilities[i] = Instantiate(abilities[i]);
+				abilities[i].Owner = this;
+			}
+
+			Initialized = true;
+		}
+
 		protected override void Start() {
 			base.Start();
 
-			Controller = GetComponent<HeroController>();
-
 			fixedAttackDelay = 1 / attacksPerSecond;
 			attackDelay = 0;
-
-			foreach (Ability ability in abilities) {
-				ability.Owner = this;
-			}
 		}
 
 		protected override void Update() {
@@ -52,9 +65,30 @@ namespace DungeonRaid.Characters.Heroes {
 			}
 		}
 
+		public bool CheckForTarget(Camera cam, Vector3 reticlePosition) {
+			Vector3 dir = reticlePosition - cam.transform.position;
+			dir.Normalize();
+			Ray ray = new Ray(cam.transform.position, dir);
+			if (Physics.Raycast(ray, out RaycastHit hit, 300, targetableLayers)) {
+				Character target = hit.collider.GetComponentInParent<Character>();
+				if (target != null) {
+					TargetCharacter = target;
+					TargetPoint = null;
+				} else {
+					TargetCharacter = null;
+					TargetPoint = hit.point;
+				}
+				return true;
+			} else {
+				TargetCharacter = null;
+				TargetPoint = null;
+				return false;
+			}
+		}
+
 		public bool Cast(int index) {
-			if (index >= 0 && index < abilities.Length) {
-				return Cast(abilities[index]);
+			if (index >= 0 && index < Abilities.Length) {
+				return Cast(Abilities[index]);
 			}
 
 			return false;

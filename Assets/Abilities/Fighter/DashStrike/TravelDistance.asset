@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   applyToCaster: 1
   duration: 0.1
-  distance: 5
+  distance: 10
