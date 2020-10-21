@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+using UnityEditor;
+
 using DungeonRaid.Collections;
 using DungeonRaid.Characters.Heroes;
 using DungeonRaid.Input;
-using UnityEditor;
 using DungeonRaid.Abilities;
 using DeungonRaid.UI;
+using DungeonRaid.Characters;
+using Common.Extensions;
 
 namespace DungeonRaid.UI {
 	public class HeroHUD : MonoBehaviour {
@@ -20,13 +23,17 @@ namespace DungeonRaid.UI {
 		[SerializeField] private RectTransform highlight = null;
 		[SerializeField] private Color color = Color.white;
 		[SerializeField] private Camera cam = null;
+		[SerializeField] private Canvas canvas = null;
 
 		public Hero Hero { get; private set; }
 
 		private readonly AbilityHUD[] abilityHUDs = new AbilityHUD[4];
 
+		private Character prevTarget = null;
+
 		private void Start() {
 			reticle.GetComponent<Image>().color = color;
+			highlight.GetComponent<Image>().color = color;
 		}
 
 		public void SetHero(Hero hero) {
@@ -61,43 +68,48 @@ namespace DungeonRaid.UI {
 		}
 
 		public void SetReticlePosition(Vector2 newPosition) {
-			//Vector3 viewPos = cam.ScreenToViewportPoint(newPosition);
-			//viewPos.x = Mathf.Clamp01(viewPos.x);
-			//viewPos.y = Mathf.Clamp01(viewPos.y);
-			//reticle.anchoredPosition = cam.ViewportToScreenPoint(viewPos);
-			reticle.anchoredPosition = newPosition;
-			Hero.TestTarget(cam, reticle.anchoredPosition);
-		}
+			Vector3 viewPos = cam.ScreenToViewportPoint(newPosition) * canvas.scaleFactor;
 
-		public void UpdateHighlight(GameObject target) {
-			Rect bounds = BoundsToScreenRect(target);
-			highlight.anchoredPosition = bounds.center;
-		}
+			viewPos.x = Mathf.Clamp01(viewPos.x);
+			viewPos.y = Mathf.Clamp01(viewPos.y);
+			Vector2 screenPos = cam.ViewportToScreenPoint(viewPos) / canvas.scaleFactor;
 
-		//private void OnDrawGizmos() {
-		//	Gizmos.DrawWireSphere(cam.ScreenToWorldPoint(reticle.anchoredPosition), 0.5f);
-		//}
+			reticle.anchoredPosition = screenPos;
 
-		public static Rect BoundsToScreenRect(GameObject go) {
-			Vector3 cen = go.GetComponent<Renderer>().bounds.center;
-			Vector3 ext = go.GetComponent<Renderer>().bounds.extents;
-			Vector2[] extentPoints = new Vector2[8] {
-				HandleUtility.WorldToGUIPoint(new Vector3(cen.x-ext.x, cen.y-ext.y, cen.z-ext.z)),
-				HandleUtility.WorldToGUIPoint(new Vector3(cen.x+ext.x, cen.y-ext.y, cen.z-ext.z)),
-				HandleUtility.WorldToGUIPoint(new Vector3(cen.x-ext.x, cen.y-ext.y, cen.z+ext.z)),
-				HandleUtility.WorldToGUIPoint(new Vector3(cen.x+ext.x, cen.y-ext.y, cen.z+ext.z)),
-				HandleUtility.WorldToGUIPoint(new Vector3(cen.x-ext.x, cen.y+ext.y, cen.z-ext.z)),
-				HandleUtility.WorldToGUIPoint(new Vector3(cen.x+ext.x, cen.y+ext.y, cen.z-ext.z)),
-				HandleUtility.WorldToGUIPoint(new Vector3(cen.x-ext.x, cen.y+ext.y, cen.z+ext.z)),
-				HandleUtility.WorldToGUIPoint(new Vector3(cen.x+ext.x, cen.y+ext.y, cen.z+ext.z))
-			};
-			Vector2 min = extentPoints[0];
-			Vector2 max = extentPoints[0];
-			foreach (Vector2 v in extentPoints) {
-				min = Vector2.Min(min, v);
-				max = Vector2.Max(max, v);
+			if (Hero.CheckForTarget(cam, reticle.position)) {
+				UpdateHighlightPosition(Hero.TargetCharacter);
+			} else {
+				highlight.gameObject.SetActive(false);
 			}
-			return new Rect(min.x, min.y, max.x - min.x, max.y - min.y);
+		}
+
+		private void UpdateHighlightPosition(Character target) {
+			if (target == null) {
+				highlight.gameObject.SetActive(false);
+				return;
+			}
+
+			Vector2 screenPos = cam.WorldToScreenPoint(target.transform.position) / canvas.scaleFactor;
+			highlight.anchoredPosition = screenPos + Vector2.up * 30;
+
+			if (target != prevTarget) {
+				UpdateHighlightSize(target);
+			}
+
+			highlight.gameObject.SetActive(true);
+
+			prevTarget = target;
+		}
+
+		private void UpdateHighlightSize(Character target) {
+			Renderer rend = target.GetComponentInChildren<Renderer>();
+			Rect screenRect = rend.bounds.ToScreenSpace(cam, canvas);
+
+			float width = Mathf.Max(75, screenRect.width + 30);
+			float height = Mathf.Max(75, screenRect.height);
+
+			highlight.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
+			highlight.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
 		}
 	}
 }
