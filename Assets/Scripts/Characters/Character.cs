@@ -27,7 +27,7 @@ namespace DungeonRaid.Characters {
 			
 			foreach (MeterComponent meter in Meters) {
 				if (meter.MeterName == "Health") {
-					meter.MaxValue = CalculateHealth(GameObject.FindGameObjectsWithTag("Hero").Count());
+					meter.MaxValue = CalculateHealth(4);
 					meter.Value = meter.MaxValue;
 					break;
 				}
