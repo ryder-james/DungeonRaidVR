@@ -2,62 +2,85 @@
 using UnityEngine.InputSystem;
 
 using DungeonRaid.Characters.Heroes;
+using DungeonRaid.UI;
 
-[RequireComponent(typeof(BodyMover))]
-public class HeroController : MonoBehaviour {
-	[SerializeField] private Hero hero = null;
+namespace DungeonRaid.Input {
+	[RequireComponent(typeof(BodyMover))]
+	public class HeroController : MonoBehaviour {
+		[SerializeField] private Hero hero = null;
 
-	private Vector2 lookInput;
-	private Vector3 movementInput;
+		private Vector2 lookInput;
+		private Vector3 movementInput;
 
-	public BodyMover Mover { get; private set; }
-	public Vector3 Direction { get; private set; }
+		public BodyMover Mover { get; private set; }
+		public Vector3 Direction { get; private set; }
+		public HeroHUD HUD { get; set; }
 
-	private void Start() {
-		Mover = GetComponent<BodyMover>();
-		Direction = transform.forward;
-	}
+		private bool usingMouse = false;
+		private Canvas canvas;
 
-	private void Update() {
-		Aim(lookInput);
-
-		Vector3 move = new Vector3(movementInput.x, 0, movementInput.y);
-
-		Mover.MoveToward(move, hero.Speed);
-		if (move.magnitude != 0) {
-			Direction = move.normalized;
-		} else {
+		private void Start() {
+			Mover = GetComponent<BodyMover>();
 			Direction = transform.forward;
+			canvas = FindObjectOfType<Canvas>();
 		}
-	}
 
-	public void OnMove(InputValue value) {
-		Debug.Log("on move");
-		movementInput = value.Get<Vector2>();
-	}
+		private void Update() {
+			Aim(lookInput);
 
-	public void OnLook(InputValue value) {
-		lookInput = value.Get<Vector2>();
-	}
+			Vector3 move = new Vector3(movementInput.x, 0, movementInput.y);
 
-	public void OnAttack(InputValue _) {
-		Debug.Log("start/end attacking");
-		hero.IsAttacking = !hero.IsAttacking;
-	}
+			Mover.MoveToward(move, hero.Speed);
+			if (move.magnitude != 0) {
+				Direction = move.normalized;
+			} else {
+				Direction = transform.forward;
+			}
+		}
 
-	public void OnAbilityOne(InputValue _) {
-		hero.Cast(0);
-	}
+		public void OnMove(InputValue value) {
+			movementInput = value.Get<Vector2>();
+		}
 
-	public void OnAbilityTwo(InputValue _) {
-		hero.Cast(1);
-	}
+		public void OnAim(InputValue value) {
+			lookInput = value.Get<Vector2>();
+		}
 
-	public void OnAbilityThree(InputValue _) {
-		hero.Cast(2);
-	}
+		public void OnAimExact(InputValue value) {
+			usingMouse = true;
+			lookInput = value.Get<Vector2>();
+		}
 
-	private void Aim(Vector2 direction) {
-		// TODO
+		public void OnAttack(InputValue _) {
+			hero.IsAttacking = !hero.IsAttacking;
+		}
+
+		public void OnAbilityOne(InputValue _) {
+			Cast(0);
+		}
+
+		public void OnAbilityTwo(InputValue _) {
+			Cast(1);
+		}
+
+		public void OnAbilityThree(InputValue _) {
+			Cast(2);
+		}
+
+		private void Cast(int index) {
+			if (hero.Cast(index)) {
+				HUD.CastAbility(index);
+			}
+		}
+
+		private void Aim(Vector2 direction) {
+			if (HUD != null) {
+				if (usingMouse) {
+					//HUD.SetReticlePosition(Camera.main.ScreenToViewportPoint(direction));
+				} else {
+					HUD.MoveReticle(direction);
+				}
+			}
+		}
 	}
 }
