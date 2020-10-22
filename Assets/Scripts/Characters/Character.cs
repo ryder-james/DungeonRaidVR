@@ -7,6 +7,7 @@ using DungeonRaid.Abilities;
 
 namespace DungeonRaid.Characters {
 	public abstract class Character : MonoBehaviour {
+		[SerializeField] private Transform nozzle = null;
 		[SerializeField] protected GameObject modelDataPrefab = null;
 		[Space]
 		[SerializeField] protected float hpMod = 1;
@@ -14,6 +15,7 @@ namespace DungeonRaid.Characters {
 		[SerializeField] protected AmmoPool[] ammoPools = null;
 
 		public MeterComponent[] Meters { get => meters; private set => meters = value; }
+		public Vector3 Nozzle { get => nozzle.position; set => nozzle.position = value; }
 		public bool Initialized { get; protected set; }
 
 		protected virtual void Start() {

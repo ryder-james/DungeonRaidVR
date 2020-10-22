@@ -38,6 +38,7 @@ namespace DungeonRaid.UI {
 
 		public void SetHero(Hero hero) {
 			Hero = hero;
+			Hero.Color = color;
 			Hero.GetComponent<HeroController>().HUD = this;
 			reticle.gameObject.SetActive(true);
 

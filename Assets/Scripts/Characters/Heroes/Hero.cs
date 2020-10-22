@@ -17,8 +17,9 @@ namespace DungeonRaid.Characters.Heroes {
 
 		public HeroController Controller { get; private set; }
 		public Character TargetCharacter { get; set; }
-		public Vector3? TargetPoint { get; set; }
+		public Vector3 TargetPoint { get; set; }
 		public Ability[] Abilities { get => abilities; set => abilities = value; }
+		public Color Color { get; set; }
 
 		public float Speed { get => speed; set => speed = Mathf.Max(value, 0); }
 		public float AttackSpeed { 
@@ -65,23 +66,26 @@ namespace DungeonRaid.Characters.Heroes {
 			}
 		}
 
+		private void OnDrawGizmosSelected() {
+			Gizmos.color = Color;
+			Gizmos.DrawSphere(TargetPoint, 1);
+		}
+
 		public bool CheckForTarget(Camera cam, Vector3 reticlePosition) {
 			Vector3 dir = reticlePosition - cam.transform.position;
 			dir.Normalize();
 			Ray ray = new Ray(cam.transform.position, dir);
 			if (Physics.Raycast(ray, out RaycastHit hit, 300, targetableLayers)) {
 				Character target = hit.collider.GetComponentInParent<Character>();
+				TargetPoint = hit.point;
 				if (target != null) {
 					TargetCharacter = target;
-					TargetPoint = null;
 				} else {
 					TargetCharacter = null;
-					TargetPoint = hit.point;
 				}
 				return true;
 			} else {
 				TargetCharacter = null;
-				TargetPoint = null;
 				return false;
 			}
 		}
