@@ -44,6 +44,36 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 4
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!1 &8023564229564856746
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5411998999097397152}
+  m_Layer: 10
+  m_Name: Nozzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5411998999097397152
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8023564229564856746}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.91, z: 2.59}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8639554464805647235}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8639554463600203991
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,6 +271,7 @@ Transform:
   m_Children:
   - {fileID: 8639554463925906136}
   - {fileID: 1351499222379493530}
+  - {fileID: 5411998999097397152}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -256,6 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd91dbd019f31e41927d62a8a4adc5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nozzle: {fileID: 5411998999097397152}
   modelDataPrefab: {fileID: 0}
   hpMod: 1.2
   meters:
@@ -268,6 +300,7 @@ MonoBehaviour:
   abilities:
   - {fileID: 11400000, guid: b41abdd681aa41a42a8bc46786ad945d, type: 2}
   - {fileID: 11400000, guid: 5aee0ab62c1c9d74fb095d129eedd21d, type: 2}
+  - {fileID: 11400000, guid: a7c3047ae343d4d41941de8e3d60172b, type: 2}
   targetableLayers:
     serializedVersion: 2
     m_Bits: 2048

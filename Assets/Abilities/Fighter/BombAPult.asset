@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1820891a09a12a4d8df7bd080961f8b, type: 3}
+  m_Name: BombAPult
+  m_EditorClassIdentifier: 
+  costs:
+  - type: 1
+    meterName: Energy
+    ammoName: 
+    amount: 1
+  effects:
+  - {fileID: 11400000, guid: 6a104cadfd001a84c96e287be9a4165f, type: 2}
+  durationType: 0
+  duration: 0
+  maxChannelTime: 0
+  cooldown: 1
+  icon: {fileID: 21300000, guid: 318431337db73d346916c37be0e77565, type: 3}
+  archHeight: 0.5
+  maxSpeed: 50
+  projectilePrefab: {fileID: 5478810904490622146, guid: a0ce4b5d8b7a1954c95a31599bf60bc0,
+    type: 3}
