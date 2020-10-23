@@ -11,6 +11,12 @@ namespace DungeonRaid.Abilities.Effects.Improveables {
 		[SerializeField, Min(0.01f)] private float rangeImprovement = 1;
 		[SerializeField] private GameObject projectilePrefab = null;
 
+		private float currentRange;
+
+		public override void Reset() {
+			currentRange = range;
+		}
+
 		public override void Apply(Hero caster, Character target, Vector3 point) {
 			Vector3 start = caster.Nozzle;
 			Vector3 dir = point - start;
@@ -18,7 +24,7 @@ namespace DungeonRaid.Abilities.Effects.Improveables {
 			float height = dir.y;
 			dir.y = 0;
 
-			dir = Vector3.ClampMagnitude(dir, range);
+			dir = Vector3.ClampMagnitude(dir, currentRange);
 
 			float distance = dir.magnitude;
 			dir.y = distance;
@@ -30,21 +36,26 @@ namespace DungeonRaid.Abilities.Effects.Improveables {
 			Projectile proj = projObj.GetComponent<Projectile>();
 			proj.GetComponent<Rigidbody>().AddForce(velocity * dir.normalized, ForceMode.VelocityChange);
 			proj.Owner = caster;
+
+			currentRange = range;
 		}
 
 		public override void Improve() {
 			switch (stackType) {
 			case StackType.Add:
-				range += rangeImprovement;
+				currentRange += rangeImprovement;
 				break;
 			case StackType.Subtract:
-				range -= rangeImprovement;
+				currentRange -= rangeImprovement;
 				break;
 			case StackType.Multiply:
-				range *= rangeImprovement;
+				currentRange *= rangeImprovement;
 				break;
 			case StackType.Divide:
-				range /= rangeImprovement;
+				currentRange /= rangeImprovement;
+				break;
+			case StackType.Set:
+				currentRange = rangeImprovement;
 				break;
 			default:
 				break;

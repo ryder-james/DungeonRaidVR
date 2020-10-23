@@ -70,11 +70,6 @@ namespace DungeonRaid.Characters.Heroes {
 			}
 		}
 
-		private void OnDrawGizmosSelected() {
-			Gizmos.color = Color;
-			Gizmos.DrawSphere(TargetPoint, 1);
-		}
-
 		public bool CheckForTarget(Camera cam, Vector3 reticlePosition) {
 			Vector3 dir = reticlePosition - cam.transform.position;
 			dir.Normalize();
@@ -94,12 +89,17 @@ namespace DungeonRaid.Characters.Heroes {
 			}
 		}
 
-		public bool Cast(int index) {
+		public bool BeginCast(int index) {
 			if (index >= 0 && index < Abilities.Length) {
 				return Cast(Abilities[index]);
 			}
 
 			return false;
+		}
+
+		public bool EndCast(int index) {
+			Abilities[index].IsChanneling = false;
+			return Abilities[index].DurationType == DurationType.Channeled;
 		}
 
 		public bool Cast(Ability ability) {
@@ -108,7 +108,14 @@ namespace DungeonRaid.Characters.Heroes {
 			}
 
 			StartCoroutine(nameof(RunCooldown), ability);
-			return ability.Cast();
+			ability.IsChanneling = true;
+			bool success = ability.Cast();
+			
+			if (ability.DurationType != DurationType.Channeled) {
+				return success;
+			} else {
+				return false;
+			}
 		}
 
 		protected override float CalculateHealth(int heroCount) {
