@@ -90,13 +90,9 @@ namespace DungeonRaid.Input {
 
 		private void Cast(int index) {
 			if (channeling[index]) {
-				if (hero.BeginCast(index)) {
-					HUD.ShowCooldown(index);
-				}
+				hero.BeginCast(index);
 			} else {
-				if (hero.EndCast(index)) {
-					HUD.ShowCooldown(index);
-				}
+				hero.EndCast(index);
 			}
 		}
 

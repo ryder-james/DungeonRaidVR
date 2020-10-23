@@ -4,7 +4,6 @@ using Sirenix.OdinInspector;
 
 using DungeonRaid.Characters.Heroes;
 using DungeonRaid.Abilities.Effects;
-using DungeonRaid.Abilities.Effects.Improveables;
 
 namespace DungeonRaid.Abilities {
 	public abstract class Ability : ScriptableObject {
@@ -36,7 +35,7 @@ namespace DungeonRaid.Abilities {
 		[SerializeField] private EffectSet endEffectSet;
 
 		[HideIf("DurationType", DurationType.Instant)]
-		[SerializeField] private ImproveableEffect[] improveableEffects = null;
+		[SerializeField] private ChannelableEffect[] channelableEffects = null;
 
 		[Space]
 		[SerializeField, Min(0)] private float cooldown = 1;
@@ -76,8 +75,8 @@ namespace DungeonRaid.Abilities {
 			OnAbilityBeginCast?.Invoke();
 			bool success = TryCast(ref effectSet);
 
-			foreach (ImproveableEffect improveable in improveableEffects) {
-				improveable.Reset();
+			foreach (ChannelableEffect effect in channelableEffects) {
+				effect.BeginChannel();
 			}
 
 			if (durationType == DurationType.Instant) {
@@ -96,8 +95,8 @@ namespace DungeonRaid.Abilities {
 
 			if (sinceLastUpdate >= 1) {
 				OnAbilityUpdate?.Invoke();
-				foreach (ImproveableEffect improveable in improveableEffects) {
-					improveable.Improve();
+				foreach (ChannelableEffect effect in channelableEffects) {
+					effect.ChannelUpdate();
 				}
 				channels++;
 
@@ -127,7 +126,11 @@ namespace DungeonRaid.Abilities {
 
 			OnAbilityEndCast?.Invoke();
 
-			TargetCast(improveableEffects);
+			foreach (ChannelableEffect effect in channelableEffects) {
+				effect.EndChannel();
+			}
+
+			TargetCast(channelableEffects);
 
 			return TryCast(ref endEffectSet);
 		}
