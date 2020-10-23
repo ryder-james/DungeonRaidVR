@@ -11,6 +11,10 @@ namespace DungeonRaid.UI {
 
 		private int heroCount = 0;
 
+		private void Start() {
+			Cursor.visible = false;
+		}
+
 		public void OnPlayerJoined(PlayerInput obj) {
 			StartCoroutine(nameof(AddHero), obj.GetComponent<Hero>());
 		}

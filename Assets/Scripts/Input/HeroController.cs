@@ -21,8 +21,8 @@ namespace DungeonRaid.Input {
 
 		private void Start() {
 			Mover = GetComponent<BodyMover>();
-			Direction = transform.forward;
 			canvas = FindObjectOfType<Canvas>();
+			Direction = transform.forward;
 		}
 
 		private void Update() {
@@ -76,7 +76,7 @@ namespace DungeonRaid.Input {
 		private void Aim(Vector2 direction) {
 			if (HUD != null) {
 				if (usingMouse) {
-					//HUD.SetReticlePosition(Camera.main.ScreenToViewportPoint(direction));
+					HUD.SetReticlePosition(direction / canvas.scaleFactor);
 				} else {
 					HUD.MoveReticle(direction);
 				}

@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 
+using DungeonRaid.Characters;
 using DungeonRaid.Characters.Heroes;
 
-namespace DungeonRaid.Abilities {
-	[CreateAssetMenu(fileName = "Projectile", menuName = AbilityMenuPrefix + "Projectile")]
-	public class ProjectileAbility : Ability {
+namespace DungeonRaid.Abilities.Effects {
+	[CreateAssetMenu(fileName = "CreateProjectile", menuName = EffectMenuPrefix + "Create Projectile")]
+	public class CreateProjectileEffect : Effect {
 		[SerializeField] private GameObject projectilePrefab = null;
 
-		protected override bool TargetCast() {
-			Vector3 start = Owner.Nozzle;
-			Vector3 target = (Owner as Hero).TargetPoint;
+		public override void Apply(Character caster) {
+			Vector3 start = caster.Nozzle;
+			Vector3 target = (caster as Hero).TargetPoint;
 			Vector3 dir = target - start;
 
 			float height = dir.y;
@@ -21,12 +22,10 @@ namespace DungeonRaid.Abilities {
 
 			float velocity = Mathf.Sqrt(distance * Physics.gravity.magnitude);
 
-			GameObject projObj = Instantiate(projectilePrefab, Owner.Nozzle, Quaternion.identity);
+			GameObject projObj = Instantiate(projectilePrefab, caster.Nozzle, Quaternion.identity);
 			Projectile proj = projObj.GetComponent<Projectile>();
 			proj.GetComponent<Rigidbody>().AddForce(velocity * dir.normalized, ForceMode.VelocityChange);
-			proj.Owner = Owner;
-			proj.Effects = Effects;
-			return true;
+			proj.Owner = caster;
 		}
 	}
 }
