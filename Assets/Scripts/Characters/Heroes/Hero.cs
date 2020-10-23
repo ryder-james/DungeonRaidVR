@@ -43,6 +43,7 @@ namespace DungeonRaid.Characters.Heroes {
 			Controller = GetComponent<HeroController>();
 
 			for (int i = 0; i < abilities.Length; i++) {
+				Debug.Log(abilities[i]);
 				abilities[i] = Instantiate(abilities[i]);
 				abilities[i].Owner = this;
 			}

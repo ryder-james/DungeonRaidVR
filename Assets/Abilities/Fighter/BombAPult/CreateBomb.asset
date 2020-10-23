@@ -9,10 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ef194a8a02566546b0c6b403150c858, type: 3}
-  m_Name: MeterChange
+  m_Script: {fileID: 11500000, guid: be0d726e7cb96eb4f8da12eb03ff431f, type: 3}
+  m_Name: CreateBomb
   m_EditorClassIdentifier: 
   applyToCaster: 0
-  targetMeterName: Health
-  type: 0
-  amount: 10
+  range: 4
+  stackType: 0
+  rangeImprovement: 4
+  projectilePrefab: {fileID: 5478810904490622146, guid: a0ce4b5d8b7a1954c95a31599bf60bc0,
+    type: 3}
