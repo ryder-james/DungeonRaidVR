@@ -4,6 +4,7 @@ using Sirenix.OdinInspector;
 
 using DungeonRaid.Characters;
 using DungeonRaid.Abilities.Effects;
+using DungeonRaid.Abilities.Effects.Improveables;
 
 namespace DungeonRaid.Abilities {
 	public abstract class Ability : ScriptableObject {
@@ -31,6 +32,9 @@ namespace DungeonRaid.Abilities {
 
 		[HideIf("DurationType", DurationType.Instant)]
 		[SerializeField] private EffectSet endEffectSet;
+
+		[HideIf("DurationType", DurationType.Instant)]
+		[SerializeField] private ImproveableEffect[] improveableEffects = null;
 
 		[Space]
 		[SerializeField, Min(0)] private float cooldown = 1;
@@ -93,6 +97,10 @@ namespace DungeonRaid.Abilities {
 				return false;
 			}
 
+			foreach (ImproveableEffect improveable in improveableEffects) {
+				improveable.Improve();
+			}
+
 			return TryCast(ref updateEffectSet);
 		}
 
@@ -100,16 +108,19 @@ namespace DungeonRaid.Abilities {
 			isRunning = false;
 			totalRunTime = 0;
 			sinceLastUpdate = 0;
+
+			TargetCast(improveableEffects);
+
 			return TryCast(ref endEffectSet);
 		}
 
-		protected abstract bool TargetCast(ref Effect[] effects);
+		protected abstract bool TargetCast(Effect[] effects);
 
 		private bool TryCast(ref EffectSet set) {
 			bool canCast = CanCast(ref set.costs);
 
 			if (canCast) {
-				if (TargetCast(ref set.effects)) {
+				if (TargetCast(set.effects)) {
 					foreach (Cost cost in set.costs) {
 						Owner.PayCost(cost);
 					}

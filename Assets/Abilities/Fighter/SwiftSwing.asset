@@ -12,15 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36490d2ba2bcc1c4c9492cb7abe612de, type: 3}
   m_Name: SwiftSwing
   m_EditorClassIdentifier: 
-  costs:
-  - type: 1
-    meterName: Energy
-    ammoName: 
-    amount: 3
-  effects:
-  - {fileID: 11400000, guid: a74ae6d7afae532418e74eafbb035309, type: 2}
   durationType: 0
   duration: 0
   maxChannelTime: 0
+  effectSet:
+    costs:
+    - type: 0
+      meterName: Energy
+      ammoName: 
+      amount: 3
+    effects:
+    - {fileID: 11400000, guid: a74ae6d7afae532418e74eafbb035309, type: 2}
+  updateEffectSet:
+    costs: []
+    effects: []
+  endEffectSet:
+    costs: []
+    effects: []
   cooldown: 4
   icon: {fileID: 21300000, guid: fd756a0256ac14b45a3b920e70d4a99f, type: 3}

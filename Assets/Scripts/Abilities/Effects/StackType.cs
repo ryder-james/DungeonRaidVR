@@ -1,5 +1,5 @@
 ﻿namespace DungeonRaid.Abilities.Effects {
-	public enum StatChangeType {
+	public enum StackType {
 		Add,
 		Subtract,
 		Multiply,
