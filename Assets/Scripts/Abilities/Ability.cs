@@ -8,6 +8,8 @@ using DungeonRaid.Abilities.Effects.Improveables;
 
 namespace DungeonRaid.Abilities {
 	public abstract class Ability : ScriptableObject {
+		public delegate void AbilityNotification();
+
 		[System.Serializable]
 		public struct EffectSet {
 			public Cost[] costs;
@@ -19,10 +21,10 @@ namespace DungeonRaid.Abilities {
 		[SerializeField] private DurationType durationType = DurationType.Instant;
 
 		[ShowIf("DurationType", DurationType.Timed)]
-		[SerializeField] private float duration = 0;
+		[SerializeField, Min(1)] private float duration = 1;
 
 		[ShowIf("DurationType", DurationType.Channeled)]
-		[SerializeField] private float maxChannelTime = 0;
+		[SerializeField, Min(1)] private int maxChannelTime = 1;
 
 		[Space]
 		[SerializeField] private EffectSet effectSet;
@@ -42,6 +44,9 @@ namespace DungeonRaid.Abilities {
 
 		public Hero Owner { get; set; }
 		public Sprite Icon { get => icon; set => icon = value; }
+		public AbilityNotification OnAbilityBeginCast { get; set; }
+		public AbilityNotification OnAbilityUpdate { get; set; }
+		public AbilityNotification OnAbilityEndCast { get; set; }
 
 		public DurationType DurationType { get => durationType; set => durationType = value; }
 
@@ -49,11 +54,11 @@ namespace DungeonRaid.Abilities {
 		public bool IsChanneling { get; set; }
 
 		private bool isRunning = false;
-		private float totalRunTime = 0, sinceLastUpdate = 0;
+		private float totalRunTime, sinceLastUpdate;
+		private int channels = 0;
 
 		public void AddTime(float dt) {
 			if (isRunning) {
-				totalRunTime += dt;
 				sinceLastUpdate += dt;
 				AbilityUpdate();
 			}
@@ -68,49 +73,59 @@ namespace DungeonRaid.Abilities {
 		}
 
 		protected virtual bool Begin() {
+			OnAbilityBeginCast?.Invoke();
 			bool success = TryCast(ref effectSet);
+
+			foreach (ImproveableEffect improveable in improveableEffects) {
+				improveable.Reset();
+			}
 
 			if (durationType == DurationType.Instant) {
 				End();
-				return success;
-			} else {
+			} else if (success) {
 				isRunning = true;
-				totalRunTime = 0;
 			}
 
 			return success;
 		}
 
-		protected virtual bool AbilityUpdate() {
-			if (durationType == DurationType.Channeled) {
-				if (!IsChanneling || totalRunTime > maxChannelTime) {
-					return End();
-				}
-			} else if (durationType == DurationType.Timed) {
-				if (totalRunTime > duration) {
-					return End();
-				}
-			} else {
-				return false;
+		protected virtual bool AbilityUpdate() { 
+			if (durationType == DurationType.Instant) {
+				return End();
 			}
 
 			if (sinceLastUpdate >= 1) {
+				OnAbilityUpdate?.Invoke();
+				foreach (ImproveableEffect improveable in improveableEffects) {
+					improveable.Improve();
+				}
+				channels++;
+
 				sinceLastUpdate = 0;
+
+				return TryCast(ref updateEffectSet);
 			} else {
+				if (durationType == DurationType.Channeled) {
+					if (!IsChanneling || channels >= maxChannelTime) {
+						return End();
+					}
+				} else if (durationType == DurationType.Timed) {
+					if (totalRunTime >= duration) {
+						return End();
+					}
+				}
+
 				return false;
 			}
-
-			foreach (ImproveableEffect improveable in improveableEffects) {
-				improveable.Improve();
-			}
-
-			return TryCast(ref updateEffectSet);
 		}
 
 		protected virtual bool End() {
 			isRunning = false;
 			totalRunTime = 0;
 			sinceLastUpdate = 0;
+			channels = 0;
+
+			OnAbilityEndCast?.Invoke();
 
 			TargetCast(improveableEffects);
 

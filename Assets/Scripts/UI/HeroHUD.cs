@@ -59,7 +59,7 @@ namespace DungeonRaid.UI {
 			LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
 		}
 
-		public void CastAbility(int abilityIndex) {
+		public void ShowCooldown(int abilityIndex) {
 			abilityHUDs[abilityIndex].StartCooldown();
 		}
 

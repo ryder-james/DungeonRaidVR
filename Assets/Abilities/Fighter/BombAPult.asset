@@ -23,7 +23,11 @@ MonoBehaviour:
       amount: 3
     effects: []
   updateEffectSet:
-    costs: []
+    costs:
+    - type: 0
+      meterName: Energy
+      ammoName: 
+      amount: 1
     effects: []
   endEffectSet:
     costs: []
@@ -32,7 +36,3 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 272029920e45622469a4360354a9e81b, type: 2}
   cooldown: 3
   icon: {fileID: 21300000, guid: 318431337db73d346916c37be0e77565, type: 3}
-  hitSelf: 0
-  targetLayers:
-    serializedVersion: 2
-    m_Bits: 1

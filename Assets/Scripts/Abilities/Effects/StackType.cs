@@ -3,6 +3,7 @@
 		Add,
 		Subtract,
 		Multiply,
-		Divide
+		Divide,
+		Set
 	}
 }
