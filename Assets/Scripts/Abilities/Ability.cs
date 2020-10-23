@@ -55,10 +55,7 @@ namespace DungeonRaid.Abilities {
 			if (isRunning) {
 				totalRunTime += dt;
 				sinceLastUpdate += dt;
-				if (sinceLastUpdate >= 1) {
-					sinceLastUpdate = 0;
-					AbilityUpdate();
-				}
+				AbilityUpdate();
 			}
 		}
 
@@ -93,6 +90,12 @@ namespace DungeonRaid.Abilities {
 				if (totalRunTime > duration) {
 					return End();
 				}
+			} else {
+				return false;
+			}
+
+			if (sinceLastUpdate >= 1) {
+				sinceLastUpdate = 0;
 			} else {
 				return false;
 			}
