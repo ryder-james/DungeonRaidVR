@@ -17,8 +17,9 @@ namespace DungeonRaid.Characters.Heroes {
 
 		public HeroController Controller { get; private set; }
 		public Character TargetCharacter { get; set; }
-		public Vector3? TargetPoint { get; set; }
+		public Vector3 TargetPoint { get; set; }
 		public Ability[] Abilities { get => abilities; set => abilities = value; }
+		public Color Color { get; set; }
 
 		public float Speed { get => speed; set => speed = Mathf.Max(value, 0); }
 		public float AttackSpeed { 
@@ -59,6 +60,10 @@ namespace DungeonRaid.Characters.Heroes {
 		protected override void Update() {
 			base.Update();
 
+			foreach (Ability ability in abilities) {
+				ability.AddTime(Time.deltaTime);
+			}
+
 			attackDelay -= Time.deltaTime;
 			if (IsAttacking) {
 				Attack();
@@ -71,27 +76,30 @@ namespace DungeonRaid.Characters.Heroes {
 			Ray ray = new Ray(cam.transform.position, dir);
 			if (Physics.Raycast(ray, out RaycastHit hit, 300, targetableLayers)) {
 				Character target = hit.collider.GetComponentInParent<Character>();
+				TargetPoint = hit.point;
 				if (target != null) {
 					TargetCharacter = target;
-					TargetPoint = null;
 				} else {
 					TargetCharacter = null;
-					TargetPoint = hit.point;
 				}
 				return true;
 			} else {
 				TargetCharacter = null;
-				TargetPoint = null;
 				return false;
 			}
 		}
 
-		public bool Cast(int index) {
+		public bool BeginCast(int index) {
 			if (index >= 0 && index < Abilities.Length) {
 				return Cast(Abilities[index]);
 			}
 
 			return false;
+		}
+
+		public bool EndCast(int index) {
+			Abilities[index].IsChanneling = false;
+			return Abilities[index].DurationType == DurationType.Channeled;
 		}
 
 		public bool Cast(Ability ability) {
@@ -100,7 +108,14 @@ namespace DungeonRaid.Characters.Heroes {
 			}
 
 			StartCoroutine(nameof(RunCooldown), ability);
-			return ability.Cast();
+			ability.IsChanneling = true;
+			bool success = ability.Cast();
+			
+			if (ability.DurationType != DurationType.Channeled) {
+				return success;
+			} else {
+				return false;
+			}
 		}
 
 		protected override float CalculateHealth(int heroCount) {

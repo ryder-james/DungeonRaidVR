@@ -38,6 +38,7 @@ namespace DungeonRaid.UI {
 
 		public void SetHero(Hero hero) {
 			Hero = hero;
+			Hero.Color = color;
 			Hero.GetComponent<HeroController>().HUD = this;
 			reticle.gameObject.SetActive(true);
 
@@ -58,7 +59,7 @@ namespace DungeonRaid.UI {
 			LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
 		}
 
-		public void CastAbility(int abilityIndex) {
+		public void ShowCooldown(int abilityIndex) {
 			abilityHUDs[abilityIndex].StartCooldown();
 		}
 
