@@ -11,10 +11,9 @@ namespace DungeonRaid.Abilities.Effects.Improveables {
 		[SerializeField, Min(0.01f)] private float rangeImprovement = 1;
 		[SerializeField] private GameObject projectilePrefab = null;
 
-		public override void Apply(Character caster) {
+		public override void Apply(Hero caster, Character target, Vector3 point) {
 			Vector3 start = caster.Nozzle;
-			Vector3 target = (caster as Hero).TargetPoint;
-			Vector3 dir = target - start;
+			Vector3 dir = point - start;
 
 			float height = dir.y;
 			dir.y = 0;

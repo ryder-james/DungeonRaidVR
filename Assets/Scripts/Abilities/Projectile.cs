@@ -2,6 +2,7 @@
 
 using DungeonRaid.Abilities.Effects;
 using DungeonRaid.Characters;
+using DungeonRaid.Characters.Heroes;
 
 namespace DungeonRaid.Abilities {
 	[RequireComponent(typeof(Collider), typeof(Rigidbody))]
@@ -16,11 +17,11 @@ namespace DungeonRaid.Abilities {
 		[SerializeField] private ProjectileTargetType targetType = ProjectileTargetType.Boss;
 
 		public Effect[] Effects { get; set; }
-		public Character Owner { get; set; }
+		public Hero Owner { get; set; }
 
 		private void ApplyAll(Character target) {
 			foreach (Effect e in Effects) {
-				e.Apply(target);
+				e.Apply(Owner, target, Owner.TargetPoint);
 			}
 		}
 
