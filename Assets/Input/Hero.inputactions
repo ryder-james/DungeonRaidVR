@@ -35,7 +35,7 @@
                     "id": "c09b68e5-23ac-44e2-8d5e-6e8fbeeaa6f2",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Press(behavior=2)"
                 },
                 {
                     "name": "AbilityTwo",
@@ -43,7 +43,7 @@
                     "id": "ae5c0346-52dc-4762-b897-9f2d7f83b872",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Press(behavior=2)"
                 },
                 {
                     "name": "AbilityThree",
@@ -51,7 +51,7 @@
                     "id": "1a0a8aad-29bf-49e4-b0b5-1b153e92f443",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Press(behavior=2)"
                 },
                 {
                     "name": "Join",

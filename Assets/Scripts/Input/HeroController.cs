@@ -19,10 +19,16 @@ namespace DungeonRaid.Input {
 		private bool usingMouse = false;
 		private Canvas canvas;
 
+		private readonly bool[] channeling = new bool[3];
+
 		private void Start() {
 			Mover = GetComponent<BodyMover>();
-			Direction = transform.forward;
 			canvas = FindObjectOfType<Canvas>();
+			Direction = transform.forward;
+
+			channeling[0] = false;
+			channeling[1] = false;
+			channeling[2] = false;
 		}
 
 		private void Update() {
@@ -56,27 +62,44 @@ namespace DungeonRaid.Input {
 		}
 
 		public void OnAbilityOne(InputValue _) {
+			if (channeling[1] || channeling[2]) {
+				return;
+			}
+
+			channeling[0] = !channeling[0];
 			Cast(0);
 		}
 
 		public void OnAbilityTwo(InputValue _) {
+			if (channeling[0] || channeling[2]) {
+				return;
+			}
+
+			channeling[1] = !channeling[1];
 			Cast(1);
 		}
 
 		public void OnAbilityThree(InputValue _) {
+			if (channeling[0] || channeling[1]) {
+				return;
+			}
+
+			channeling[2] = !channeling[2];
 			Cast(2);
 		}
 
 		private void Cast(int index) {
-			if (hero.Cast(index)) {
-				HUD.CastAbility(index);
+			if (channeling[index]) {
+				hero.BeginCast(index);
+			} else {
+				hero.EndCast(index);
 			}
 		}
 
 		private void Aim(Vector2 direction) {
 			if (HUD != null) {
 				if (usingMouse) {
-					//HUD.SetReticlePosition(Camera.main.ScreenToViewportPoint(direction));
+					HUD.SetReticlePosition(direction / canvas.scaleFactor);
 				} else {
 					HUD.MoveReticle(direction);
 				}
