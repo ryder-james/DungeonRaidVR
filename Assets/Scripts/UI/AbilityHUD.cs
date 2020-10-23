@@ -11,10 +11,25 @@ namespace DeungonRaid.UI {
 		[SerializeField] private Slider cooldownSlider = null;
 		[SerializeField] private TMP_Text cooldownText = null;
 		[SerializeField] private Image tooExpensiveWarning = null;
+		[SerializeField] private Image channelingWarning = null;
 
-		public Ability Ability { get; set; }
+		private Ability ability;
+
+		public Ability Ability { 
+			get => ability;
+			set {
+				ability = value;
+				ability.OnAbilityBeginCast += StartCasting;
+				ability.OnAbilityEndCast += StartCooldown;
+			}
+		}
+
+		public void StartCasting() {
+			channelingWarning.enabled = true;
+		}
 
 		public void StartCooldown() {
+			channelingWarning.enabled = false;
 			StartCoroutine(nameof(RunCooldownAsync), Ability.Cooldown);
 		}
 

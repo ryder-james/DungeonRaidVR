@@ -3,19 +3,15 @@
 using DungeonRaid.Characters;
 using DungeonRaid.Characters.Heroes;
 
-namespace DungeonRaid.Abilities.Effects.Improveables {
-	[CreateAssetMenu(fileName = "CreateProjectile", menuName = ImproveableEffectMenuPrefix + "Create Projectile")]
-	public class CreateProjectileEffect : ImproveableEffect {
+namespace DungeonRaid.Abilities.Effects {
+	[CreateAssetMenu(fileName = "CreateProjectile", menuName = EffectMenuPrefix + "Create Projectile")]
+	public class CreateProjectileEffect : ChannelableEffect {
 		[SerializeField] private float range = 4;
 		[SerializeField] private StackType stackType = StackType.Add;
 		[SerializeField, Min(0.01f)] private float rangeImprovement = 1;
 		[SerializeField] private GameObject projectilePrefab = null;
 
 		private float currentRange;
-
-		public override void Reset() {
-			currentRange = range;
-		}
 
 		public override void Apply(Hero caster, Character target, Vector3 point) {
 			Vector3 start = caster.Nozzle;
@@ -40,7 +36,11 @@ namespace DungeonRaid.Abilities.Effects.Improveables {
 			currentRange = range;
 		}
 
-		public override void Improve() {
+		protected override void Begin() {
+			currentRange = range;
+		}
+
+		protected override void Channel() {
 			switch (stackType) {
 			case StackType.Add:
 				currentRange += rangeImprovement;
@@ -61,5 +61,7 @@ namespace DungeonRaid.Abilities.Effects.Improveables {
 				break;
 			}
 		}
+
+		protected override void End() {}
 	}
 }
