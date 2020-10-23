@@ -60,6 +60,10 @@ namespace DungeonRaid.Characters.Heroes {
 		protected override void Update() {
 			base.Update();
 
+			foreach (Ability ability in abilities) {
+				ability.AddTime(Time.deltaTime);
+			}
+
 			attackDelay -= Time.deltaTime;
 			if (IsAttacking) {
 				Attack();
