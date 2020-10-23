@@ -8,7 +8,7 @@ namespace DungeonRaid.Abilities.Effects.StatusEffects {
 		[SerializeField] private Effect effect = null;
 
 		protected override void StartEffect(Character target) {
-			InvokeRepeating(target, t => effect.Apply(t));
+			InvokeRepeating(target, t => effect.Apply(Caster, t, Caster.TargetPoint));
 		}
 
 		protected override void StopEffect(Character target) { }

@@ -2,6 +2,7 @@
 using UnityEngine;
 
 using DungeonRaid.Characters;
+using DungeonRaid.Characters.Heroes;
 
 namespace DungeonRaid.Abilities.Effects.StatusEffects {
 	public abstract class StatusEffect : Effect {
@@ -11,7 +12,13 @@ namespace DungeonRaid.Abilities.Effects.StatusEffects {
 
 		public bool IsRunning { get; set; }
 
-		public override sealed void Apply(Character target) {
+		protected Hero Caster { get; set; }
+		protected Vector3 Point { get; set; }
+
+		public override sealed void Apply(Hero caster, Character target, Vector3 point) {
+			Caster = caster;
+			Point = point;
+
 			StatusEffectComponent effect = target.gameObject.AddComponent<StatusEffectComponent>();
 			effect.Begin(this, target, duration);
 		}

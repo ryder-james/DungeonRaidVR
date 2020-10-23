@@ -2,7 +2,7 @@
 
 using Sirenix.OdinInspector;
 
-using DungeonRaid.Characters;
+using DungeonRaid.Characters.Heroes;
 using DungeonRaid.Abilities.Effects;
 using DungeonRaid.Abilities.Effects.Improveables;
 
@@ -40,7 +40,7 @@ namespace DungeonRaid.Abilities {
 		[SerializeField, Min(0)] private float cooldown = 1;
 		[SerializeField] private Sprite icon = null;
 
-		public Character Owner { get; set; }
+		public Hero Owner { get; set; }
 		public Sprite Icon { get => icon; set => icon = value; }
 
 		public DurationType DurationType { get => durationType; set => durationType = value; }

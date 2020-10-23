@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 using DungeonRaid.Characters;
+using DungeonRaid.Characters.Heroes;
 
 namespace DungeonRaid.Abilities.Effects {
 	public abstract class Effect : ScriptableObject {
@@ -10,6 +11,6 @@ namespace DungeonRaid.Abilities.Effects {
 
 		public bool ApplyToCaster { get => applyToCaster; set => applyToCaster = value; }
 
-		public abstract void Apply(Character target);
+		public abstract void Apply(Hero caster, Character target, Vector3 point);
 	}
 }
