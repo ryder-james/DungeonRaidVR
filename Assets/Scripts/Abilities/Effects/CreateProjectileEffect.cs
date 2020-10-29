@@ -13,7 +13,7 @@ namespace DungeonRaid.Abilities.Effects {
 
 		private float currentRange;
 
-		public override void Apply(Hero caster, Character target, Vector3 point) {
+		public override void Apply(Character caster, Character target, Vector3 point) {
 			Vector3 start = caster.Nozzle;
 			Vector3 dir = point - start;
 

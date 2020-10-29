@@ -11,6 +11,6 @@ namespace DungeonRaid.Abilities.Effects {
 
 		public bool ApplyToCaster { get => applyToCaster; set => applyToCaster = value; }
 
-		public abstract void Apply(Hero caster, Character target, Vector3 point);
+		public abstract void Apply(Character caster, Character target, Vector3 point);
 	}
 }

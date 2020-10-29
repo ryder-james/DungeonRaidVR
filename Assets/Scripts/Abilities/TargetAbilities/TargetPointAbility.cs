@@ -8,9 +8,9 @@ namespace DungeonRaid.Abilities {
 		protected override bool TargetCast(Effect[] effects) {
 			foreach (Effect effect in effects) {
 				if (effect.ApplyToCaster) {
-					effect.Apply(Owner, Owner, Owner.TargetPoint);
+					effect.Apply(Owner, Owner, TargetPoint);
 				} else {
-					effect.Apply(Owner, null, Owner.TargetPoint);
+					effect.Apply(Owner, null, TargetPoint);
 				}
 			}
 

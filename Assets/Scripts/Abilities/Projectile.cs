@@ -19,11 +19,15 @@ namespace DungeonRaid.Abilities {
 		[SerializeField] private ProjectileTargetType targetType = ProjectileTargetType.Boss;
 		[SerializeField] private Effect[] onHitEffects = null;
 
-		public Hero Owner { get; set; }
+		public Character Owner { get; set; }
 
 		private void ApplyAll(Character target) {
 			foreach (Effect e in onHitEffects) {
-				e.Apply(Owner, target, Owner.TargetPoint);
+				if (Owner is Hero) {
+					e.Apply(Owner, target, (Owner as Hero).TargetPoint);
+				} else {
+					e.Apply(Owner, target, Vector3.zero);
+				}
 			}
 
 			Destroy(gameObject);

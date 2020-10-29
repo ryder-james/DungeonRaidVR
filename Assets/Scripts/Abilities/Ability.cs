@@ -4,6 +4,7 @@ using Sirenix.OdinInspector;
 
 using DungeonRaid.Characters.Heroes;
 using DungeonRaid.Abilities.Effects;
+using DungeonRaid.Characters;
 
 namespace DungeonRaid.Abilities {
 	public abstract class Ability : ScriptableObject {
@@ -41,11 +42,13 @@ namespace DungeonRaid.Abilities {
 		[SerializeField, Min(0)] private float cooldown = 1;
 		[SerializeField] private Sprite icon = null;
 
-		public Hero Owner { get; set; }
 		public Sprite Icon { get => icon; set => icon = value; }
+		public Character Owner { get; set; }
 		public AbilityNotification OnAbilityBeginCast { get; set; }
 		public AbilityNotification OnAbilityUpdate { get; set; }
 		public AbilityNotification OnAbilityEndCast { get; set; }
+
+		protected Vector3 TargetPoint => Owner is Hero ? (Owner as Hero).TargetPoint : Vector3.zero;
 
 		public DurationType DurationType { get => durationType; set => durationType = value; }
 
