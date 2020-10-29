@@ -70,6 +70,11 @@ namespace DungeonRaid.Characters.Heroes {
 			}
 		}
 
+		private void OnDrawGizmosSelected() {
+			Gizmos.color = Color;
+			Gizmos.DrawSphere(TargetPoint, 1);
+		}
+
 		public bool CheckForTarget(Camera cam, Vector3 reticlePosition) {
 			Vector3 dir = reticlePosition - cam.transform.position;
 			dir.Normalize();
