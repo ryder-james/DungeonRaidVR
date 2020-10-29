@@ -125,3 +125,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useTriggerCollision: 0
   targetType: 2
+  onHitEffects:
+  - {fileID: 11400000, guid: 726f46f2973fc4148b4eabe6eeac5398, type: 2}

@@ -7,6 +7,8 @@ TagManager:
   - Hero
   - Boss
   - Ground
+  - projectile
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -20,8 +22,8 @@ TagManager:
   - Boss
   - Hero
   - Targetable
-  - 
-  - 
+  - PostProcessing
+  - IgnorePlayer
   - 
   - 
   - 
