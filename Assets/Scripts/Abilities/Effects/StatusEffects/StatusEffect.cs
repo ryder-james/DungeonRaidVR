@@ -12,10 +12,10 @@ namespace DungeonRaid.Abilities.Effects.StatusEffects {
 
 		public bool IsRunning { get; set; }
 
-		protected Hero Caster { get; set; }
+		protected Character Caster { get; set; }
 		protected Vector3 Point { get; set; }
 
-		public override sealed void Apply(Hero caster, Character target, Vector3 point) {
+		public override sealed void Apply(Character caster, Character target, Vector3 point) {
 			Caster = caster;
 			Point = point;
 

@@ -7,7 +7,7 @@ namespace DungeonRaid.Abilities {
 	public class TargetSelfAbility : Ability {
 		protected override bool TargetCast(Effect[] effects) {
 			foreach (Effect effect in effects) {
-				effect.Apply(Owner, Owner, Owner.TargetPoint);
+				effect.Apply(Owner, Owner, TargetPoint);
 			}
 
 			return true;

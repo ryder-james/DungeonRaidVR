@@ -15,10 +15,7 @@ namespace DungeonRaid.Abilities.Effects {
 		[SerializeField] private MeterChangeType type = MeterChangeType.Damage;
 		[SerializeField] private float amount = 0;
 
-		public override void Apply(Hero caster, Character target, Vector3 point) {
-			Debug.Log(target);
-			Debug.Log(amount);
-			Debug.Log(target.FindMeter(targetMeterName));
+		public override void Apply(Character caster, Character target, Vector3 point) {
 			target.UpdateMeter(targetMeterName, amount * (type == MeterChangeType.Damage ? -1 : 1));
 		}
 	}

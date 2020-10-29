@@ -8,7 +8,7 @@ namespace DungeonRaid.Abilities.Effects {
 	public class JumpEffect : Effect {
 		[SerializeField] private float height = 1;
 
-		public override void Apply(Hero caster, Character target, Vector3 point) {
+		public override void Apply(Character caster, Character target, Vector3 point) {
 			Debug.Log($"jumped {height}");
 		}
 	}
