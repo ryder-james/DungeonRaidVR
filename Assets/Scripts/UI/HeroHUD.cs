@@ -90,7 +90,7 @@ namespace DungeonRaid.UI {
 				return;
 			}
 
-			Vector2 screenPos = cam.WorldToScreenPoint(target.transform.position) / canvas.scaleFactor;
+			Vector2 screenPos = cam.WorldToScreenPoint(target.Center) / canvas.scaleFactor;
 			highlight.anchoredPosition = screenPos + Vector2.up * 30;
 
 			if (target != prevTarget) {
@@ -107,7 +107,7 @@ namespace DungeonRaid.UI {
 			Rect screenRect = rend.bounds.ToScreenSpace(cam, canvas);
 
 			float width = Mathf.Max(75, screenRect.width + 30);
-			float height = Mathf.Max(75, screenRect.height);
+			float height = Mathf.Max(75, screenRect.height + 10);
 
 			highlight.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
 			highlight.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);

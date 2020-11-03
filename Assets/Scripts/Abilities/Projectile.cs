@@ -3,6 +3,7 @@
 using DungeonRaid.Abilities.Effects;
 using DungeonRaid.Characters;
 using DungeonRaid.Characters.Heroes;
+using DungeonRaid.Characters.Bosses;
 
 namespace DungeonRaid.Abilities {
 	[RequireComponent(typeof(Collider), typeof(Rigidbody))]
@@ -10,25 +11,38 @@ namespace DungeonRaid.Abilities {
 		[System.Flags]
 		public enum ProjectileTargetType {
 			Hero = 1 << 0,
-			Boss = 1 << 1
+			Boss = 1 << 1,
+			Environment = 1 << 2
 		}
 
 		[SerializeField] private bool useTriggerCollision = true;
 		[SerializeField] private ProjectileTargetType targetType = ProjectileTargetType.Boss;
+		[SerializeField] private Effect[] onHitEffects = null;
 
-		public Effect[] Effects { get; set; }
-		public Hero Owner { get; set; }
+		public Character Owner { get; set; }
 
 		private void ApplyAll(Character target) {
-			foreach (Effect e in Effects) {
-				e.Apply(Owner, target, Owner.TargetPoint);
+			foreach (Effect e in onHitEffects) {
+				if (Owner is Hero) {
+					e.Apply(Owner, target, (Owner as Hero).TargetPoint);
+				} else {
+					e.Apply(Owner, target, Vector3.zero);
+				}
 			}
+
+			Destroy(gameObject);
 		}
 
 		private void Hit(GameObject other) {
-			if ((other.CompareTag("Hero") && targetType.HasFlag(ProjectileTargetType.Hero)) ||
-				(other.CompareTag("Boss") && targetType.HasFlag(ProjectileTargetType.Boss))) {
-				ApplyAll(other.GetComponent<Character>());
+			Character hit = other.GetComponent<Character>();
+			
+			if (targetType.HasFlag(ProjectileTargetType.Hero) && other.CompareTag("Hero") ||
+				targetType.HasFlag(ProjectileTargetType.Boss) && other.CompareTag("Boss") ||
+				targetType.HasFlag(ProjectileTargetType.Environment)) {
+
+				ApplyAll(hit);
+			} else {
+				Destroy(gameObject);
 			}
 		}
 
@@ -39,7 +53,6 @@ namespace DungeonRaid.Abilities {
 
 			if (useTriggerCollision) {
 				Hit(other.gameObject);
-				Destroy(gameObject);
 			}
 
 		}
@@ -52,7 +65,6 @@ namespace DungeonRaid.Abilities {
 
 			if (!useTriggerCollision) {
 				Hit(other.gameObject);
-				Destroy(gameObject);
 			}
 
 		}

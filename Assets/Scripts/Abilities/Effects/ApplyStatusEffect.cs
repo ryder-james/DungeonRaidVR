@@ -8,7 +8,7 @@ namespace DungeonRaid.Abilities.Effects {
 	[CreateAssetMenu(fileName = "ApplyStatusEffect", menuName = EffectMenuPrefix + "Apply Status Effect")]
 	public class ApplyStatusEffect : Effect {
 		[SerializeField] private StatusEffect statusEffect = null;
-		public override void Apply(Hero caster, Character target, Vector3 point) {
+		public override void Apply(Character caster, Character target, Vector3 point) {
 			statusEffect.Apply(caster, target, point);
 		}
 	}

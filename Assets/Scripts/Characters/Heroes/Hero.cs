@@ -5,6 +5,7 @@ using UnityEngine;
 
 using DungeonRaid.Abilities;
 using DungeonRaid.Input;
+using DungeonRaid.Characters.Bosses;
 
 namespace DungeonRaid.Characters.Heroes {
 	[RequireComponent(typeof(HeroController))]
@@ -70,6 +71,11 @@ namespace DungeonRaid.Characters.Heroes {
 			}
 		}
 
+		private void OnDrawGizmosSelected() {
+			Gizmos.color = Color;
+			Gizmos.DrawSphere(TargetPoint, 1);
+		}
+
 		public bool CheckForTarget(Camera cam, Vector3 reticlePosition) {
 			Vector3 dir = reticlePosition - cam.transform.position;
 			dir.Normalize();
@@ -119,7 +125,7 @@ namespace DungeonRaid.Characters.Heroes {
 		}
 
 		protected override float CalculateHealth(int heroCount) {
-			return 1;
+			return FindObjectOfType<Boss>().InitialHealth / heroCount;
 		}
 
 		private void Attack() {

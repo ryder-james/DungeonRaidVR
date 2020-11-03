@@ -10,7 +10,7 @@ namespace DungeonRaid.Abilities.Effects {
 		[SerializeField] private float chanceToApply = 0.5f;
 		[SerializeField] private Effect effect = null;
 
-		public override void Apply(Hero caster, Character target, Vector3 point) {
+		public override void Apply(Character caster, Character target, Vector3 point) {
 			if (Random.Range(0, 1f) < chanceToApply) {
 				effect.Apply(caster, target, point);
 			}

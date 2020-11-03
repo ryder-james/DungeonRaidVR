@@ -8,7 +8,7 @@ namespace DungeonRaid.Abilities.Effects {
 	public class TravelToEffect : Effect {
 		[SerializeField] private float speed = 1;
 
-		public override void Apply(Hero caster, Character target, Vector3 point) {
+		public override void Apply(Character caster, Character target, Vector3 point) {
 			//Debug.Log($"travel to {worldSpacePoint} at {speed}");
 		}
 	}
