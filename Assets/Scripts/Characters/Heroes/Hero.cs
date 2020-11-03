@@ -5,6 +5,7 @@ using UnityEngine;
 
 using DungeonRaid.Abilities;
 using DungeonRaid.Input;
+using DungeonRaid.Characters.Bosses;
 
 namespace DungeonRaid.Characters.Heroes {
 	[RequireComponent(typeof(HeroController))]
@@ -124,7 +125,7 @@ namespace DungeonRaid.Characters.Heroes {
 		}
 
 		protected override float CalculateHealth(int heroCount) {
-			return 1;
+			return FindObjectOfType<Boss>().InitialHealth / heroCount;
 		}
 
 		private void Attack() {

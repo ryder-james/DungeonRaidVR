@@ -1,8 +1,11 @@
 fileFormatVersion: 2
-guid: b3183e4ca9ef4e94a98025943c1c124f
+guid: 0c8de5c2c4a2bb24fbac0559b4d17541
 ModelImporter:
   serializedVersion: 19301
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: -1647008330252919787
+    second: floorBLC|floorBLC|Base Stack|DefaultLayer
   externalObjects: {}
   materials:
     materialImportMode: 1
