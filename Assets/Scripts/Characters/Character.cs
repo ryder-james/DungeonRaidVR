@@ -16,9 +16,23 @@ namespace DungeonRaid.Characters {
 		[SerializeField] protected AmmoPool[] ammoPools = null;
 
 		public MeterComponent[] Meters { get => meters; private set => meters = value; }
+
+		public Animator Animator {
+			get { 
+				if (animator == null) {
+					animator = GetComponentInChildren<Animator>();
+				}
+
+				return animator;
+			}
+			private set => animator = value;
+		}
+
 		public Vector3 Nozzle { get => nozzle.position; set => nozzle.position = value; }
 		public Vector3 Center => center != null ? center.position : transform.position;
 		public bool Initialized { get; protected set; }
+
+		private Animator animator;
 
 		protected virtual void Start() {
 			if (Meters == null) {

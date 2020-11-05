@@ -9,21 +9,23 @@ namespace DungeonRaid.Input {
 	public class HeroController : MonoBehaviour {
 		[SerializeField] private Hero hero = null;
 
+		public BodyMover Mover { get; private set; }
+		public HeroHUD HUD { get; set; }
+		public Animator Animator { get; private set; }
+		public Vector3 Direction { get; private set; }
+
 		private Vector2 lookInput;
 		private Vector3 movementInput;
-
-		public BodyMover Mover { get; private set; }
-		public Vector3 Direction { get; private set; }
-		public HeroHUD HUD { get; set; }
+		private Canvas canvas;
 
 		private bool usingMouse = false;
-		private Canvas canvas;
 
 		private readonly bool[] channeling = new bool[3];
 
 		private void Start() {
 			Mover = GetComponent<BodyMover>();
 			canvas = FindObjectOfType<Canvas>();
+			Animator = GetComponentInChildren<Animator>();
 			Direction = transform.forward;
 
 			channeling[0] = false;
@@ -36,11 +38,18 @@ namespace DungeonRaid.Input {
 
 			Vector3 move = new Vector3(movementInput.x, 0, movementInput.y);
 
-			Mover.MoveToward(move, hero.Speed);
+			float speedSubtracter = hero.Speed * (Mover.NormalizedAngle * 0.5f);
+			float speed = hero.Speed - speedSubtracter;
+			Mover.MoveToward(move, speed);
+
+			Animator.SetFloat("DirX", Mover.Direction.x);
+			Animator.SetFloat("DirZ", Mover.Direction.z);
+			Animator.SetFloat("Speed", Mover.CurrentSpeed / (BodyMover.SpeedMultiplier * hero.Speed));
+
 			if (move.magnitude != 0) {
-				Direction = move.normalized;
+				Direction = -Mover.Direction;
 			} else {
-				Direction = transform.forward;
+				Direction = -transform.forward;
 			}
 		}
 

@@ -9,7 +9,7 @@ namespace DungeonRaid.Abilities.Effects {
 
 		[SerializeField] private bool applyToCaster = false;
 
-		public bool ApplyToCaster { get => applyToCaster; set => applyToCaster = value; }
+		public virtual bool ApplyToCaster { get => applyToCaster; set => applyToCaster = value; }
 
 		public abstract void Apply(Character caster, Character target, Vector3 point);
 	}

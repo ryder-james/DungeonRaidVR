@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07f8977ef3007104696c33cd084b44f1, type: 3}
-  m_Name: IFrames
+  m_Script: {fileID: 11500000, guid: 2ef194a8a02566546b0c6b403150c858, type: 3}
+  m_Name: DashDamage
   m_EditorClassIdentifier: 
-  applyToCaster: 1
-  duration: 1
+  applyToCaster: 0
+  targetMeterName: Health
+  type: 0
+  amount: 2
