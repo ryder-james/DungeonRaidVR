@@ -24,10 +24,11 @@ namespace DungeonRaid.Input {
 			}
 
 			if (direction.magnitude > 0) {
-				body.velocity = transform.rotation * (Vector3.ClampMagnitude(direction, 1) * SpeedMultiplier * speed);
-				body.velocity = Vector3.ClampMagnitude(body.velocity, SpeedMultiplier * speed);
+				Vector3 newVelocity = transform.rotation * (Vector3.ClampMagnitude(direction, 1) * SpeedMultiplier * speed);
+				newVelocity.y = body.velocity.y;
+				body.velocity = Vector3.ClampMagnitude(newVelocity, SpeedMultiplier * speed);
 			} else if (!Manual) {
-				body.velocity = Vector3.zero;
+				body.velocity = new Vector3(0, body.velocity.y, 0);
 				body.angularVelocity = Vector3.zero;
 			}
 		}

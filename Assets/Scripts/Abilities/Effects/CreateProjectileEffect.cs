@@ -2,13 +2,14 @@
 
 using DungeonRaid.Characters;
 using DungeonRaid.Characters.Heroes;
+using Sirenix.OdinInspector;
 
 namespace DungeonRaid.Abilities.Effects {
 	[CreateAssetMenu(fileName = "CreateProjectile", menuName = EffectMenuPrefix + "Create Projectile")]
 	public class CreateProjectileEffect : ChannelableEffect {
 		[SerializeField] private float range = 4;
-		[SerializeField] private StackType stackType = StackType.Add;
-		[SerializeField, Min(0.01f)] private float rangeImprovement = 1;
+		[SerializeField] private StackType stackType = StackType.None;
+		[SerializeField, Min(0.01f), HideIf("stackType", StackType.None)] private float rangeImprovement = 1;
 		[SerializeField] private GameObject projectilePrefab = null;
 
 		private float currentRange;
