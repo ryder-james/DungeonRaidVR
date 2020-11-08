@@ -12,5 +12,10 @@ namespace Common.Movement {
 		private void Update() {
 			transform.Rotate(rotationAxis, rotationSpeed * Time.deltaTime);
 		}
+
+		private void OnDrawGizmosSelected() {
+			Gizmos.color = Color.white;
+			Gizmos.DrawLine(transform.position - (rotationAxis * 0.5f), transform.position + (rotationAxis * 0.5f));
+		}
 	}
 }
