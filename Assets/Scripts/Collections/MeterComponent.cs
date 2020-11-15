@@ -19,6 +19,7 @@ namespace DungeonRaid.Collections {
 
 		public Color Color { get => color; set => color = value; }
 		public ValueChangedDelegate OnValueChanged { get; set; }
+		public float NormalizedValue => Value / MaxValue;
 
 		public float Value {
 			get => value;
