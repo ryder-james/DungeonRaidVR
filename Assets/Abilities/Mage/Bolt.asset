@@ -16,8 +16,13 @@ MonoBehaviour:
   duration: 1
   maxChannelTime: 1
   effectSet:
-    costs: []
-    effects: []
+    costs:
+    - type: 0
+      meterName: Mana
+      ammoName: 
+      amount: 3
+    effects:
+    - {fileID: 11400000, guid: cc1ba9591e5c0b14a9c3cb918c091ffe, type: 2}
   updateEffectSet:
     costs: []
     effects: []
@@ -26,4 +31,4 @@ MonoBehaviour:
     effects: []
   channelableEffects: []
   cooldown: 2
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: d2cbfb3a851121c4b87140252a793254, type: 3}

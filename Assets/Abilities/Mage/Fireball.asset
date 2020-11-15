@@ -21,7 +21,8 @@ MonoBehaviour:
       meterName: Mana
       ammoName: 
       amount: 3
-    effects: []
+    effects:
+    - {fileID: 11400000, guid: f5b5d106d08d61a4db560dca07e35f32, type: 2}
   updateEffectSet:
     costs: []
     effects: []
@@ -30,4 +31,4 @@ MonoBehaviour:
     effects: []
   channelableEffects: []
   cooldown: 5
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 628704aad68f3294580af3a342bd8528, type: 3}

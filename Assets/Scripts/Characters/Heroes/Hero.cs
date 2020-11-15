@@ -125,7 +125,8 @@ namespace DungeonRaid.Characters.Heroes {
 		}
 
 		protected override float CalculateHealth(int heroCount) {
-			return FindObjectOfType<Boss>().InitialHealth / heroCount;
+			Boss boss = FindObjectOfType<Boss>();
+			return (boss != null ? boss.InitialHealth : 100) / heroCount;
 		}
 
 		private void Attack() {

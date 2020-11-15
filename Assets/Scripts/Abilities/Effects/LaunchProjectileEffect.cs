@@ -5,36 +5,31 @@ using DungeonRaid.Characters.Heroes;
 using Sirenix.OdinInspector;
 
 namespace DungeonRaid.Abilities.Effects {
-	[CreateAssetMenu(fileName = "CreateProjectile", menuName = EffectMenuPrefix + "Create Projectile")]
-	public class CreateProjectileEffect : ChannelableEffect {
+	[CreateAssetMenu(fileName = "LaunchProjectile", menuName = EffectMenuPrefix + "Launch Projectile")]
+	public class LaunchProjectileEffect : ChannelableEffect {
 		[SerializeField] private float range = 4;
 		[SerializeField] private StackType stackType = StackType.None;
 		[SerializeField, Min(0.01f), HideIf("stackType", StackType.None)] private float rangeImprovement = 1;
 		[SerializeField] private GameObject projectilePrefab = null;
 
-		private float currentRange;
+		protected float currentRange;
 
 		public override void Apply(Character caster, Character target, Vector3 point) {
+			GameObject projObj = Instantiate(projectilePrefab, caster.Nozzle, Quaternion.identity);
+			Projectile proj = projObj.GetComponent<Projectile>();
+			proj.GetComponent<Rigidbody>().AddForce(GetLaunchVelocity(caster, target, point), ForceMode.VelocityChange);
+			proj.Owner = caster;
+		}
+
+		protected virtual Vector3 GetLaunchVelocity(Character caster, Character target, Vector3 point) {
 			Vector3 start = caster.Nozzle;
 			Vector3 dir = point - start;
 
-			float height = dir.y;
-			dir.y = 0;
-
 			dir = Vector3.ClampMagnitude(dir, currentRange);
 
-			float distance = dir.magnitude;
-			dir.y = distance;
-			distance += height;
+			//float velocity = Mathf.Sqrt(dir.magnitude * Physics.gravity.magnitude);
 
-			float velocity = Mathf.Sqrt(distance * Physics.gravity.magnitude);
-
-			GameObject projObj = Instantiate(projectilePrefab, caster.Nozzle, Quaternion.identity);
-			Projectile proj = projObj.GetComponent<Projectile>();
-			proj.GetComponent<Rigidbody>().AddForce(velocity * dir.normalized, ForceMode.VelocityChange);
-			proj.Owner = caster;
-
-			currentRange = range;
+			return dir;
 		}
 
 		protected override void Begin() {

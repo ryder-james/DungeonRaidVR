@@ -29,7 +29,7 @@ namespace DungeonRaid.Characters.Bosses.Pinhead {
 
 		public override void Throw(Vector3 releaseVelocity, Vector3 releaseAngularVelocity) {
 			body.constraints |= RigidbodyConstraints.FreezePositionX;
-			body.velocity = Vector3.forward * speed;
+			body.velocity = new Vector3(0, -speed, speed);
 			body.angularVelocity = releaseAngularVelocity;
 		}
 	}

@@ -10,7 +10,8 @@ namespace DungeonRaid.Characters.Heroes {
 		private Boss boss;
 
 		private void Start() {
-			boss = GameObject.FindGameObjectWithTag("Boss").GetComponent<Boss>();
+			GameObject bossObj = GameObject.FindGameObjectWithTag("Boss");
+			boss = bossObj != null ? bossObj.GetComponent<Boss>() : null;
 		}
 
 		public void Attack() {

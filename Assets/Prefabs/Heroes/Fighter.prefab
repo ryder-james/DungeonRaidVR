@@ -108,7 +108,7 @@ Transform:
   m_GameObject: {fileID: 8639554464805647238}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 1351499222379493530}
   - {fileID: 5411998999097397152}
@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nozzle: {fileID: 5411998999097397152}
-  center: {fileID: 0}
+  center: {fileID: 8639554464805647235}
   modelDataPrefab: {fileID: 0}
   hpMod: 1.2
   meters:
@@ -327,7 +327,7 @@ MonoBehaviour:
     m_ActionName: Player/AbilityThree[/Keyboard/3]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
+  m_DefaultActionMap: Hero
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &8639554464805647246
@@ -397,6 +397,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 95390870097647798, guid: 5fa3e1994eb724d4584fc06de38d2e95,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 37471075f47341b48a922bbeb370f053, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5fa3e1994eb724d4584fc06de38d2e95, type: 3}
 --- !u!4 &5620217395572304782 stripped

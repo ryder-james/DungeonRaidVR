@@ -45,6 +45,7 @@ namespace DungeonRaid.Input {
 			Animator.SetFloat("DirX", Mover.Direction.x);
 			Animator.SetFloat("DirZ", Mover.Direction.z);
 			Animator.SetFloat("Speed", Mover.CurrentSpeed / (BodyMover.SpeedMultiplier * hero.Speed));
+			Animator.SetFloat("AnimSpeed", 1 + Animator.GetFloat("Speed"));
 
 			if (move.magnitude != 0) {
 				Direction = -Mover.Direction;

@@ -15,7 +15,6 @@ namespace DungeonRaid.Abilities {
 
 			foreach (Effect effect in effects) {
 				if (effect.ApplyToCaster) {
-					Debug.Log(effect);
 					effect.Apply(Owner, Owner, TargetPoint);
 				} else {
 					foreach (Collider col in overlaps) {

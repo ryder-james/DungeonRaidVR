@@ -2,7 +2,7 @@
     "name": "Hero",
     "maps": [
         {
-            "name": "Player",
+            "name": "Hero",
             "id": "c9d1b74e-a83c-42f4-8eb7-73ebdcda0f54",
             "actions": [
                 {

@@ -42,18 +42,20 @@ namespace DungeonRaid.Characters {
 			if (ammoPools == null) {
 				ammoPools = new AmmoPool[0];
 			}
-			
-			foreach (MeterComponent meter in Meters) {
-				if (meter.MeterName == "Health") {
-					meter.MaxValue = CalculateHealth(4);
-					meter.Value = meter.MaxValue;
-					break;
-				}
-			}
 		}
 
 		protected virtual void Update() {
 			
+		}
+
+		public void UpdateHealth(int heroCount) {
+			foreach (MeterComponent meter in Meters) {
+				if (meter.MeterName == "Health") {
+					meter.MaxValue = CalculateHealth(heroCount);
+					meter.Value = meter.MaxValue;
+					break;
+				}
+			}
 		}
 
 		public void UpdateMeter(string meterName, float amount) {

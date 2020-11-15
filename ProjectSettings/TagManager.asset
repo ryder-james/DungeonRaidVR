@@ -9,6 +9,7 @@ TagManager:
   - Ground
   - projectile
   - FxTemporaire
+  - Spawnpoint
   layers:
   - Default
   - TransparentFX
@@ -24,7 +25,7 @@ TagManager:
   - Targetable
   - PostProcessing
   - IgnorePlayer
-  - 
+  - PlayerWalls
   - 
   - 
   - 
