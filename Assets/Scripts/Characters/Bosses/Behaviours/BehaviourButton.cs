@@ -6,21 +6,23 @@ public class BehaviourButton : TriggerBehaviourToggle {
 	[SerializeField] private float pressSpeed = 2;
 	[SerializeField] private Vector3 pressOffset = Vector3.down;
 
-	private bool inMotion = false;
+	protected override IEnumerator ChangeState(bool toActiveState) {
+		yield return new WaitUntil(() => toggleState != ToggleState.Transitioning);
 
-	protected override IEnumerator ChangeState(bool releasing) {
-		yield return new WaitUntil(() => !inMotion);
+		toggleState = ToggleState.Transitioning;
 
 		Vector3 start = transform.position;
-		Vector3 end = transform.position + (releasing ? -pressOffset : pressOffset);
+		Vector3 end = transform.position + (toActiveState ? pressOffset : -pressOffset);
 
-		inMotion = true;
+		//Debug.Log(end);
+
 		for (float t = 0; t < 1; t += Time.deltaTime * pressSpeed) {
 			transform.position = Vector3.Lerp(start, end, t);
 			yield return new WaitForEndOfFrame();
 		}
-		inMotion = false;
 
 		transform.position = end;
+
+		toggleState = toActiveState ? ToggleState.On : ToggleState.Off;
 	}
 }

@@ -12,10 +12,15 @@ public abstract class TriggerVolume : Interactable {
 
 	private float channelTimer = 0;
 	private bool held = false;
+	private bool interactedThisFrame = false;
 
 	protected abstract void TriggerEnter();
 	protected abstract void TriggerStay();
 	protected abstract void TriggerExit();
+
+	private void LateUpdate() {
+		interactedThisFrame = false;
+	}
 
 	protected void ReleaseEarly() {
 		held = false;
@@ -24,31 +29,38 @@ public abstract class TriggerVolume : Interactable {
 	}
 
 	private void OnTriggerEnter(Collider other) {
-		if (triggeringObject == null && other.CompareTag(triggerTag)) {
+		if (!interactedThisFrame && triggeringObject == null && other.CompareTag(triggerTag)) {
 			triggeringObject = other.gameObject;
 			channelTimer = 0;
 			held = true;
 
 			TriggerEnter();
+
+			interactedThisFrame = true;
 		}
 	}
 
 	private void OnTriggerStay(Collider other) {
-		if (held && other.gameObject == triggeringObject) {
+		if (!interactedThisFrame && held && other.gameObject == triggeringObject) {
 			channelTimer += Time.deltaTime;
 			if (channelTimer >= fixedChannelTimer) {
 				TriggerStay();
 				channelTimer -= fixedChannelTimer;
 			}
 
-		} else if (!held && other == triggeringObject) {
+			interactedThisFrame = true;
+		} else if (!interactedThisFrame && !held && other == triggeringObject) {
 			OnTriggerExit(other);
+
+			interactedThisFrame = true;
 		}
 	}
 
 	private void OnTriggerExit(Collider other) {
-		if (other.gameObject == triggeringObject) {
+		if (!interactedThisFrame && other.gameObject == triggeringObject) {
 			ReleaseEarly();
+
+			interactedThisFrame = true;
 		}
 	}
 }
