@@ -19,31 +19,24 @@ public abstract class TriggerVolume : Interactable {
 
 	protected void ReleaseEarly() {
 		held = false;
-		Debug.Log("trigger exit");
 		TriggerExit();
 		triggeringObject = null;
 	}
 
 	private void OnTriggerEnter(Collider other) {
-		Debug.Log("object enter");
-
 		if (triggeringObject == null && other.CompareTag(triggerTag)) {
 			triggeringObject = other.gameObject;
 			channelTimer = 0;
 			held = true;
 
-			Debug.Log("trigger");
 			TriggerEnter();
 		}
 	}
 
 	private void OnTriggerStay(Collider other) {
-		Debug.Log("object stay");
-
 		if (held && other.gameObject == triggeringObject) {
 			channelTimer += Time.deltaTime;
 			if (channelTimer >= fixedChannelTimer) {
-				Debug.Log("trigger stay");
 				TriggerStay();
 				channelTimer -= fixedChannelTimer;
 			}
@@ -54,8 +47,6 @@ public abstract class TriggerVolume : Interactable {
 	}
 
 	private void OnTriggerExit(Collider other) {
-		Debug.Log("object exit");
-
 		if (other.gameObject == triggeringObject) {
 			ReleaseEarly();
 		}
