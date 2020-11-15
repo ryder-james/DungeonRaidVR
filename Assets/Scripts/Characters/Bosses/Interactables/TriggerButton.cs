@@ -1,19 +1,38 @@
-﻿using System.Collections;
+﻿using Sirenix.OdinInspector;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TriggerButton : TriggerVolume {
 	[SerializeField] private float pressSpeed = 2;
+	[SerializeField] private bool useContinuousBehaviour = false;
+	[SerializeField, ShowIf("useContinuousBehaviour"), Indent] private bool waitForBehaviourToEnd = false;
 	[SerializeField] private Vector3 pressOffset = Vector3.down;
-	[SerializeField] private TriggeredBehaviour[] behaviours = null;
+	[SerializeField, HideIf("useContinuousBehaviour")] private TriggeredBehaviour behaviour = null;
+	[SerializeField, ShowIf("useContinuousBehaviour")] private ContinuousBehaviour continuousBehaviour = null;
 
 	private bool inMotion = false;
+	private bool isPressed = false;
+
+	private void Start() {
+		if (!useContinuousBehaviour) {
+			waitForBehaviourToEnd = false;
+		}
+
+		if (waitForBehaviourToEnd) {
+			continuousBehaviour.OnBehaviourEnd += End;
+		}
+	}
 
 	protected override void TriggerEnter() {
-		StartCoroutine(nameof(Press));
-
-		foreach (TriggeredBehaviour behaviour in behaviours) {
-			behaviour.Trigger();
+		if (!isPressed) {
+			isPressed = true;
+			StartCoroutine(nameof(Press));
+			if(useContinuousBehaviour) {
+				continuousBehaviour.Trigger();
+			} else {
+				behaviour.Trigger();
+			}
 		}
 	}
 
@@ -22,6 +41,13 @@ public class TriggerButton : TriggerVolume {
 	}
 
 	protected override void TriggerExit() {
+		if (isPressed && !waitForBehaviourToEnd) {
+			End();
+		}
+	}
+
+	private void End() {
+		isPressed = false;
 		StartCoroutine(nameof(Release));
 	}
 

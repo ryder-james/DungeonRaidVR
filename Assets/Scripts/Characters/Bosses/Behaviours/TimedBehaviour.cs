@@ -19,16 +19,12 @@ public abstract class TimedBehaviour : ContinuousBehaviour {
 
 	public override void BeginBehaviour() {
 		autoUpdating = true;
-		Begin();
-	}
-
-	public override void UpdateBehaviour() {
-		Channel();
+		base.BeginBehaviour();
 	}
 
 	public override void EndBehaviour() {
 		autoUpdating = false;
-		End();
+		base.EndBehaviour();
 	}
 
 	protected override void ResetBehaviour() {
