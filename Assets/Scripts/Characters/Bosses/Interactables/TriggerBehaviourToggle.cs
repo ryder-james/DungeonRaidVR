@@ -1,4 +1,5 @@
 ﻿using DungeonRaid.Abilities;
+using DungeonRaid.Characters.Bosses;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,8 +31,8 @@ public abstract class TriggerBehaviourToggle : TriggerVolume {
 	[SerializeField] private bool hasCooldown = false;
 	[SerializeField, ShowIf("hasCooldown")] private float cooldown = 2;
 	[Space]
-	[SerializeField] private Cost[] triggerCosts = null;
-	[SerializeField, ShowIf("hasChanneledBehaviours")] private Cost[] channelCosts = null;
+	[SerializeField] private Cost triggerCost = new Cost();
+	[SerializeField, ShowIf("hasChanneledBehaviours")] private Cost channelCost = new Cost();
 
 	private bool UseTriggeredBehaviours {
 		get {
@@ -44,9 +45,11 @@ public abstract class TriggerBehaviourToggle : TriggerVolume {
 	}
 
 	private float cooldownTimer = 0;
+	private bool canContinueChanneling = true;
 
 	protected ToggleState toggleState = ToggleState.Off;
 	protected LockState lockState = LockState.None;
+	protected Boss boss;
 
 	private void Start() {
 		if (useBehaviourAsLock) {
@@ -58,8 +61,6 @@ public abstract class TriggerBehaviourToggle : TriggerVolume {
 		if (lockState.HasFlag(LockState.Active) && lockState.HasFlag(LockState.OnCooldown)) {
 			cooldownTimer += Time.deltaTime;
 			if (cooldownTimer >= cooldown) {
-				Debug.Log("off cooldown");
-
 				lockState ^= LockState.OnCooldown;
 
 				if (!lockState.HasFlag(LockState.Held) && !lockState.HasFlag(LockState.Locked)) {
@@ -70,7 +71,16 @@ public abstract class TriggerBehaviourToggle : TriggerVolume {
 	}
 
 	protected override void TriggerEnter() {
-		if (!lockState.HasFlag(LockState.Active)) {
+		if (boss == null) {
+			boss = triggeringObject.GetComponentInParent<Boss>();
+			if (boss == null) {
+				return;
+			}
+		}
+
+		bool canAfford = boss.PayCost(triggerCost);
+
+		if (canAfford && !lockState.HasFlag(LockState.Active)) {
 			lockState |= LockState.Active;
 
 			lockState |= LockState.Held;
@@ -95,6 +105,8 @@ public abstract class TriggerBehaviourToggle : TriggerVolume {
 			}
 
 			if (hasChanneledBehaviours) {
+				canContinueChanneling = true;
+
 				foreach (ContinuousBehaviour behaviour in channeledBehaviours) {
 					if (behaviour != lockingBehaviour) {
 						behaviour.Trigger();
@@ -106,18 +118,22 @@ public abstract class TriggerBehaviourToggle : TriggerVolume {
 	}
 
 	protected override void TriggerStay() {
-		if (lockState.HasFlag(LockState.Active) && hasChanneledBehaviours) {
-			foreach (ContinuousBehaviour behaviour in channeledBehaviours) {
-				if (behaviour != lockingBehaviour) {
-					behaviour.UpdateBehaviour();
+		if (canContinueChanneling) {
+			bool canAfford = boss.PayCost(channelCost);
+
+			if (canAfford && lockState.HasFlag(LockState.Active) && hasChanneledBehaviours) {
+				foreach (ContinuousBehaviour behaviour in channeledBehaviours) {
+					if (behaviour != lockingBehaviour) {
+						behaviour.UpdateBehaviour();
+					}
 				}
+			} else if (!canAfford) {
+				canContinueChanneling = false;
 			}
 		}
 	}
 
 	protected override void TriggerExit() {
-		Debug.Log("let go");
-
 		lockState ^= LockState.Held;
 
 		if (!lockState.HasFlag(LockState.OnCooldown) && !lockState.HasFlag(LockState.Locked)) {
@@ -126,8 +142,6 @@ public abstract class TriggerBehaviourToggle : TriggerVolume {
 	}
 
 	private void Unlock() {
-		Debug.Log("unlock");
-
 		lockState ^= LockState.Locked;
 
 		if (!lockState.HasFlag(LockState.OnCooldown) && !lockState.HasFlag(LockState.Held)) {
