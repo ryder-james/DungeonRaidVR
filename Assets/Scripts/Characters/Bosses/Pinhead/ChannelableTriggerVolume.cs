@@ -8,7 +8,7 @@ namespace DungeonRaid.Characters.Bosses.Interactables {
 	public class ChannelableTriggerVolume : Interactable {
 		[SerializeField] private Cost activationCost = new Cost();
 		[SerializeField] private Cost channelCost = new Cost();
-		[SerializeField] private ChannelableBehaviour[] behaviours = null;
+		[SerializeField] private ContinuousBehaviour[] behaviours = null;
 
 		private bool channeling = false;
 		private Boss boss;
@@ -28,8 +28,8 @@ namespace DungeonRaid.Characters.Bosses.Interactables {
 
 				if (boss.PayCost(activationCost)) {
 					channeling = true;
-					foreach (ChannelableBehaviour effect in behaviours) {
-						effect.BeginChannel();
+					foreach (ContinuousBehaviour effect in behaviours) {
+						effect.BeginBehaviour();
 					}
 				}
 			}
@@ -43,8 +43,8 @@ namespace DungeonRaid.Characters.Bosses.Interactables {
 
 					if (other.gameObject == triggeringObject) {
 						if (boss.PayCost(channelCost)) {
-							foreach (ChannelableBehaviour effect in behaviours) {
-								effect.ChannelUpdate();
+							foreach (ContinuousBehaviour effect in behaviours) {
+								effect.UpdateBehaviour();
 							}
 						} else {
 							OnTriggerExit(other);
@@ -59,8 +59,8 @@ namespace DungeonRaid.Characters.Bosses.Interactables {
 			if (other.gameObject == triggeringObject) {
 				channeling = false;
 				triggeringObject = null;
-				foreach (ChannelableBehaviour effect in behaviours) {
-					effect.EndChannel();
+				foreach (ContinuousBehaviour effect in behaviours) {
+					effect.EndBehaviour();
 				}
 			}
 		}
