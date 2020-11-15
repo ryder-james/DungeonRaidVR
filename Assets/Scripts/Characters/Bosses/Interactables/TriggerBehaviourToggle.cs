@@ -3,10 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TriggerButton : TriggerVolume {
-	[SerializeField] private float pressSpeed = 2;
-	[SerializeField] private Vector3 pressOffset = Vector3.down;
-
+public abstract class TriggerBehaviourToggle : TriggerVolume {
 	[SerializeField] private bool limitPressability = false;
 	[SerializeField, ShowIf("limitPressability")] private ContinuousBehaviour pressLimitingBehaviour = null;
 	[SerializeField, ShowIf("limitPressability")] private bool hasTriggeredBehaviours = true;
@@ -24,9 +21,8 @@ public class TriggerButton : TriggerVolume {
 		}
 	}
 
-	private bool inMotion = false;
-	private bool isBeingHeld = false;
-	private bool allowManualRelease = true;
+	private bool isActive = false;
+	private bool allowManualToggle = true;
 
 	private void Start() {
 		if (limitPressability) {
@@ -35,13 +31,13 @@ public class TriggerButton : TriggerVolume {
 	}
 
 	protected override void TriggerEnter() {
-		if (!isBeingHeld) {
-			isBeingHeld = true;
+		if (!isActive) {
+			isActive = true;
 			StartCoroutine(nameof(ChangeState), false);
 
 			if(limitPressability) {
 				pressLimitingBehaviour.Trigger();
-				allowManualRelease = false;
+				allowManualToggle = false;
 			}
 
 			if (UseTriggeredBehaviours) {
@@ -73,19 +69,19 @@ public class TriggerButton : TriggerVolume {
 	}
 
 	protected override void TriggerExit() {
-		if (isBeingHeld) {
-			isBeingHeld = false;
+		if (isActive) {
+			isActive = false;
 
-			if (allowManualRelease) {
+			if (allowManualToggle) {
 				Release();
 			}
 		}
 	}
 
 	private void End() {
-		allowManualRelease = true;
+		allowManualToggle = true;
 
-		if (!isBeingHeld) {
+		if (!isActive) {
 			Release();
 		}
 	}
@@ -101,21 +97,7 @@ public class TriggerButton : TriggerVolume {
 		StartCoroutine(nameof(ChangeState), true);
 	}
 
-	private IEnumerator ChangeState(bool releasing) {
-		yield return new WaitUntil(() => !inMotion);
-
-		Vector3 start = transform.position;
-		Vector3 end = transform.position + (releasing ? -pressOffset : pressOffset);
-
-		inMotion = true;
-		for (float t = 0; t < 1; t += Time.deltaTime * pressSpeed) {
-			transform.position = Vector3.Lerp(start, end, t);
-			yield return new WaitForEndOfFrame();
-		}
-		inMotion = false;
-
-		transform.position = end;
-	}
+	protected abstract IEnumerator ChangeState(bool releasing);
 
 	private void OnDestroy() {
 		if (limitPressability) {
