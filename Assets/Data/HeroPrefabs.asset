@@ -15,5 +15,3 @@ MonoBehaviour:
   gameObjects:
   - {fileID: 8639554464805647238, guid: e94e4a0e17d54f94d8027224675ee751, type: 3}
   - {fileID: 8639554464805647238, guid: 5ef92b58b45712e4cb046ba329526c66, type: 3}
-  - {fileID: 8639554464805647238, guid: 9b761c6de52186f409c4dc902ecc8655, type: 3}
-  - {fileID: 8639554464805647238, guid: 08cde1da324662f49ab7c683dd2979ef, type: 3}
