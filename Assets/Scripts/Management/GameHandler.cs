@@ -22,11 +22,8 @@ public class GameHandler : Persistent {
 
 		FindObjectOfType<Boss>().UpdateHealth(info.heroIndices.Length);
 
-		PlayerInputManager manager = FindObjectOfType<PlayerInputManager>();
 		GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag("Spawnpoint");
-		Debug.Log(info.heroIndices.Length);
 		for (int i = 0; i < info.heroIndices.Length; i++) {
-			Debug.Log("calling join");
 			GameObject heroObj = Instantiate(heroPrefabs[info.heroIndices[i]], spawnPoints[i].transform.position, Quaternion.Euler(0, 180, 0));
 			heroObj.GetComponent<Hero>().UpdateHealth(info.heroIndices.Length);
 		}
