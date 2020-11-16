@@ -9,7 +9,6 @@ namespace DungeonRaid.Characters {
 	public abstract class Character : MonoBehaviour {
 		[SerializeField] private Transform nozzle = null;
 		[SerializeField] private Transform center = null;
-		[SerializeField] protected GameObject modelDataPrefab = null;
 		[Space]
 		[SerializeField] protected float hpMod = 1;
 		[SerializeField] private MeterComponent[] meters = null;
@@ -28,6 +27,7 @@ namespace DungeonRaid.Characters {
 			private set => animator = value;
 		}
 
+		public System.Action OnDeath { get; set; }
 		public Vector3 Nozzle { get => nozzle.position; set => nozzle.position = value; }
 		public Vector3 Center => center != null ? center.position : transform.position;
 		public bool Initialized { get; protected set; }
@@ -62,6 +62,10 @@ namespace DungeonRaid.Characters {
 			MeterComponent meter = FindMeter(meterName);
 			if (meter != null) {
 				meter.Value += amount;
+			}
+
+			if (meterName == "Health" && meter.Value <= 0) {
+				OnDeath?.Invoke();
 			}
 		}
 
