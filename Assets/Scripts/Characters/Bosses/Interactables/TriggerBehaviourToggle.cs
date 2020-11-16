@@ -78,9 +78,11 @@ public abstract class TriggerBehaviourToggle : TriggerVolume {
 			}
 		}
 
-		bool canAfford = boss.PayCost(triggerCost);
+		bool canAfford = boss.CanAfford(triggerCost);
 
 		if (canAfford && !lockState.HasFlag(LockState.Active)) {
+			boss.PayCost(triggerCost);
+
 			lockState |= LockState.Active;
 
 			lockState |= LockState.Held;
