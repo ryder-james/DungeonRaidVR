@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SideRailController : ChannelableBehaviour {
+public class SideRailController : ContinuousBehaviour {
 	[SerializeField] private SideRail[] rails = null;
 
 	protected override void Begin() {
@@ -19,5 +19,9 @@ public class SideRailController : ChannelableBehaviour {
 		foreach (SideRail rail in rails) {
 			rail.Lower();
 		}
+	}
+
+	protected override void ResetBehaviour() {
+
 	}
 }
