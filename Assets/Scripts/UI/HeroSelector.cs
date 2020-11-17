@@ -14,12 +14,13 @@ public class HeroSelector : MonoBehaviour {
 	public bool Active { get; set; } = false;
 	public int Current { get; set; }
 	
-	private GameObject[] heroes = new GameObject[4];
+	private GameObject[] heroes;
 	private PlayerInput input;
 
 	private void Start() {
 		Current = initial - 1;
 
+		heroes = new GameObject[heroPrefabs.Length];
 		heroes[Current] = CreateHero(Current);
 	}
 
