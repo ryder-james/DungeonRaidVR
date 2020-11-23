@@ -19,12 +19,12 @@ namespace DungeonRaid.Abilities.Effects.StatusEffects {
 			Caster = caster;
 			Point = point;
 
-			StatusEffectComponent effect = target.gameObject.AddComponent<StatusEffectComponent>();
-			effect.Begin(this, target, duration);
+			StatusEffectComponent behaviour = target.GetFreeBehaviour<StatusEffectComponent>();
+			behaviour.Begin(this, target, duration);
 		}
 
 		protected void InvokeRepeating(Character target, System.Action<Character> callback, float interval = 1) {
-			RepeatingEffectComponent behaviour = target.gameObject.AddComponent<RepeatingEffectComponent>();
+			RepeatingEffectComponent behaviour = target.GetFreeBehaviour<RepeatingEffectComponent>();
 			behaviour.Begin(this, target, callback, interval);
 		}
 
@@ -57,7 +57,7 @@ namespace DungeonRaid.Abilities.Effects.StatusEffects {
 					}
 				}
 
-				Destroy(this);
+				enabled = false;
 			}
 		}
 
@@ -79,7 +79,7 @@ namespace DungeonRaid.Abilities.Effects.StatusEffects {
 				Caller.StopEffect(Target);
 				Caller.IsRunning = false;
 
-				Destroy(this);
+				enabled = false;
 			}
 		}
 	}

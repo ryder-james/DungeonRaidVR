@@ -4,6 +4,10 @@ using UnityEngine;
 
 using DungeonRaid.Collections;
 using DungeonRaid.Abilities;
+using System.Collections.Generic;
+using DungeonRaid.Abilities.Effects.StatusEffects;
+using DungeonRaid.Abilities.Effects;
+using System;
 
 namespace DungeonRaid.Characters {
 	public abstract class Character : MonoBehaviour {
@@ -16,6 +20,7 @@ namespace DungeonRaid.Characters {
 		[SerializeField] protected AmmoPool[] ammoPools = null;
 
 		public MeterComponent[] Meters { get => meters; private set => meters = value; }
+		private Dictionary<Type, List<MonoBehaviour>> ComponentPools { get; set; } = new Dictionary<Type, List<MonoBehaviour>>();
 
 		public Animator Animator {
 			get { 
@@ -97,5 +102,42 @@ namespace DungeonRaid.Characters {
 		}
 
 		protected abstract float CalculateHealth(int heroCount);
+
+		public T GetFreeBehaviour<T>(bool add = true) where T : MonoBehaviour {
+			if (!ComponentPools.ContainsKey(typeof(T))) {
+				if (add) {
+					return AddBehaviour<T>();
+				} else {
+					return null;
+				}
+			}
+
+			T result = null;
+			foreach (T element in ComponentPools[typeof(T)]) {
+				if (!element.enabled) {
+					result = element;
+					break;
+				}
+			}
+
+			if (add && result == null) {
+				result = AddBehaviour<T>();
+			}
+
+			return result;
+		}
+
+		public T AddBehaviour<T>() where T : MonoBehaviour {
+			Type t = typeof(T);
+
+			if (!ComponentPools.ContainsKey(t)) {
+				ComponentPools[t] = new List<MonoBehaviour>();
+			}
+
+			T added = gameObject.AddComponent<T>();
+			ComponentPools[t].Add(added);
+
+			return added;
+		}
 	}
 }

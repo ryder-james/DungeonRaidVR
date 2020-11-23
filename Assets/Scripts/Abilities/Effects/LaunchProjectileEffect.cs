@@ -17,8 +17,8 @@ namespace DungeonRaid.Abilities.Effects {
 		public override void Apply(Character caster, Character target, Vector3 point) {
 			GameObject projObj = Instantiate(projectilePrefab, caster.Nozzle, Quaternion.identity);
 			Projectile proj = projObj.GetComponent<Projectile>();
-			proj.GetComponent<Rigidbody>().AddForce(GetLaunchVelocity(caster, target, point), ForceMode.VelocityChange);
 			proj.Owner = caster;
+			proj.GetComponent<Rigidbody>().AddForce(GetLaunchVelocity(caster, target, point), ForceMode.VelocityChange);
 		}
 
 		protected virtual Vector3 GetLaunchVelocity(Character caster, Character target, Vector3 point) {

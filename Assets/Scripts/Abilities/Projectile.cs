@@ -47,7 +47,7 @@ namespace DungeonRaid.Abilities {
 		}
 
 		private void OnTriggerEnter(Collider other) {
-			if (other.gameObject == Owner.gameObject) {
+			if (IsCasterOrChildOfCaster(other)) {
 				return;
 			}
 
@@ -59,7 +59,7 @@ namespace DungeonRaid.Abilities {
 
 		private void OnCollisionEnter(Collision collision) {
 			Collider other = collision.collider;
-			if (other.gameObject == Owner.gameObject) {
+			if (IsCasterOrChildOfCaster(other)) {
 				return;
 			}
 
@@ -67,6 +67,16 @@ namespace DungeonRaid.Abilities {
 				Hit(other.gameObject);
 			}
 
+		}
+
+		private bool IsCasterOrChildOfCaster(Collider other) {
+			if (Owner.gameObject == other.gameObject) {
+				return true;
+			} else if (other.transform.parent != null && Owner.gameObject == other.transform.parent.gameObject) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
 }
