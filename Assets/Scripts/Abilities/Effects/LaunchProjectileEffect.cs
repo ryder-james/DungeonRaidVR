@@ -23,11 +23,7 @@ namespace DungeonRaid.Abilities.Effects {
 
 		protected virtual Vector3 GetLaunchVelocity(Character caster, Character target, Vector3 point) {
 			Vector3 start = caster.Nozzle;
-			Vector3 dir = point - start;
-
-			dir = Vector3.ClampMagnitude(dir, currentRange);
-
-			//float velocity = Mathf.Sqrt(dir.magnitude * Physics.gravity.magnitude);
+			Vector3 dir = (point - start) * 2;
 
 			return dir;
 		}
