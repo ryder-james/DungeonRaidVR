@@ -9,7 +9,6 @@ namespace DungeonRaid.Abilities.Effects {
 		public override bool ApplyToCaster => true;
 
 		public override void Apply(Character caster, Character target, Vector3 point) {
-			Debug.Log($"trigger {caster.Animator}");
 			caster.Animator.SetTrigger(triggerName);
 		}
 	}
