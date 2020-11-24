@@ -56,7 +56,7 @@ namespace DungeonRaid.Characters {
 		public void UpdateHealth(int heroCount) {
 			foreach (MeterComponent meter in Meters) {
 				if (meter.MeterName == "Health") {
-					meter.MaxValue = CalculateHealth(heroCount);
+					meter.MaxValue = CalculateHealth(Mathf.Max(1, heroCount));
 					meter.Value = meter.MaxValue;
 					break;
 				}
