@@ -4,7 +4,7 @@ using DungeonRaid.Characters;
 using DungeonRaid.Characters.Heroes;
 
 namespace DungeonRaid.Abilities.Effects {
-	[CreateAssetMenu(fileName = "ChanceToApply", menuName = EffectMenuPrefix + "Chance to Apply Effect")]
+	[CreateAssetMenu(fileName = "ChanceToApply", menuName = SuperEffectMenuPrefix + "Chance to Apply Effect")]
 	public class ChanceToApplyEffect : Effect {
 		[Range(0, 1)]
 		[SerializeField] private float chanceToApply = 0.5f;

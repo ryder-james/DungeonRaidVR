@@ -23,6 +23,7 @@ MonoBehaviour:
       amount: 4
     effects:
     - {fileID: 11400000, guid: 510210806258bfb4aae21a7756ac924c, type: 2}
+    - {fileID: 11400000, guid: 363f221dda6f5964cbe009a84f4ce6de, type: 2}
     - {fileID: 11400000, guid: ce5459545a7ff8f4eb38552b6f5efcf3, type: 2}
   updateEffectSet:
     costs: []

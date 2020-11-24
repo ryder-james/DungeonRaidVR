@@ -2,7 +2,7 @@
 using UnityEngine;
 
 namespace DungeonRaid.Abilities.Effects {
-	[CreateAssetMenu(fileName = "AnimatorTrigger", menuName = EffectMenuPrefix + "Animator Trigger")]
+	[CreateAssetMenu(fileName = "AnimatorTrigger", menuName = AVEffectMenuPrefix + "Animator Trigger")]
 	public class AnimatorTriggerEffect : Effect {
 		[SerializeField] private string triggerName = "";
 

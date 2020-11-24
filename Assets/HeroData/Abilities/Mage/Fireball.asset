@@ -22,6 +22,7 @@ MonoBehaviour:
       ammoName: 
       amount: 3
     effects:
+    - {fileID: 11400000, guid: 70e414f0dadac7c40811c7c7a4c34597, type: 2}
     - {fileID: 11400000, guid: 510210806258bfb4aae21a7756ac924c, type: 2}
     - {fileID: 11400000, guid: efd024d9dec7f664089fdd5c8e246222, type: 2}
   updateEffectSet:

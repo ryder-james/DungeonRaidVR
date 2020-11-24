@@ -5,7 +5,7 @@ using DungeonRaid.Characters.Heroes;
 using Sirenix.OdinInspector;
 
 namespace DungeonRaid.Abilities.Effects {
-	[CreateAssetMenu(fileName = "LaunchArcProjectile", menuName = EffectMenuPrefix + "Launch Arc Projectile")]
+	[CreateAssetMenu(fileName = "LaunchArcProjectile", menuName = ObjectEffectMenuPrefix + "Launch Arc Projectile")]
 	public class LaunchArcProjectileEffect : LaunchProjectileEffect {
 		//public override void Apply(Character caster, Character target, Vector3 point) {
 		//	Vector3 start = caster.Nozzle;

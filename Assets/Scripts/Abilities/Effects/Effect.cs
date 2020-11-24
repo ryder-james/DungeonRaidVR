@@ -6,6 +6,11 @@ using DungeonRaid.Characters;
 namespace DungeonRaid.Abilities.Effects {
 	public abstract class Effect : ScriptableObject {
 		protected const string EffectMenuPrefix = "Dungeon Raid/Effects/";
+		protected const string AVEffectMenuPrefix = EffectMenuPrefix + "Audial Visual/";
+		protected const string SuperEffectMenuPrefix = EffectMenuPrefix + "Super/";
+		protected const string MovementEffectMenuPrefix = EffectMenuPrefix + "Movement/";
+		protected const string StatEffectMenuPrefix = EffectMenuPrefix + "Stat/";
+		protected const string ObjectEffectMenuPrefix = EffectMenuPrefix + "Object/";
 
 		[SerializeField] private bool applyToCaster = false;
 

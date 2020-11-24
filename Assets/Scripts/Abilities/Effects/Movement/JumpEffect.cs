@@ -4,7 +4,7 @@ using DungeonRaid.Characters;
 using DungeonRaid.Characters.Heroes;
 
 namespace DungeonRaid.Abilities.Effects {
-	[CreateAssetMenu(fileName = "Jump", menuName = EffectMenuPrefix + "Jump")]
+	[CreateAssetMenu(fileName = "Jump", menuName = MovementEffectMenuPrefix + "Jump")]
 	public class JumpEffect : Effect {
 		[SerializeField] private float height = 1;
 

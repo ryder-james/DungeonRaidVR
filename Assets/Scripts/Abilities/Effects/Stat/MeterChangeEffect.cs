@@ -4,7 +4,7 @@ using DungeonRaid.Characters;
 using DungeonRaid.Characters.Heroes;
 
 namespace DungeonRaid.Abilities.Effects {
-	[CreateAssetMenu(fileName = "MeterChange", menuName = EffectMenuPrefix + "Meter Change")]
+	[CreateAssetMenu(fileName = "MeterChange", menuName = StatEffectMenuPrefix + "Meter Change")]
 	public class MeterChangeEffect : ChannelableEffect {
 		public enum MeterChangeType {
 			Damage,

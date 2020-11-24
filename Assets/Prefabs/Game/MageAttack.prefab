@@ -126,4 +126,5 @@ MonoBehaviour:
   useTriggerCollision: 1
   targetType: 2
   onHitEffects:
+  - {fileID: 11400000, guid: 69350e1178adeac4183786ae99c85201, type: 2}
   - {fileID: 11400000, guid: ab7b4f2af804b7540bf9d0b81d906d71, type: 2}

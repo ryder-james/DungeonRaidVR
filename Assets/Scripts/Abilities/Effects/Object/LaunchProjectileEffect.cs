@@ -5,7 +5,7 @@ using DungeonRaid.Characters.Heroes;
 using Sirenix.OdinInspector;
 
 namespace DungeonRaid.Abilities.Effects {
-	[CreateAssetMenu(fileName = "LaunchProjectile", menuName = EffectMenuPrefix + "Launch Projectile")]
+	[CreateAssetMenu(fileName = "LaunchProjectile", menuName = ObjectEffectMenuPrefix + "Launch Projectile")]
 	public class LaunchProjectileEffect : ChannelableEffect {
 		[SerializeField] private float range = 4;
 		[SerializeField] private StackType stackType = StackType.None;
