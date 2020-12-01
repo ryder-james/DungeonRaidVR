@@ -1,6 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class MeterSave : MonoBehaviour {
+using DungeonRaid.Characters;
+
+namespace DungeonRaid.Abilities.Passive {
+	public class MeterSave : MonoBehaviour {
+		[SerializeField] private Character character = null;
+
+		private void Start() {
+			
+		}
+	}
 }

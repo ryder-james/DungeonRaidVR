@@ -20,6 +20,10 @@ namespace DungeonRaid.Characters {
 		[SerializeField] protected AmmoPool[] ammoPools = null;
 
 		public MeterComponent[] Meters { get => meters; private set => meters = value; }
+
+		public Action<MeterComponent, float> OnMeterSpent { get; set; }
+		public Action<AmmoPool, float> OnAmmoSpent { get; set; }
+
 		private Dictionary<Type, List<MonoBehaviour>> ComponentPools { get; set; } = new Dictionary<Type, List<MonoBehaviour>>();
 
 		public Animator Animator {
@@ -63,9 +67,12 @@ namespace DungeonRaid.Characters {
 			}
 		}
 
-		public void UpdateMeter(string meterName, float amount) {
+		public void UpdateMeter(string meterName, float amount, bool isSpending = false) {
 			MeterComponent meter = FindMeter(meterName);
 			if (meter != null) {
+				if (isSpending) {
+					OnMeterSpent?.Invoke(meter, amount);
+				}
 				meter.Value += amount;
 			}
 		}
@@ -78,7 +85,7 @@ namespace DungeonRaid.Characters {
 			return FindMeter(meterName) != null;
 		}
 
-		public void UpdateAmmoPool(string ammoName, float amount) {
+		public void UpdateAmmoPool(string ammoName, float amount, bool isSpending = false) {
 			AmmoPool pool = FindAmmoPool(ammoName);
 			if (pool != null) {
 				pool.AmmoCount += amount;
