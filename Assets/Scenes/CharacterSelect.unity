@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -362,7 +362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8e02fcbcd2c1ba45a2f04d72840f57d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initial: 2
+  initial: 1
   heroPrefabs: {fileID: 11400000, guid: 88e43e27198d9074983a90b1ca13c05c, type: 2}
   lights:
   - {fileID: 800012115}
@@ -1021,7 +1021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8e02fcbcd2c1ba45a2f04d72840f57d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initial: 4
+  initial: 1
   heroPrefabs: {fileID: 11400000, guid: 88e43e27198d9074983a90b1ca13c05c, type: 2}
   lights:
   - {fileID: 370402227}
@@ -1454,7 +1454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8e02fcbcd2c1ba45a2f04d72840f57d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initial: 3
+  initial: 1
   heroPrefabs: {fileID: 11400000, guid: 88e43e27198d9074983a90b1ca13c05c, type: 2}
   lights:
   - {fileID: 453395409}

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   applyToCaster: 0
   duration: 2
-  changeType: 2
+  changeType: 3
   amount: 2

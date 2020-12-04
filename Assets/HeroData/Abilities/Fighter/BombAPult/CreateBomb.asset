@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   applyToCaster: 0
   range: 4
-  stackType: 0
+  stackType: 1
   rangeImprovement: 4
   projectilePrefab: {fileID: 5478810904490622146, guid: a0ce4b5d8b7a1954c95a31599bf60bc0,
     type: 3}

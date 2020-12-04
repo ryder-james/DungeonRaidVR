@@ -93,9 +93,7 @@ namespace DungeonRaid.UI {
 			Vector2 screenPos = cam.WorldToScreenPoint(target.Center) / canvas.scaleFactor;
 			highlight.anchoredPosition = screenPos + Vector2.up * 30;
 
-			if (target != prevTarget) {
-				UpdateHighlightSize(target);
-			}
+			UpdateHighlightSize(target);
 
 			highlight.gameObject.SetActive(true);
 

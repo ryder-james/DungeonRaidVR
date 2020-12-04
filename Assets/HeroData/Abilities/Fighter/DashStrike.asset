@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c8d0c970bec9c344aca3d6074209da2, type: 3}
+  m_Script: {fileID: 11500000, guid: 36490d2ba2bcc1c4c9492cb7abe612de, type: 3}
   m_Name: DashStrike
   m_EditorClassIdentifier: 
   durationType: 0
-  duration: 0
-  maxChannelTime: 0
+  duration: 1
+  maxChannelTime: 1
   effectSet:
     costs:
     - type: 0
@@ -22,10 +22,10 @@ MonoBehaviour:
       ammoName: 
       amount: 5
     effects:
-    - {fileID: 11400000, guid: e21eae393a896934697d68ed1699314b, type: 2}
-    - {fileID: 11400000, guid: bf3bcebaaa481c14a917f85de611efe0, type: 2}
+    - {fileID: 11400000, guid: 095dba1b1cff79e469743cfcac79e1ac, type: 2}
     - {fileID: 11400000, guid: feccc8a9cb8f68d48844cfb6ce64fe8a, type: 2}
-    - {fileID: 11400000, guid: eb470a255365a9b46849b2711a61bc67, type: 2}
+    - {fileID: 11400000, guid: bf3bcebaaa481c14a917f85de611efe0, type: 2}
+    - {fileID: 11400000, guid: e21eae393a896934697d68ed1699314b, type: 2}
   updateEffectSet:
     costs: []
     effects: []
@@ -35,8 +35,3 @@ MonoBehaviour:
   channelableEffects: []
   cooldown: 2
   icon: {fileID: 21300000, guid: 8f21cf4531f7d91478a51e41f4c7fb7c, type: 3}
-  radius: 1
-  hitSelf: 0
-  targetLayers:
-    serializedVersion: 2
-    m_Bits: 1

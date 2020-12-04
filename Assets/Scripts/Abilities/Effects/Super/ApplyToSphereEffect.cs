@@ -17,7 +17,8 @@ namespace DungeonRaid.Abilities.Effects {
 			Collider[] overlaps = Physics.OverlapSphere(center, radius, layerMask, QueryTriggerInteraction.Collide);
 
 			foreach (Collider collider in overlaps) {
-				if (collider.TryGetComponent(out Character character)) {
+				Character character = collider.GetComponentInParent<Character>();
+				if (character != null) {
 					effect.Apply(caster, character, point);
 				}
 			}

@@ -13,7 +13,6 @@ namespace DungeonRaid.Characters {
 	public abstract class Character : MonoBehaviour {
 		[SerializeField] private Transform nozzle = null;
 		[SerializeField] private Transform center = null;
-		[SerializeField] protected GameObject modelDataPrefab = null;
 		[Space]
 		[SerializeField] protected float hpMod = 1;
 		[SerializeField] private MeterComponent[] meters = null;
@@ -37,6 +36,7 @@ namespace DungeonRaid.Characters {
 			private set => animator = value;
 		}
 
+		public System.Action OnDeath { get; set; }
 		public Vector3 Nozzle { get => nozzle.position; set => nozzle.position = value; }
 		public Vector3 Center => center != null ? center.position : transform.position;
 		public bool Initialized { get; protected set; }
@@ -75,6 +75,10 @@ namespace DungeonRaid.Characters {
 				}
 				meter.Value += amount;
 			}
+
+			if (meterName == "Health" && meter.Value <= 0) {
+				OnDeath?.Invoke();
+			}
 		}
 
 		public MeterComponent FindMeter(string meterName) {
@@ -111,15 +115,18 @@ namespace DungeonRaid.Characters {
 		protected abstract float CalculateHealth(int heroCount);
 
 		public T GetFreeBehaviour<T>(bool add = true) where T : MonoBehaviour {
+			T result = null;
+
 			if (!ComponentPools.ContainsKey(typeof(T))) {
 				if (add) {
-					return AddBehaviour<T>();
+					result = AddBehaviour<T>();
+					result.enabled = true;
+					return result;
 				} else {
 					return null;
 				}
 			}
 
-			T result = null;
 			foreach (T element in ComponentPools[typeof(T)]) {
 				if (!element.enabled) {
 					result = element;
@@ -131,6 +138,7 @@ namespace DungeonRaid.Characters {
 				result = AddBehaviour<T>();
 			}
 
+			result.enabled = true;
 			return result;
 		}
 

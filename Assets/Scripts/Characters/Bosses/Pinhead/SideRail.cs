@@ -76,7 +76,7 @@ public class SideRail : MonoBehaviour {
 
 			Hero hero = collision.gameObject.GetComponent<Hero>();
 
-			if (heroHitCooldowns[hero] <= 0) {
+			if (heroHitCooldowns.ContainsKey(hero) && heroHitCooldowns[hero] <= 0) {
 				hero.UpdateMeter("Health", -damage);
 				heroHitCooldowns[hero] += 1;
 			} else {
