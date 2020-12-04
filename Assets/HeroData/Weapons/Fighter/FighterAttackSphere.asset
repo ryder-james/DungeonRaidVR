@@ -16,7 +16,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 512
-  radius: 10
-  offset: {x: 0, y: 0, z: -0.5}
+  radius: 6
+  offset: {x: 0, y: 0, z: -1}
   useReticlePosition: 0
   effect: {fileID: 11400000, guid: c25c4542c668faa45bd86ffd3d958615, type: 2}

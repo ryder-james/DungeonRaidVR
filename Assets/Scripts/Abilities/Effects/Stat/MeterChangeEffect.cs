@@ -19,10 +19,10 @@ namespace DungeonRaid.Abilities.Effects {
 
 		public override void Apply(Character caster, Character target, Vector3 point) {
 			this.target = target;
+			target.UpdateMeter(targetMeterName, amount * (type == MeterChangeType.Damage ? -1 : 1));
 		}
 
 		protected override void Begin() {
-			target.UpdateMeter(targetMeterName, amount * (type == MeterChangeType.Damage ? -1 : 1));
 		}
 
 		protected override void Channel() {
@@ -30,7 +30,6 @@ namespace DungeonRaid.Abilities.Effects {
 		}
 
 		protected override void End() {
-			throw new System.NotImplementedException();
 		}
 	}
 }
