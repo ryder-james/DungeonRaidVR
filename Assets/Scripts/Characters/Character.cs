@@ -115,15 +115,18 @@ namespace DungeonRaid.Characters {
 		protected abstract float CalculateHealth(int heroCount);
 
 		public T GetFreeBehaviour<T>(bool add = true) where T : MonoBehaviour {
+			T result = null;
+
 			if (!ComponentPools.ContainsKey(typeof(T))) {
 				if (add) {
-					return AddBehaviour<T>();
+					result = AddBehaviour<T>();
+					result.enabled = true;
+					return result;
 				} else {
 					return null;
 				}
 			}
 
-			T result = null;
 			foreach (T element in ComponentPools[typeof(T)]) {
 				if (!element.enabled) {
 					result = element;
@@ -135,6 +138,7 @@ namespace DungeonRaid.Characters {
 				result = AddBehaviour<T>();
 			}
 
+			result.enabled = true;
 			return result;
 		}
 
