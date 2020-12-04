@@ -34,7 +34,7 @@ namespace DungeonRaid.Abilities {
 		}
 
 		private void Hit(GameObject other) {
-			Character hit = other.GetComponent<Character>();
+			Character hit = other.GetComponentInParent<Character>();
 			
 			if (targetType.HasFlag(ProjectileTargetType.Hero) && other.CompareTag("Hero") ||
 				targetType.HasFlag(ProjectileTargetType.Boss) && other.CompareTag("Boss") ||
