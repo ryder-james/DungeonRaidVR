@@ -8,6 +8,8 @@ namespace DungeonRaid.Characters.Bosses.Pinhead {
 	public class BowlingBall : Throwable {
 		[SerializeField] private float damage = 2;
 		[SerializeField] private float speed = 10;
+		[SerializeField] private AudioSource rollingSound = null;
+		[SerializeField] private AudioSource hitSound = null;
 
 		public override void Grab() {
 
@@ -19,18 +21,21 @@ namespace DungeonRaid.Characters.Bosses.Pinhead {
 			}
 		}
 
-		public void OnTriggerExit(Collider other) {
-
-		}
-
-		public void OnTriggerStay(Collider other) {
-
+		public void StopRollingSound() {
+			rollingSound.Stop();
 		}
 
 		public override void Throw(Vector3 releaseVelocity, Vector3 releaseAngularVelocity) {
 			body.constraints |= RigidbodyConstraints.FreezePositionX;
 			body.velocity = new Vector3(0, -speed, speed);
 			body.angularVelocity = releaseAngularVelocity;
+		}
+
+		private void OnCollisionEnter(Collision collision) {
+			if (collision.gameObject.layer == LayerMask.NameToLayer("Ground")) {
+				hitSound.Play();
+				rollingSound.Play();
+			}
 		}
 	}
 }
