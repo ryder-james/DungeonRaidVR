@@ -1,22 +1,22 @@
 ﻿using UnityEngine;
 
 using DungeonRaid.Characters.Bosses;
+using DungeonRaid.Abilities.Effects;
 
 namespace DungeonRaid.Characters.Heroes {
 	public class Weapon : MonoBehaviour {
-		[SerializeField] private float damage = 1;
-		[SerializeField] private float range = 1;
+		[SerializeField] private Effect[] attackEffects = null;
 
-		private Boss boss;
+		private Hero wielder;
 
 		private void Start() {
-			GameObject bossObj = GameObject.FindGameObjectWithTag("Boss");
-			boss = bossObj != null ? bossObj.GetComponent<Boss>() : null;
+			wielder = GetComponent<Hero>();
 		}
 
 		public void Attack() {
-			Debug.Log($"Range: {range}");
-			boss.UpdateMeter("Health", -damage);
+			foreach (Effect attackEffect in attackEffects) {
+				attackEffect.Apply(wielder, wielder.TargetCharacter, wielder.TargetPoint);
+			}
 		}
 	}
 }

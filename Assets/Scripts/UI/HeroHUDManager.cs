@@ -19,7 +19,6 @@ namespace DungeonRaid.UI {
 		}
 
 		public void OnPlayerJoined(PlayerInput obj) {
-			Debug.Log("join");
 			if (!playerInputs.Contains(obj)) {
 				playerInputs.Add(obj);
 				StartCoroutine(nameof(AddHero), obj.GetComponent<Hero>());
@@ -27,9 +26,7 @@ namespace DungeonRaid.UI {
 		}
 
 		private IEnumerator AddHero(Hero hero) {
-			Debug.Log("add pre-init");
 			yield return new WaitUntil(() => hero.Initialized);
-			Debug.Log("add post-init");
 
 			heroHUDs[heroCount].SetHero(hero);
 

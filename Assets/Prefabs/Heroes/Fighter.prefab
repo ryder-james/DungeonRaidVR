@@ -158,8 +158,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a4b4304cadb3694da035259346bd3f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
-  range: 2
+  attackEffects:
+  - {fileID: 11400000, guid: c9efa330d82f65e44b8f93bbeaf0c240, type: 2}
+  - {fileID: 11400000, guid: 510210806258bfb4aae21a7756ac924c, type: 2}
+  - {fileID: 11400000, guid: 228329417c67b7a498120157ece78c62, type: 2}
 --- !u!114 &8639554464805647247
 MonoBehaviour:
   m_ObjectHideFlags: 0

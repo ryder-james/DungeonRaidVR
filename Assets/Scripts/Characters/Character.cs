@@ -4,6 +4,10 @@ using UnityEngine;
 
 using DungeonRaid.Collections;
 using DungeonRaid.Abilities;
+using System.Collections.Generic;
+using DungeonRaid.Abilities.Effects.StatusEffects;
+using DungeonRaid.Abilities.Effects;
+using System;
 
 namespace DungeonRaid.Characters {
 	public abstract class Character : MonoBehaviour {
@@ -16,6 +20,11 @@ namespace DungeonRaid.Characters {
 		[SerializeField] protected AmmoPool[] ammoPools = null;
 
 		public MeterComponent[] Meters { get => meters; private set => meters = value; }
+
+		public Action<MeterComponent, float> OnMeterSpent { get; set; }
+		public Action<AmmoPool, float> OnAmmoSpent { get; set; }
+
+		private Dictionary<Type, List<MonoBehaviour>> ComponentPools { get; set; } = new Dictionary<Type, List<MonoBehaviour>>();
 
 		public Animator Animator {
 			get { 
@@ -51,16 +60,19 @@ namespace DungeonRaid.Characters {
 		public void UpdateHealth(int heroCount) {
 			foreach (MeterComponent meter in Meters) {
 				if (meter.MeterName == "Health") {
-					meter.MaxValue = CalculateHealth(heroCount);
+					meter.MaxValue = CalculateHealth(Mathf.Max(1, heroCount));
 					meter.Value = meter.MaxValue;
 					break;
 				}
 			}
 		}
 
-		public void UpdateMeter(string meterName, float amount) {
+		public void UpdateMeter(string meterName, float amount, bool isSpending = false) {
 			MeterComponent meter = FindMeter(meterName);
 			if (meter != null) {
+				if (isSpending) {
+					OnMeterSpent?.Invoke(meter, amount);
+				}
 				meter.Value += amount;
 			}
 		}
@@ -73,7 +85,7 @@ namespace DungeonRaid.Characters {
 			return FindMeter(meterName) != null;
 		}
 
-		public void UpdateAmmoPool(string ammoName, float amount) {
+		public void UpdateAmmoPool(string ammoName, float amount, bool isSpending = false) {
 			AmmoPool pool = FindAmmoPool(ammoName);
 			if (pool != null) {
 				pool.AmmoCount += amount;
@@ -97,5 +109,42 @@ namespace DungeonRaid.Characters {
 		}
 
 		protected abstract float CalculateHealth(int heroCount);
+
+		public T GetFreeBehaviour<T>(bool add = true) where T : MonoBehaviour {
+			if (!ComponentPools.ContainsKey(typeof(T))) {
+				if (add) {
+					return AddBehaviour<T>();
+				} else {
+					return null;
+				}
+			}
+
+			T result = null;
+			foreach (T element in ComponentPools[typeof(T)]) {
+				if (!element.enabled) {
+					result = element;
+					break;
+				}
+			}
+
+			if (add && result == null) {
+				result = AddBehaviour<T>();
+			}
+
+			return result;
+		}
+
+		public T AddBehaviour<T>() where T : MonoBehaviour {
+			Type t = typeof(T);
+
+			if (!ComponentPools.ContainsKey(t)) {
+				ComponentPools[t] = new List<MonoBehaviour>();
+			}
+
+			T added = gameObject.AddComponent<T>();
+			ComponentPools[t].Add(added);
+
+			return added;
+		}
 	}
 }

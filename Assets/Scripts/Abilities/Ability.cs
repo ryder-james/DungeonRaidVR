@@ -86,6 +86,13 @@ namespace DungeonRaid.Abilities {
 				End();
 			} else if (success) {
 				isRunning = true;
+				if (durationType == DurationType.Channeled) {
+					foreach (Cost cost in updateEffectSet.costs) {
+						if (cost.Type == CostType.Stat) {
+							Owner.FindMeter(cost.MeterName).IsRecharging = false;
+						}
+					}
+				}
 			}
 
 			return success;
@@ -131,6 +138,14 @@ namespace DungeonRaid.Abilities {
 
 			foreach (ChannelableEffect effect in channelableEffects) {
 				effect.EndChannel();
+			}
+
+			if (durationType == DurationType.Channeled) {
+				foreach (Cost cost in updateEffectSet.costs) {
+					if (cost.Type == CostType.Stat) {
+						Owner.FindMeter(cost.MeterName).IsRecharging = true;
+					}
+				}
 			}
 
 			TargetCast(channelableEffects);

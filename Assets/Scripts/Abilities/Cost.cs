@@ -59,10 +59,10 @@ namespace DungeonRaid.Abilities {
 			if (canPay) {
 				switch (Type) {
 				case CostType.Stat:
-					target.UpdateMeter(MeterName, -Amount);
+					target.UpdateMeter(MeterName, -Amount, true);
 					break;
 				case CostType.Ammo:
-					target.UpdateAmmoPool(AmmoName, -Amount);
+					target.UpdateAmmoPool(AmmoName, -Amount, true);
 					break;
 				default:
 					canPay = false;

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2455634998618640638}
   m_Layer: 11
   m_Name: Target
-  m_TagString: Untagged
+  m_TagString: Hero
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -68,7 +68,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8023564229564856746}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.91, z: 2.59}
+  m_LocalPosition: {x: 0.458, y: 1.33, z: 1.26}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8639554464805647235}
@@ -158,8 +158,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a4b4304cadb3694da035259346bd3f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0.5
-  range: 20
+  attackEffects:
+  - {fileID: 11400000, guid: d54190c0cb098e147a24e29b4b30c81b, type: 2}
+  - {fileID: 11400000, guid: 510210806258bfb4aae21a7756ac924c, type: 2}
+  - {fileID: 11400000, guid: 0c25b2bdcfbc3cc4b921e43590ad6397, type: 2}
 --- !u!114 &8639554464805647247
 MonoBehaviour:
   m_ObjectHideFlags: 0
