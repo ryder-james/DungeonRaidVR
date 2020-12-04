@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28f205def9094f943abeeff6a91cc4a0, type: 3}
+  m_Name: Fireball
+  m_EditorClassIdentifier: 
+  durationType: 0
+  duration: 1
+  maxChannelTime: 1
+  effectSet:
+    costs:
+    - type: 0
+      meterName: Mana
+      ammoName: 
+      amount: 3
+    effects:
+    - {fileID: 11400000, guid: 70e414f0dadac7c40811c7c7a4c34597, type: 2}
+    - {fileID: 11400000, guid: 510210806258bfb4aae21a7756ac924c, type: 2}
+    - {fileID: 11400000, guid: efd024d9dec7f664089fdd5c8e246222, type: 2}
+  updateEffectSet:
+    costs: []
+    effects: []
+  endEffectSet:
+    costs: []
+    effects: []
+  channelableEffects: []
+  cooldown: 5
+  icon: {fileID: 21300000, guid: 628704aad68f3294580af3a342bd8528, type: 3}
