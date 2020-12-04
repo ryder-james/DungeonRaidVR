@@ -11,6 +11,8 @@ namespace DungeonRaid.Characters.Bosses.Pinhead {
 		[SerializeField] private AudioSource rollingSound = null;
 		[SerializeField] private AudioSource hitSound = null;
 
+		private bool hasLanded = true;
+
 		public override void Grab() {
 
 		}
@@ -23,18 +25,21 @@ namespace DungeonRaid.Characters.Bosses.Pinhead {
 
 		public void StopRollingSound() {
 			rollingSound.Stop();
+			hasLanded = true;
 		}
 
 		public override void Throw(Vector3 releaseVelocity, Vector3 releaseAngularVelocity) {
 			body.constraints |= RigidbodyConstraints.FreezePositionX;
 			body.velocity = new Vector3(0, -speed, speed);
 			body.angularVelocity = releaseAngularVelocity;
+			hasLanded = false;
 		}
 
 		private void OnCollisionEnter(Collision collision) {
-			if (collision.gameObject.layer == LayerMask.NameToLayer("Ground")) {
+			if (!hasLanded && collision.gameObject.CompareTag("Ground")) {
 				hitSound.Play();
 				rollingSound.Play();
+				hasLanded = true;
 			}
 		}
 	}
