@@ -3,8 +3,9 @@
 namespace DungeonRaid.Characters.Bosses.Pinhead {
 	public class BallResetter : MonoBehaviour {
 		private void OnTriggerEnter(Collider other) {
-			if (TryGetComponent(out BowlingBall ball)) {
-				Rigidbody rb = other.GetComponent<Rigidbody>();
+			BowlingBall ball = other.GetComponentInParent<BowlingBall>();
+			if (ball != null) {
+				Rigidbody rb = other.GetComponentInParent<Rigidbody>();
 				rb.constraints = RigidbodyConstraints.None;
 				rb.velocity *= 2;
 				ball.StopRollingSound();

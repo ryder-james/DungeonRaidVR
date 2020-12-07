@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5436d7b0982d5db4680421e0ad8837dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
+  damage: 5
   speed: 30
   rollingSound: {fileID: 6189927560586009339}
   hitSound: {fileID: 3120647655992776821}

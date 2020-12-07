@@ -14,8 +14,8 @@ public class GameHandler : Persistent {
 	private Boss boss;
 	private Hero[] heroes;
 	private int deadHeroes = 0;
-	private TMP_Text gameOverText;
-	private GameObject gameOverPanel;
+	private TMP_Text[] gameOverTexts;
+	private GameObject[] gameOverPanels;
 	private Button mainMenuButton;
 
 	public void OnGameStart() {
@@ -29,6 +29,10 @@ public class GameHandler : Persistent {
 	public void OnMainMenu() {
 		mainMenuButton.onClick.RemoveListener(OnMainMenu);
 		SceneManager.LoadScene("MainMenu");
+	}
+
+	public void OnQuit() {
+		Application.Quit();
 	}
 
 	private IEnumerator StartGameAsync(GameStartInfo info) {
@@ -48,26 +52,38 @@ public class GameHandler : Persistent {
 			heroes[i].OnDeath += OnHeroDeath;
 		}
 
-		gameOverPanel = GameObject.FindGameObjectWithTag("GameOverPanel");
-		gameOverText = gameOverPanel.transform.GetComponentInChildren<TMP_Text>();
-		mainMenuButton = gameOverPanel.transform.GetComponentInChildren<Button>(true);
+		gameOverPanels = GameObject.FindGameObjectsWithTag("GameOverPanel");
+		gameOverTexts = new TMP_Text[gameOverPanels.Length];
+		for (int i = 0; i < gameOverPanels.Length; i++) {
+			gameOverTexts[i] = gameOverPanels[i].transform.GetComponentInChildren<TMP_Text>();
+			mainMenuButton = gameOverPanels[i].transform.GetComponentInChildren<Button>(true);
+		}
+
 		mainMenuButton.onClick.AddListener(OnMainMenu);
-		gameOverPanel.SetActive(false);
+		foreach(GameObject panel in gameOverPanels) {
+			panel.SetActive(false);
+		}
 	}
 
 	private void OnHeroDeath() {
 		deadHeroes++;
 		if (deadHeroes >= heroes.Length) {
-			gameOverText.text = "Pinhead Wins!";
+			for (int i = 0; i < gameOverPanels.Length; i++) {
+				gameOverTexts[i].text = "Pinhead Wins!";
+				gameOverPanels[i].SetActive(true);
+			}
+
 			mainMenuButton.gameObject.SetActive(true);
-			gameOverPanel.SetActive(true);
 		}
 	}
 
 	private void OnBossDeath() {
-		gameOverText.text = "Heroes Win!";
+		for (int i = 0; i < gameOverPanels.Length; i++) {
+			gameOverTexts[i].text = "Heroes Win!";
+			gameOverPanels[i].SetActive(true);
+		}
+
 		mainMenuButton.gameObject.SetActive(true);
-		gameOverPanel.SetActive(true);
 	}
 
 	private struct GameStartInfo {
