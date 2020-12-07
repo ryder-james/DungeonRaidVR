@@ -79,7 +79,7 @@ public class SideRail : MonoBehaviour {
 			if (heroHitCooldowns.ContainsKey(hero) && heroHitCooldowns[hero] <= 0) {
 				hero.UpdateMeter("Health", -damage);
 				heroHitCooldowns[hero] += 1;
-			} else {
+			} else if (heroHitCooldowns.ContainsKey(hero)) {
 				heroHitCooldowns[hero] -= Time.deltaTime;
 			}
 		}

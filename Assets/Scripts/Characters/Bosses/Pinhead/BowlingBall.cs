@@ -3,6 +3,7 @@
 using Common.Physics;
 using DungeonRaid.Characters.Bosses.Interactables;
 using DungeonRaid.Characters.Heroes;
+using System.Collections;
 
 namespace DungeonRaid.Characters.Bosses.Pinhead {
 	public class BowlingBall : Throwable {
@@ -24,7 +25,7 @@ namespace DungeonRaid.Characters.Bosses.Pinhead {
 		}
 
 		public void StopRollingSound() {
-			rollingSound.Stop();
+			StartCoroutine(nameof(Decrescendo));
 			hasLanded = true;
 		}
 
@@ -41,6 +42,23 @@ namespace DungeonRaid.Characters.Bosses.Pinhead {
 				rollingSound.Play();
 				hasLanded = true;
 			}
+		}
+
+		private IEnumerator Decrescendo() {
+			if (!rollingSound.isPlaying) {
+				yield break;
+			}
+
+			float start = rollingSound.volume;
+			float end = 0;
+			for (float t = 0; t < 1; t += Time.deltaTime) {
+				Debug.Log(rollingSound.volume);
+				rollingSound.volume = Mathf.Lerp(start, end, t);
+				yield return new WaitForEndOfFrame();
+			}
+
+			rollingSound.Stop();
+			rollingSound.volume = start;
 		}
 	}
 }
