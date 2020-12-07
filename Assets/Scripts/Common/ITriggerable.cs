@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Common.Physics {
+namespace JCommon.Physics {
 	public interface ITriggerable {
 		void OnTriggerEnter(Collider other);
 		void OnTriggerStay(Collider other);

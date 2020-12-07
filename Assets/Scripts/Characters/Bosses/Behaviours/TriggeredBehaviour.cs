@@ -1,13 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public abstract class TriggeredBehaviour : MonoBehaviour {
-	public delegate void BehaviourNotification();
 
-	public abstract void Trigger();
+namespace DungeonRaid.Characters.Bosses.Behaviours {
+	public abstract class TriggeredBehaviour : MonoBehaviour {
+		public delegate void BehaviourNotification();
 
-	protected virtual void Start() {}
+		public abstract void Trigger();
 
-	protected virtual void Update() {}
+		protected virtual void Start() { }
+
+		protected virtual void Update() { }
+	}
 }

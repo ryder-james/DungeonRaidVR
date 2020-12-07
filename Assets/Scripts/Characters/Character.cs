@@ -1,13 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 
 using UnityEngine;
 
 using DungeonRaid.Collections;
 using DungeonRaid.Abilities;
-using System.Collections.Generic;
-using DungeonRaid.Abilities.Effects.StatusEffects;
-using DungeonRaid.Abilities.Effects;
-using System;
 
 namespace DungeonRaid.Characters {
 	public abstract class Character : MonoBehaviour {

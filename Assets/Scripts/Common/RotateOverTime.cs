@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Common.Movement {
+namespace JCommon.Movement {
 	public class RotateOverTime : MonoBehaviour {
 		[SerializeField] private Vector3 rotationAxis = Vector3.up;
 		[SerializeField] private float rotationSpeed = 2;

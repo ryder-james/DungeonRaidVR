@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-using DungeonRaid.Characters.Bosses;
 using DungeonRaid.Abilities.Effects;
 
 namespace DungeonRaid.Characters.Heroes {

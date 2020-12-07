@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
+using Sirenix.OdinInspector;
 
 using DungeonRaid.Characters;
-using DungeonRaid.Characters.Heroes;
-using Sirenix.OdinInspector;
 
 namespace DungeonRaid.Abilities.Effects {
 	[CreateAssetMenu(fileName = "LaunchProjectile", menuName = ObjectEffectMenuPrefix + "Launch Projectile")]

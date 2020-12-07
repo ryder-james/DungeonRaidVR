@@ -2,9 +2,9 @@
 
 using Sirenix.OdinInspector;
 
+using DungeonRaid.Characters;
 using DungeonRaid.Characters.Heroes;
 using DungeonRaid.Abilities.Effects;
-using DungeonRaid.Characters;
 
 namespace DungeonRaid.Abilities {
 	public abstract class Ability : ScriptableObject {

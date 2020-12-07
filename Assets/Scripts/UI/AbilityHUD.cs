@@ -2,11 +2,12 @@
 
 using UnityEngine;
 using UnityEngine.UI;
+
 using TMPro;
 
 using DungeonRaid.Abilities;
 
-namespace DeungonRaid.UI {
+namespace DungeonRaid.UI {
 	public class AbilityHUD : MonoBehaviour{
 		[SerializeField] private Slider cooldownSlider = null;
 		[SerializeField] private TMP_Text cooldownText = null;

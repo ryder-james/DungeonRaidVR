@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-using DungeonRaid.Abilities.Effects;
 using DungeonRaid.Abilities;
+using DungeonRaid.Characters.Bosses.Behaviours;
 
 namespace DungeonRaid.Characters.Bosses.Interactables {
 	[RequireComponent(typeof(Collider))]

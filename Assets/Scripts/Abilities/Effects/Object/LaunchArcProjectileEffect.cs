@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 
 using DungeonRaid.Characters;
-using DungeonRaid.Characters.Heroes;
-using Sirenix.OdinInspector;
 
 namespace DungeonRaid.Abilities.Effects {
 	[CreateAssetMenu(fileName = "LaunchArcProjectile", menuName = ObjectEffectMenuPrefix + "Launch Arc Projectile")]

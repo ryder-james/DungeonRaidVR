@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+
 using Valve.VR;
 
 namespace DungeonRaid.Characters.Bosses.Interactables {

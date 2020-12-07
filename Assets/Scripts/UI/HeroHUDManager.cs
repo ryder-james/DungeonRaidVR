@@ -1,10 +1,10 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 using DungeonRaid.Characters.Heroes;
-using UnityEngine.InputSystem;
-using System.Collections.Generic;
 
 namespace DungeonRaid.UI {
 	public class HeroHUDManager : MonoBehaviour {

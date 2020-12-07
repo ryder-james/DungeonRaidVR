@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Common.Extensions {
+namespace JCommon.Extensions {
 	public static class BoundsExtensions {
 		/**
 		 * Most of this code is lifted (with permission) from this answer board and modified to fit this use case

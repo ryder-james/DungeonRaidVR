@@ -2,7 +2,6 @@
 
 using DungeonRaid.Characters;
 using DungeonRaid.Abilities.Effects.StatusEffects;
-using DungeonRaid.Characters.Heroes;
 
 namespace DungeonRaid.Abilities.Effects {
 	[CreateAssetMenu(fileName = "ApplyStatusEffect", menuName = SuperEffectMenuPrefix + "Apply Status Effect")]

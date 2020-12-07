@@ -1,7 +1,6 @@
-﻿using DungeonRaid.Characters;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
+using DungeonRaid.Characters;
 
 namespace DungeonRaid.Abilities.Effects {
 	[CreateAssetMenu(fileName = "EffectSet", menuName = SuperEffectMenuPrefix + "Effect Set")]

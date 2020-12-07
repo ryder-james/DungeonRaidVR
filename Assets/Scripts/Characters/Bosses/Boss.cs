@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 
-using DungeonRaid.Collections;
-
 namespace DungeonRaid.Characters.Bosses {
     public class Boss : Character {
 		[SerializeField] private float initialHealth = 100;

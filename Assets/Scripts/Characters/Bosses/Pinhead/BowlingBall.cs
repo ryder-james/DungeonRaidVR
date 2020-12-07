@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+﻿using System.Collections;
 
-using Common.Physics;
-using DungeonRaid.Characters.Bosses.Interactables;
+using UnityEngine;
+
 using DungeonRaid.Characters.Heroes;
-using System.Collections;
+using DungeonRaid.Characters.Bosses.Interactables;
 
 namespace DungeonRaid.Characters.Bosses.Pinhead {
 	public class BowlingBall : Throwable {
