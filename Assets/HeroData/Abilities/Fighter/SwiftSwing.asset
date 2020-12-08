@@ -22,6 +22,7 @@ MonoBehaviour:
       ammoName: 
       amount: 3
     effects:
+    - {fileID: 11400000, guid: 72846cec4dff3214985eca3b23745d8d, type: 2}
     - {fileID: 11400000, guid: a74ae6d7afae532418e74eafbb035309, type: 2}
   updateEffectSet:
     costs: []
@@ -29,5 +30,6 @@ MonoBehaviour:
   endEffectSet:
     costs: []
     effects: []
+  channelableEffects: []
   cooldown: 4
   icon: {fileID: 21300000, guid: fd756a0256ac14b45a3b920e70d4a99f, type: 3}

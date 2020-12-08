@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f924bdc1467d6cd4389c4215689b2247, type: 3}
-  m_Name: FighterSwingSound
+  m_Script: {fileID: 11500000, guid: ecdfca8aa8fd2624a80903858318ce13, type: 3}
+  m_Name: DashStrikeHitEffects
   m_EditorClassIdentifier: 
   applyToCaster: 0
-  playAtTarget: 0
-  volume: 1
-  clip: {fileID: 8300000, guid: fec9921cace35134f9e46040fe7bc24f, type: 3}
+  effects:
+  - {fileID: 11400000, guid: 72953076ded7d6b40981ed9dddb753fb, type: 2}
+  - {fileID: 11400000, guid: eb470a255365a9b46849b2711a61bc67, type: 2}

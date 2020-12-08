@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f924bdc1467d6cd4389c4215689b2247, type: 3}
-  m_Name: FighterSwingSound
+  m_Name: DashStrikeSound
   m_EditorClassIdentifier: 
   applyToCaster: 0
   playAtTarget: 0
   volume: 1
-  clip: {fileID: 8300000, guid: fec9921cace35134f9e46040fe7bc24f, type: 3}
+  clip: {fileID: 8300000, guid: cd6602be67f07db47be46a564669aba6, type: 3}

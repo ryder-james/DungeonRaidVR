@@ -21,17 +21,20 @@ MonoBehaviour:
       meterName: Energy
       ammoName: 
       amount: 3
-    effects: []
+    effects:
+    - {fileID: 11400000, guid: 35fdadd92be54514e8ad5bbe42cdcade, type: 2}
   updateEffectSet:
     costs:
     - type: 0
       meterName: Energy
       ammoName: 
       amount: 1
-    effects: []
+    effects:
+    - {fileID: 11400000, guid: 35fdadd92be54514e8ad5bbe42cdcade, type: 2}
   endEffectSet:
     costs: []
-    effects: []
+    effects:
+    - {fileID: 11400000, guid: c810c404e645d8e4b9a4ed9c77a3940c, type: 2}
   channelableEffects:
   - {fileID: 11400000, guid: 272029920e45622469a4360354a9e81b, type: 2}
   cooldown: 3

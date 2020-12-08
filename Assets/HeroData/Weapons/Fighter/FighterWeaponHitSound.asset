@@ -15,4 +15,4 @@ MonoBehaviour:
   applyToCaster: 0
   playAtTarget: 1
   volume: 1
-  clip: {fileID: 8300000, guid: d25bef6380cd9fb4592f469c49abd251, type: 3}
+  clip: {fileID: 8300000, guid: 49144b32a53863c4e8e86c0b0dada7a1, type: 3}
