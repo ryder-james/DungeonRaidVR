@@ -20,7 +20,10 @@ namespace DungeonRaid.Characters.Bosses.Pinhead {
 
 		public void OnTriggerEnter(Collider other) {
 			if (other.CompareTag("Hero")) {
-				other.GetComponent<Hero>().UpdateMeter("Health", -damage);
+				float dmg = -damage * Boss.DamageMultiplier;
+				if (other.TryGetComponent(out Hero hero))  {
+					hero.UpdateMeter("Health", dmg);
+				}
 			}
 		}
 
@@ -52,7 +55,6 @@ namespace DungeonRaid.Characters.Bosses.Pinhead {
 			float start = rollingSound.volume;
 			float end = 0;
 			for (float t = 0; t < 1; t += Time.deltaTime) {
-				Debug.Log(rollingSound.volume);
 				rollingSound.volume = Mathf.Lerp(start, end, t);
 				yield return new WaitForEndOfFrame();
 			}

@@ -34,6 +34,10 @@ namespace DungeonRaid.Input {
 		}
 
 		private void Update() {
+			if (hero.IsDead) {
+				return;
+			}
+
 			Aim(lookInput);
 
 			Vector3 move = new Vector3(movementInput.x, 0, movementInput.y);

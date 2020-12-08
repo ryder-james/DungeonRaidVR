@@ -73,18 +73,19 @@ namespace DungeonRaid {
 		private void OnHeroDeath() {
 			deadHeroes++;
 			if (deadHeroes >= heroes.Length) {
-				for (int i = 0; i < gameOverPanels.Length; i++) {
-					gameOverTexts[i].text = "Pinhead Wins!";
-					gameOverPanels[i].SetActive(true);
-				}
-
-				mainMenuButton.gameObject.SetActive(true);
+				StartCoroutine(nameof(EndGame), "Pinhead Wins!");
 			}
 		}
 
 		private void OnBossDeath() {
+			StartCoroutine(nameof(EndGame), "Heroes Win!");
+		}
+
+		private IEnumerator EndGame(string message) {
+			yield return new WaitForSeconds(2);
+
 			for (int i = 0; i < gameOverPanels.Length; i++) {
-				gameOverTexts[i].text = "Heroes Win!";
+				gameOverTexts[i].text = message;
 				gameOverPanels[i].SetActive(true);
 			}
 

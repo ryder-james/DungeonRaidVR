@@ -25,9 +25,9 @@ namespace DungeonRaid.UI {
 
 		public Hero Hero { get; private set; }
 
-		private readonly AbilityHUD[] abilityHUDs = new AbilityHUD[4];
+		private readonly AbilityHUD[] abilityHUDs = new AbilityHUD[3];
 
-		private Character prevTarget = null;
+		private bool isEnabled = true;
 
 		private void Start() {
 			reticle.GetComponent<Image>().color = color;
@@ -54,6 +54,8 @@ namespace DungeonRaid.UI {
 				abilityHUDs[i].Ability = ability;
 			}
 
+			hero.OnDeath += Disable;
+
 			LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
 		}
 
@@ -67,6 +69,10 @@ namespace DungeonRaid.UI {
 		}
 
 		public void SetReticlePosition(Vector2 newPosition) {
+			if (!isEnabled) {
+				return;
+			}
+
 			Vector3 viewPos = cam.ScreenToViewportPoint(newPosition) * canvas.scaleFactor;
 
 			viewPos.x = Mathf.Clamp01(viewPos.x);
@@ -82,7 +88,20 @@ namespace DungeonRaid.UI {
 			}
 		}
 
+		public void Disable() {
+			reticle.gameObject.SetActive(false);
+			highlight.gameObject.SetActive(false);
+			foreach (AbilityHUD hud in abilityHUDs) {
+				hud.Disable();
+			}
+			isEnabled = false;
+		}
+
 		private void UpdateHighlightPosition(Character target) {
+			if (!isEnabled) {
+				return;
+			}
+
 			if (target == null) {
 				highlight.gameObject.SetActive(false);
 				return;
@@ -94,8 +113,6 @@ namespace DungeonRaid.UI {
 			UpdateHighlightSize(target);
 
 			highlight.gameObject.SetActive(true);
-
-			prevTarget = target;
 		}
 
 		private void UpdateHighlightSize(Character target) {

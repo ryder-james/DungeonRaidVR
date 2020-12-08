@@ -49,6 +49,8 @@ namespace DungeonRaid.Characters.Heroes {
 			}
 
 			Initialized = true;
+
+			OnDeath += () => speed = 0;
 		}
 
 		protected override void Start() {
@@ -126,7 +128,8 @@ namespace DungeonRaid.Characters.Heroes {
 
 		protected override float CalculateHealth(int heroCount) {
 			Boss boss = FindObjectOfType<Boss>();
-			return (boss != null ? boss.InitialHealth : 100) / heroCount;
+			float hp = ((boss != null ? boss.InitialHealth : 100) / heroCount) * hpMod;
+			return hp;
 		}
 
 		private void Attack() {
