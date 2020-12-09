@@ -54,6 +54,7 @@ namespace DungeonRaid.UI {
 				abilityHUDs[i].Ability = ability;
 			}
 
+			hero.PersonalCanvas.SetActive(true);
 			hero.OnDeath += Disable;
 
 			LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
