@@ -7,7 +7,7 @@ namespace JCommon.Management {
 
 			foreach (Persistent persistentObj in FindObjectsOfType<Persistent>()) {
 				if (persistentObj != this && persistentObj.GetType() == this.GetType()) {
-					DestroyImmediate(gameObject);
+					DestroyImmediate(persistentObj.gameObject);
 				}
 			}
 		}
