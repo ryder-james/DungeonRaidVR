@@ -36,6 +36,18 @@ namespace DungeonRaid.Characters.Heroes {
 
 		public bool IsAttacking { get; set; } = false;
 
+		private bool canMove = true;
+		public bool CanMove { 
+			get {
+				if (IsStunned) {
+					return false;
+				}
+
+				return canMove;
+			}
+			set => canMove = value;
+		}
+
 		private readonly List<Ability> onCooldown = new List<Ability>();
 
 		private float fixedAttackDelay, attackDelay;

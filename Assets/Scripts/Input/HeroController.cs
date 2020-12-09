@@ -44,8 +44,10 @@ namespace DungeonRaid.Input {
 
 			float speedSubtracter = hero.Speed * (Mover.NormalizedAngle * 0.5f);
 			float speed = hero.Speed - speedSubtracter;
-			if (!hero.IsStunned) {
+			if (hero.CanMove) {
 				Mover.MoveToward(move, speed);
+			} else {
+				Mover.MoveToward(Vector2.zero, speed);
 			}
 
 			Animator.SetFloat("DirX", Mover.Direction.x);

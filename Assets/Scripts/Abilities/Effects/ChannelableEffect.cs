@@ -1,10 +1,16 @@
-﻿namespace DungeonRaid.Abilities.Effects {
+﻿using UnityEngine;
+
+namespace DungeonRaid.Abilities.Effects {
     public abstract class ChannelableEffect : Effect {
 		public delegate void EffectNotification();
+
+		[SerializeField] private bool applyAtStart = false;
 
 		public EffectNotification OnEffectBeginChannel { get; set; }
 		public EffectNotification OnEffectUpdate { get; set; }
 		public EffectNotification OnEffectEndChannel { get; set; }
+
+		public bool ApplyAtStart { get => applyAtStart; set => applyAtStart = value; }
 
 		public void BeginChannel() {
 			OnEffectBeginChannel?.Invoke();
