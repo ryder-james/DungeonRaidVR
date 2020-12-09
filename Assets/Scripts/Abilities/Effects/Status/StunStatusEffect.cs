@@ -17,9 +17,11 @@ namespace DungeonRaid.Abilities.Effects.StatusEffects {
 
 		protected override void StopEffect(Character target) {
 			Hero hero = target as Hero;
-			hero.IsStunned = false;
 			if (hero.Animator != null) {
 				hero.Animator.SetBool("IsDizzy", false);
+				InvokeDelayed(Caster, target, Point, (c, t, p) => { t.IsStunned = false; }, 1.35f);
+			} else {
+				hero.IsStunned = false;
 			}
 		}
 	}
