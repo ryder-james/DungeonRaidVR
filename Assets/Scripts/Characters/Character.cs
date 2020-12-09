@@ -25,6 +25,7 @@ namespace DungeonRaid.Characters {
 		public Action<AmmoPool, float> OnAmmoSpent { get; set; }
 
 		public bool IsDead => FindMeter("Health").Value <= 0;
+		public bool IsStunned { get; set; } = false;
 
 		private Dictionary<Type, List<MonoBehaviour>> ComponentPools { get; set; } = new Dictionary<Type, List<MonoBehaviour>>();
 
@@ -86,7 +87,9 @@ namespace DungeonRaid.Characters {
 
 			if (meterName == "Health") {
 				if (Animator != null) {
-					Animator.SetTrigger("Hit");
+					if (!IsStunned) {
+						Animator.SetTrigger("Hit");
+					}
 					Animator.SetFloat("Health", meter.NormalizedValue);
 				}
 				if (hitSound != null) {

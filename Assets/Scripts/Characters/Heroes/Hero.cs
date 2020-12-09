@@ -98,7 +98,7 @@ namespace DungeonRaid.Characters.Heroes {
 		}
 
 		public bool BeginCast(int index) {
-			if (index >= 0 && index < Abilities.Length) {
+			if (!IsStunned && index >= 0 && index < Abilities.Length) {
 				return Cast(Abilities[index]);
 			}
 
@@ -111,7 +111,7 @@ namespace DungeonRaid.Characters.Heroes {
 		}
 
 		public bool Cast(Ability ability) {
-			if (onCooldown.Contains(ability)) {
+			if (IsStunned || onCooldown.Contains(ability)) {
 				return false;
 			}
 
@@ -133,7 +133,7 @@ namespace DungeonRaid.Characters.Heroes {
 		}
 
 		private void Attack() {
-			if (attackDelay <= 0) {
+			if (!IsStunned && attackDelay <= 0) {
 				weapon.Attack();
 				attackDelay = fixedAttackDelay;
 			}

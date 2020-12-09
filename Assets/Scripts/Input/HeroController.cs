@@ -44,11 +44,13 @@ namespace DungeonRaid.Input {
 
 			float speedSubtracter = hero.Speed * (Mover.NormalizedAngle * 0.5f);
 			float speed = hero.Speed - speedSubtracter;
-			Mover.MoveToward(move, speed);
+			if (!hero.IsStunned) {
+				Mover.MoveToward(move, speed);
+			}
 
 			Animator.SetFloat("DirX", Mover.Direction.x);
 			Animator.SetFloat("DirZ", Mover.Direction.z);
-			Animator.SetFloat("Speed", Mover.CurrentSpeed / (BodyMover.SpeedMultiplier * hero.Speed));
+			Animator.SetFloat("Speed", Mover.CurrentSpeed / Mathf.Max(BodyMover.SpeedMultiplier * hero.Speed, 0.00001f));
 			Animator.SetFloat("AnimSpeed", 1 + Animator.GetFloat("Speed"));
 
 			if (move.magnitude != 0) {

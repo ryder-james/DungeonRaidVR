@@ -130,6 +130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 8
   speed: 30
+  dizzyEffect: {fileID: 11400000, guid: 6d75d3dae24e80049bcb0f9dd16aeaa1, type: 2}
   rollingSound: {fileID: 6189927560586009339}
   hitSound: {fileID: 3120647655992776821}
 --- !u!114 &2039119075059312802

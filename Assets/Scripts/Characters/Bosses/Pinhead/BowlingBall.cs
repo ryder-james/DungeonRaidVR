@@ -1,18 +1,28 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 
 using UnityEngine;
 
 using DungeonRaid.Characters.Heroes;
 using DungeonRaid.Characters.Bosses.Interactables;
+using DungeonRaid.Abilities.Effects;
 
 namespace DungeonRaid.Characters.Bosses.Pinhead {
 	public class BowlingBall : Throwable {
 		[SerializeField] private float damage = 2;
 		[SerializeField] private float speed = 10;
+		[SerializeField] private Effect dizzyEffect = null;
 		[SerializeField] private AudioSource rollingSound = null;
 		[SerializeField] private AudioSource hitSound = null;
 
+		private List<Hero> hit = new List<Hero>();
+
 		private bool hasLanded = true;
+
+		protected override void Start() {
+			base.Start();
+			dizzyEffect = Instantiate(dizzyEffect);
+		}
 
 		public override void Grab() {
 
@@ -21,7 +31,9 @@ namespace DungeonRaid.Characters.Bosses.Pinhead {
 		public void OnTriggerEnter(Collider other) {
 			if (other.CompareTag("Hero")) {
 				float dmg = -damage * Boss.DamageMultiplier;
-				if (other.TryGetComponent(out Hero hero))  {
+				if (other.TryGetComponent(out Hero hero) && !hit.Contains(hero))  {
+					hit.Add(hero);
+					dizzyEffect.Apply(hero, hero, Vector3.zero);
 					hero.UpdateMeter("Health", dmg);
 				}
 			}
@@ -33,6 +45,7 @@ namespace DungeonRaid.Characters.Bosses.Pinhead {
 		}
 
 		public override void Throw(Vector3 releaseVelocity, Vector3 releaseAngularVelocity) {
+			hit.Clear();
 			body.constraints |= RigidbodyConstraints.FreezePositionX;
 			body.velocity = new Vector3(0, -speed, speed);
 			body.angularVelocity = releaseAngularVelocity;
