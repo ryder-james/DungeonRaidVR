@@ -11,6 +11,7 @@ using JCommon.Collections;
 
 using DungeonRaid.Characters.Bosses;
 using DungeonRaid.Characters.Heroes;
+using DungeonRaid.Characters.Bosses.Interactables;
 
 namespace DungeonRaid {
 	public class GameHandler : Persistent {
@@ -19,12 +20,14 @@ namespace DungeonRaid {
 
 		private Boss boss;
 		private Hero[] heroes;
+		private RoundHandler gameResetter;
 		private int deadHeroes = 0;
-		private TMP_Text[] gameOverTexts;
-		private GameObject[] gameOverPanels;
-		private Button mainMenuButton;
+		private bool isPaused = false;
+
+		private Interactable[] interactables;
 
 		private void Start() {
+			AudioListener.volume = PlayerPrefs.GetFloat("Volume", 1);
 			musicHandler.PlaySceneMusic();
 		}
 
@@ -37,13 +40,39 @@ namespace DungeonRaid {
 		}
 
 		public void OnMainMenu() {
-			mainMenuButton.onClick.RemoveListener(OnMainMenu);
 			SceneManager.LoadScene("MainMenu");
-			musicHandler.PlaySceneMusic();
+			musicHandler.PlayMusicAt(0);
 		}
 
 		public void OnQuit() {
 			Application.Quit();
+		}
+
+		public void TogglePause() {
+			isPaused = !isPaused;
+
+			SetInteractables(isPaused);
+			if (isPaused) {
+				Time.timeScale = 0;
+				gameResetter.ShowPanel("Paused", 
+					"RESUME", () => TogglePause(),
+					true,
+					"QUIT", () => Application.Quit());
+			} else {
+				Time.timeScale = 1;
+				gameResetter.HidePanel();
+			}
+		}
+
+		public void SetInteractables(bool interactable) {
+			foreach (Interactable i in interactables) {
+				i.IsInteractable = interactable;
+			}
+		}
+
+		public void SetVolume(float volume) {
+			PlayerPrefs.SetFloat("Volume", volume);
+			AudioListener.volume = volume;
 		}
 
 		private IEnumerator StartGameAsync(GameStartInfo info) {
@@ -63,19 +92,13 @@ namespace DungeonRaid {
 				heroes[i] = heroObj.GetComponent<Hero>();
 				heroes[i].UpdateHealth(info.heroIndices.Length);
 				heroes[i].OnDeath += OnHeroDeath;
+				heroes[i].Game = this;
 			}
 
-			gameOverPanels = GameObject.FindGameObjectsWithTag("GameOverPanel");
-			gameOverTexts = new TMP_Text[gameOverPanels.Length];
-			for (int i = 0; i < gameOverPanels.Length; i++) {
-				gameOverTexts[i] = gameOverPanels[i].transform.GetComponentInChildren<TMP_Text>();
-				mainMenuButton = gameOverPanels[i].transform.GetComponentInChildren<Button>(true);
-			}
+			gameResetter = FindObjectOfType<RoundHandler>();
+			gameResetter.HidePanel();
 
-			mainMenuButton.onClick.AddListener(OnMainMenu);
-			foreach (GameObject panel in gameOverPanels) {
-				panel.SetActive(false);
-			}
+			interactables = FindObjectsOfType<Interactable>();
 		}
 
 		private void OnHeroDeath() {
@@ -90,14 +113,11 @@ namespace DungeonRaid {
 		}
 
 		private IEnumerator EndGame(string message) {
+			SetInteractables(false);
+
 			yield return new WaitForSeconds(2);
 
-			for (int i = 0; i < gameOverPanels.Length; i++) {
-				gameOverTexts[i].text = message;
-				gameOverPanels[i].SetActive(true);
-			}
-
-			mainMenuButton.gameObject.SetActive(true);
+			gameResetter.ShowPanel(message, "MAIN MENU", OnMainMenu);
 		}
 
 		private struct GameStartInfo {

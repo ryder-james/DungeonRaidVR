@@ -27,7 +27,7 @@ namespace DungeonRaid.Characters.Bosses.Interactables {
 		}
 
 		private void OnTriggerEnter(Collider other) {
-			if (!interactedThisFrame && triggeringObject == null && other.CompareTag(triggerTag)) {
+			if (IsInteractable && !interactedThisFrame && triggeringObject == null && other.CompareTag(triggerTag)) {
 				triggeringObject = other.gameObject;
 				channelTimer = 0;
 				held = true;
@@ -39,7 +39,7 @@ namespace DungeonRaid.Characters.Bosses.Interactables {
 		}
 
 		private void OnTriggerStay(Collider other) {
-			if (!interactedThisFrame && held && other.gameObject == triggeringObject) {
+			if (IsInteractable && !interactedThisFrame && held && other.gameObject == triggeringObject) {
 				channelTimer += Time.deltaTime;
 				if (channelTimer >= fixedChannelTimer) {
 					TriggerStay();
@@ -55,7 +55,7 @@ namespace DungeonRaid.Characters.Bosses.Interactables {
 		}
 
 		private void OnTriggerExit(Collider other) {
-			if (!interactedThisFrame && other.gameObject == triggeringObject) {
+			if (IsInteractable && !interactedThisFrame && other.gameObject == triggeringObject) {
 				ReleaseEarly();
 
 				interactedThisFrame = true;

@@ -106,6 +106,10 @@ namespace DungeonRaid.Input {
 			Cast(2);
 		}
 
+		public void OnPause(InputValue _) {
+			hero.Game.TogglePause();
+		}
+
 		private void Cast(int index) {
 			if (channeling[index]) {
 				hero.BeginCast(index);

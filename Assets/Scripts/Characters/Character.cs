@@ -23,6 +23,7 @@ namespace DungeonRaid.Characters {
 
 		public Action<MeterComponent, float> OnMeterSpent { get; set; }
 		public Action<AmmoPool, float> OnAmmoSpent { get; set; }
+		public GameHandler Game { get; set; }
 
 		public bool IsDead => FindMeter("Health").Value <= 0;
 		public bool IsStunned { get; set; } = false;
