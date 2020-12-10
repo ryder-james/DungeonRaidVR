@@ -19,4 +19,4 @@ MonoBehaviour:
   radius: 6
   offset: {x: 0, y: 0, z: 0}
   useReticlePosition: 0
-  effect: {fileID: 11400000, guid: eb470a255365a9b46849b2711a61bc67, type: 2}
+  effect: {fileID: 11400000, guid: e23dcd755882d8c40b58878e846e1530, type: 2}

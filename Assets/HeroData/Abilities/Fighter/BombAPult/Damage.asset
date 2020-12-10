@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Damage
   m_EditorClassIdentifier: 
   applyToCaster: 0
+  applyAtStart: 0
   targetMeterName: Health
   type: 0
-  amount: 5
+  amount: 10

@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Common.Physics {
+namespace JCommon.Physics {
     [RequireComponent(typeof(Collider))]
     public class ExternalTrigger : MonoBehaviour {
         [SerializeField] TriggerableContainer triggerable = null;

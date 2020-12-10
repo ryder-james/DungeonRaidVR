@@ -34,17 +34,25 @@ namespace DungeonRaid.Input {
 		}
 
 		private void Update() {
+			if (hero.IsDead) {
+				return;
+			}
+
 			Aim(lookInput);
 
 			Vector3 move = new Vector3(movementInput.x, 0, movementInput.y);
 
 			float speedSubtracter = hero.Speed * (Mover.NormalizedAngle * 0.5f);
 			float speed = hero.Speed - speedSubtracter;
-			Mover.MoveToward(move, speed);
+			if (hero.CanMove) {
+				Mover.MoveToward(move, speed);
+			} else {
+				Mover.MoveToward(Vector2.zero, speed);
+			}
 
 			Animator.SetFloat("DirX", Mover.Direction.x);
 			Animator.SetFloat("DirZ", Mover.Direction.z);
-			Animator.SetFloat("Speed", Mover.CurrentSpeed / (BodyMover.SpeedMultiplier * hero.Speed));
+			Animator.SetFloat("Speed", Mover.CurrentSpeed / Mathf.Max(BodyMover.SpeedMultiplier * hero.Speed, 0.00001f));
 			Animator.SetFloat("AnimSpeed", 1 + Animator.GetFloat("Speed"));
 
 			if (move.magnitude != 0) {
@@ -96,6 +104,10 @@ namespace DungeonRaid.Input {
 
 			channeling[2] = !channeling[2];
 			Cast(2);
+		}
+
+		public void OnPause(InputValue _) {
+			hero.Game.TogglePause();
 		}
 
 		private void Cast(int index) {

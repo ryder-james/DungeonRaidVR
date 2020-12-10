@@ -1,8 +1,8 @@
 ﻿using System.Collections;
+
 using UnityEngine;
 
 using DungeonRaid.Characters;
-using DungeonRaid.Characters.Heroes;
 
 namespace DungeonRaid.Abilities.Effects.StatusEffects {
 	public abstract class StatusEffect : Effect {

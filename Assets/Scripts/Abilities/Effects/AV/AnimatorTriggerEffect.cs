@@ -1,5 +1,6 @@
-﻿using DungeonRaid.Characters;
-using UnityEngine;
+﻿using UnityEngine;
+
+using DungeonRaid.Characters;
 
 namespace DungeonRaid.Abilities.Effects {
 	[CreateAssetMenu(fileName = "AnimatorTrigger", menuName = AVEffectMenuPrefix + "Animator Trigger")]

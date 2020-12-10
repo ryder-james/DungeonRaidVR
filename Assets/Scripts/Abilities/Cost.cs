@@ -4,8 +4,8 @@ using UnityEngine;
 
 using Sirenix.OdinInspector;
 
-using DungeonRaid.Collections;
 using DungeonRaid.Characters;
+using DungeonRaid.Collections;
 
 namespace DungeonRaid.Abilities {
 	[Serializable]

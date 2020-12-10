@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-using DungeonRaid.Abilities.Effects;
 using DungeonRaid.Characters.Heroes;
 using DungeonRaid.Characters.Bosses;
+using DungeonRaid.Abilities.Effects;
 
 namespace DungeonRaid.Abilities {
 	[CreateAssetMenu(fileName = "TargetBoss", menuName = AbilityMenuPrefix + "Target Boss")]

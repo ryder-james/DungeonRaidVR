@@ -1,13 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 
 using UnityEngine;
 
 using DungeonRaid.Collections;
 using DungeonRaid.Abilities;
-using System.Collections.Generic;
-using DungeonRaid.Abilities.Effects.StatusEffects;
-using DungeonRaid.Abilities.Effects;
-using System;
 
 namespace DungeonRaid.Characters {
 	public abstract class Character : MonoBehaviour {
@@ -17,11 +15,18 @@ namespace DungeonRaid.Characters {
 		[SerializeField] protected float hpMod = 1;
 		[SerializeField] private MeterComponent[] meters = null;
 		[SerializeField] protected AmmoPool[] ammoPools = null;
+		[Space]
+		[SerializeField] private AudioSource hitSound = null;
+		[SerializeField] private AudioSource deathSound = null;
 
 		public MeterComponent[] Meters { get => meters; private set => meters = value; }
 
 		public Action<MeterComponent, float> OnMeterSpent { get; set; }
 		public Action<AmmoPool, float> OnAmmoSpent { get; set; }
+		public GameHandler Game { get; set; }
+
+		public bool IsDead => FindMeter("Health").Value <= 0;
+		public bool IsStunned { get; set; } = false;
 
 		private Dictionary<Type, List<MonoBehaviour>> ComponentPools { get; set; } = new Dictionary<Type, List<MonoBehaviour>>();
 
@@ -36,7 +41,8 @@ namespace DungeonRaid.Characters {
 			private set => animator = value;
 		}
 
-		public System.Action OnDeath { get; set; }
+		public Action OnHit { get; set; }
+		public Action OnDeath { get; set; }
 		public Vector3 Nozzle { get => nozzle.position; set => nozzle.position = value; }
 		public Vector3 Center => center != null ? center.position : transform.position;
 		public bool Initialized { get; protected set; }
@@ -68,6 +74,10 @@ namespace DungeonRaid.Characters {
 		}
 
 		public void UpdateMeter(string meterName, float amount, bool isSpending = false) {
+			if (IsDead) {
+				return;
+			}
+
 			MeterComponent meter = FindMeter(meterName);
 			if (meter != null) {
 				if (isSpending) {
@@ -76,8 +86,24 @@ namespace DungeonRaid.Characters {
 				meter.Value += amount;
 			}
 
-			if (meterName == "Health" && meter.Value <= 0) {
-				OnDeath?.Invoke();
+			if (meterName == "Health") {
+				if (Animator != null) {
+					if (!IsStunned) {
+						Animator.SetTrigger("Hit");
+					}
+					Animator.SetFloat("Health", meter.NormalizedValue);
+				}
+				if (hitSound != null) {
+					hitSound.Play();
+				}
+				OnHit?.Invoke();
+
+				if (meter.Value <= 0) {
+					if (deathSound != null) {
+						deathSound.Play();
+					}
+					OnDeath?.Invoke();
+				}
 			}
 		}
 
@@ -90,6 +116,10 @@ namespace DungeonRaid.Characters {
 		}
 
 		public void UpdateAmmoPool(string ammoName, float amount, bool isSpending = false) {
+			if (IsDead) {
+				return;
+			}
+
 			AmmoPool pool = FindAmmoPool(ammoName);
 			if (pool != null) {
 				pool.AmmoCount += amount;
@@ -105,10 +135,17 @@ namespace DungeonRaid.Characters {
 		}
 
 		public bool CanAfford(Cost cost) {
+			if (IsDead) {
+				return false;
+			}
+
 			return cost.CheckCharacterCanAfford(this);
 		}
 
 		public bool PayCost(Cost cost) {
+			if (IsDead) {
+				return false;
+			}
 			return cost.PayFromCharacter(this);
 		}
 

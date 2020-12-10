@@ -1,9 +1,10 @@
-﻿using Sirenix.OdinInspector;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
 using UnityEngine;
 
-namespace Common.Physics {
+using Sirenix.OdinInspector;
+
+namespace JCommon.Movement {
 	[RequireComponent(typeof(Collider))]
 	public class ConveyorBelt : MonoBehaviour {
 		[System.Serializable]
@@ -30,31 +31,6 @@ namespace Common.Physics {
 		private void Update() {
 			foreach (Rigidbody body in bodies) {
 				body.velocity = GetDirection() * speed;
-				//if (useCustomDirection) {
-				//	body.velocity = conveyorDirection * speed;
-				//} else {
-				//	switch (direction) {
-				//	default:
-				//	case TransformDirection.FORWARD:
-				//		body.velocity = transform.forward * speed;
-				//		break;
-				//	case TransformDirection.BACK:
-				//		body.velocity = -transform.forward * speed;
-				//		break;
-				//	case TransformDirection.LEFT:
-				//		body.velocity = -transform.right * speed;
-				//		break;
-				//	case TransformDirection.RIGHT:
-				//		body.velocity = transform.right * speed;
-				//		break;
-				//	case TransformDirection.UP:
-				//		body.velocity = transform.up * speed;
-				//		break;
-				//	case TransformDirection.DOWN:
-				//		body.velocity = -transform.up * speed;
-				//		break;
-				//	}
-				//}
 			}
 		}
 

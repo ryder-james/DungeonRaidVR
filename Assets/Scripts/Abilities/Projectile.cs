@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 
-using DungeonRaid.Abilities.Effects;
 using DungeonRaid.Characters;
 using DungeonRaid.Characters.Heroes;
-using DungeonRaid.Characters.Bosses;
+using DungeonRaid.Abilities.Effects;
 
 namespace DungeonRaid.Abilities {
 	[RequireComponent(typeof(Collider), typeof(Rigidbody))]

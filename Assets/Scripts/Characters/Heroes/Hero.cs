@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using DungeonRaid.Abilities;
+
+using DungeonRaid.UI;
 using DungeonRaid.Input;
 using DungeonRaid.Characters.Bosses;
 
@@ -14,18 +16,30 @@ namespace DungeonRaid.Characters.Heroes {
 		[SerializeField] private float attacksPerSecond = 1;
 		[SerializeField] private Weapon weapon = null;
 		[SerializeField] private Ability[] abilities = null;
+		[SerializeField] private SpriteRenderer icon = null;
+		[SerializeField] private MeterUI healthBar = null;
+		[SerializeField] private GameObject personalCanvas = null;
 		[SerializeField] private LayerMask targetableLayers = 0;
 
 		public HeroController Controller { get; private set; }
 		public Character TargetCharacter { get; set; }
 		public Vector3 TargetPoint { get; set; }
 		public Ability[] Abilities { get => abilities; set => abilities = value; }
-		public Color Color { get; set; }
+		public Color Color { 
+			get => color;
+			set { 
+				color = value;
+				if (icon != null) {
+					icon.color = value;
+					icon.gameObject.SetActive(true);
+				}
+			} 
+		}
 
 		public float Speed { get => speed; set => speed = Mathf.Max(value, 0); }
-		public float AttackSpeed { 
+		public float AttackSpeed {
 			get => attacksPerSecond;
-			set { 
+			set {
 				attacksPerSecond = Mathf.Max(value, 0);
 				fixedAttackDelay = 1 / attacksPerSecond;
 				if (attackDelay > fixedAttackDelay) {
@@ -36,9 +50,24 @@ namespace DungeonRaid.Characters.Heroes {
 
 		public bool IsAttacking { get; set; } = false;
 
+		private bool canMove = true;
+		public bool CanMove {
+			get {
+				if (IsStunned) {
+					return false;
+				}
+
+				return canMove;
+			}
+			set => canMove = value;
+		}
+
+		public GameObject PersonalCanvas { get => personalCanvas; set => personalCanvas = value; }
+
 		private readonly List<Ability> onCooldown = new List<Ability>();
 
 		private float fixedAttackDelay, attackDelay;
+		private Color color;
 
 		private void Awake() {
 			Controller = GetComponent<HeroController>();
@@ -49,6 +78,8 @@ namespace DungeonRaid.Characters.Heroes {
 			}
 
 			Initialized = true;
+
+			OnDeath += () => speed = 0;
 		}
 
 		protected override void Start() {
@@ -56,6 +87,8 @@ namespace DungeonRaid.Characters.Heroes {
 
 			fixedAttackDelay = 1 / attacksPerSecond;
 			attackDelay = 0;
+
+			healthBar.Meter = FindMeter("Health");
 		}
 
 		protected override void Update() {
@@ -96,7 +129,7 @@ namespace DungeonRaid.Characters.Heroes {
 		}
 
 		public bool BeginCast(int index) {
-			if (index >= 0 && index < Abilities.Length) {
+			if (!IsStunned && index >= 0 && index < Abilities.Length) {
 				return Cast(Abilities[index]);
 			}
 
@@ -109,14 +142,14 @@ namespace DungeonRaid.Characters.Heroes {
 		}
 
 		public bool Cast(Ability ability) {
-			if (onCooldown.Contains(ability)) {
+			if (IsStunned || onCooldown.Contains(ability)) {
 				return false;
 			}
 
 			StartCoroutine(nameof(RunCooldown), ability);
 			ability.IsChanneling = true;
 			bool success = ability.Cast();
-			
+
 			if (ability.DurationType != DurationType.Channeled) {
 				return success;
 			} else {
@@ -126,11 +159,12 @@ namespace DungeonRaid.Characters.Heroes {
 
 		protected override float CalculateHealth(int heroCount) {
 			Boss boss = FindObjectOfType<Boss>();
-			return (boss != null ? boss.InitialHealth : 100) / heroCount;
+			float hp = ((boss != null ? boss.InitialHealth : 100) / heroCount) * hpMod;
+			return hp;
 		}
 
 		private void Attack() {
-			if (attackDelay <= 0) {
+			if (!IsStunned && attackDelay <= 0) {
 				weapon.Attack();
 				attackDelay = fixedAttackDelay;
 			}

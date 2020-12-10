@@ -26,9 +26,9 @@ TagManager:
   - Hero
   - Targetable
   - PostProcessing
-  - IgnorePlayer
+  - IgnoreCharacter
   - PlayerWalls
-  - 
+  - BossUI
   - 
   - 
   - 

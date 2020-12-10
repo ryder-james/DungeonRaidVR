@@ -1,50 +1,50 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public abstract class ContinuousBehaviour : TriggeredBehaviour {
-	public BehaviourNotification OnBehaviourBegin { get; set; }
-	public BehaviourNotification OnBehaviourUpdate { get; set; }
-	public BehaviourNotification OnBehaviourEnd { get; set; }
-	
-	protected bool autoUpdating = false;
+namespace DungeonRaid.Characters.Bosses.Behaviours {
+	public abstract class ContinuousBehaviour : TriggeredBehaviour {
+		public BehaviourNotification OnBehaviourBegin { get; set; }
+		public BehaviourNotification OnBehaviourUpdate { get; set; }
+		public BehaviourNotification OnBehaviourEnd { get; set; }
 
-	private const float fixedUpdateTimer = 1;
-	private float updateTimer = 0;
+		protected bool autoUpdating = false;
 
-	protected override void Update() {
-		if (autoUpdating) {
-			updateTimer += Time.deltaTime;
+		private const float fixedUpdateTimer = 1;
+		private float updateTimer = 0;
 
-			if (updateTimer >= fixedUpdateTimer) {
-				UpdateBehaviour();
-				updateTimer -= fixedUpdateTimer;
+		protected override void Update() {
+			if (autoUpdating) {
+				updateTimer += Time.deltaTime;
+
+				if (updateTimer >= fixedUpdateTimer) {
+					UpdateBehaviour();
+					updateTimer -= fixedUpdateTimer;
+				}
 			}
 		}
-	}
 
-	public override sealed void Trigger() {
-		BeginBehaviour();
-	}
+		public override sealed void Trigger() {
+			BeginBehaviour();
+		}
 
-	public virtual void BeginBehaviour() {
-		ResetBehaviour();
-		OnBehaviourBegin?.Invoke();
-		Begin();
-	}
+		public virtual void BeginBehaviour() {
+			ResetBehaviour();
+			OnBehaviourBegin?.Invoke();
+			Begin();
+		}
 
-	public virtual void UpdateBehaviour() {
-		OnBehaviourUpdate?.Invoke();
-		Channel();
-	}
+		public virtual void UpdateBehaviour() {
+			OnBehaviourUpdate?.Invoke();
+			Channel();
+		}
 
-	public virtual void EndBehaviour() {
-		OnBehaviourEnd?.Invoke();
-		End();
-	}
+		public virtual void EndBehaviour() {
+			OnBehaviourEnd?.Invoke();
+			End();
+		}
 
-	protected abstract void Begin();
-	protected abstract void Channel();
-	protected abstract void End();
-	protected abstract void ResetBehaviour();
+		protected abstract void Begin();
+		protected abstract void Channel();
+		protected abstract void End();
+		protected abstract void ResetBehaviour();
+	}
 }

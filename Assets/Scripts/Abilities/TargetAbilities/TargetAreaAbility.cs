@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-using DungeonRaid.Abilities.Effects;
 using DungeonRaid.Characters;
+using DungeonRaid.Abilities.Effects;
 
 namespace DungeonRaid.Abilities {
 	[CreateAssetMenu(fileName = "TargetArea", menuName = AbilityMenuPrefix + "Target Area")]

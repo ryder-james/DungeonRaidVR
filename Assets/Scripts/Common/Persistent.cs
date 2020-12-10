@@ -1,15 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Persistent : MonoBehaviour
-{
-    protected virtual void Awake() {
-		DontDestroyOnLoad(gameObject);
+namespace JCommon.Management {
+	public class Persistent : MonoBehaviour {
+		protected virtual void Awake() {
+			DontDestroyOnLoad(gameObject);
 
-		foreach (Persistent persistentObj in FindObjectsOfType<Persistent>()) {
-			if (persistentObj != this && persistentObj.GetType() == this.GetType()) {
-				//DestroyImmediate(persistentObj);
+			foreach (Persistent persistentObj in FindObjectsOfType<Persistent>()) {
+				if (persistentObj != this && persistentObj.GetType() == this.GetType()) {
+					DestroyImmediate(persistentObj.gameObject);
+				}
 			}
 		}
 	}

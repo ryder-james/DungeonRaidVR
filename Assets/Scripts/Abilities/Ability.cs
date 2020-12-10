@@ -2,9 +2,10 @@
 
 using Sirenix.OdinInspector;
 
+using DungeonRaid.Characters;
 using DungeonRaid.Characters.Heroes;
 using DungeonRaid.Abilities.Effects;
-using DungeonRaid.Characters;
+using System.Collections.Generic;
 
 namespace DungeonRaid.Abilities {
 	public abstract class Ability : ScriptableObject {
@@ -78,6 +79,14 @@ namespace DungeonRaid.Abilities {
 			OnAbilityBeginCast?.Invoke();
 			bool success = TryCast(ref effectSet);
 
+			List<ChannelableEffect> toApply = new List<ChannelableEffect>();
+			foreach (ChannelableEffect effect in channelableEffects) {
+				if (effect.ApplyAtStart) {
+					toApply.Add(effect);
+				}
+			}
+			TargetCast(toApply.ToArray());
+
 			foreach (ChannelableEffect effect in channelableEffects) {
 				effect.BeginChannel();
 			}
@@ -148,7 +157,13 @@ namespace DungeonRaid.Abilities {
 				}
 			}
 
-			TargetCast(channelableEffects);
+			List<ChannelableEffect> toApply = new List<ChannelableEffect>();
+			foreach (ChannelableEffect effect in channelableEffects) {
+				if (!effect.ApplyAtStart) {
+					toApply.Add(effect);
+				}
+			}
+			TargetCast(toApply.ToArray());
 
 			return TryCast(ref endEffectSet);
 		}

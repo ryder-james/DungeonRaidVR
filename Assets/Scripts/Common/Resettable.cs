@@ -1,55 +1,58 @@
-﻿using Sirenix.OdinInspector;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
 using UnityEngine;
 
-public class Resettable : MonoBehaviour {
-	[SerializeField] private bool resetPosition = true;
-	[SerializeField] private bool resetRotation = true;
-	[SerializeField] private bool resetScale = true;
-	[SerializeField] private bool hasRigidbody = true;
-	[SerializeField, Indent, ShowIf("hasRigidbody")] private bool resetVelocity = true;
-	[SerializeField, Indent, ShowIf("hasRigidbody")] private bool resetAngularVelocity = true;
+using Sirenix.OdinInspector;
 
-	private Dictionary<string, Vector3> resetData;
-	private Rigidbody body;
+namespace JCommon.Management {
+	public class Resettable : MonoBehaviour {
+		[SerializeField] private bool resetPosition = true;
+		[SerializeField] private bool resetRotation = true;
+		[SerializeField] private bool resetScale = true;
+		[SerializeField] private bool hasRigidbody = true;
+		[SerializeField, Indent, ShowIf("hasRigidbody")] private bool resetVelocity = true;
+		[SerializeField, Indent, ShowIf("hasRigidbody")] private bool resetAngularVelocity = true;
 
-	private void Start() {
-		resetData = new Dictionary<string, Vector3>();
+		private Dictionary<string, Vector3> resetData;
+		private Rigidbody body;
 
-		resetData["position"] = transform.localPosition;
-		resetData["rotation"] = transform.localRotation.eulerAngles;
-		resetData["scale"] = transform.localScale;
+		private void Start() {
+			resetData = new Dictionary<string, Vector3>();
 
-		if (hasRigidbody && (resetVelocity || resetAngularVelocity) && TryGetComponent(out body)) {
-			resetData["velocity"] = body.velocity;
-			resetData["rotVelocity"] = body.angularVelocity;
-		} else {
-			resetVelocity = false;
-			resetAngularVelocity = false;
-		}
-	}
+			resetData["position"] = transform.localPosition;
+			resetData["rotation"] = transform.localRotation.eulerAngles;
+			resetData["scale"] = transform.localScale;
 
-	public void FullReset() {
-		if (resetPosition) {
-			transform.localPosition = resetData["position"];
+			if (hasRigidbody && (resetVelocity || resetAngularVelocity) && TryGetComponent(out body)) {
+				resetData["velocity"] = body.velocity;
+				resetData["rotVelocity"] = body.angularVelocity;
+			} else {
+				resetVelocity = false;
+				resetAngularVelocity = false;
+			}
 		}
 
-		if (resetRotation) {
-			transform.localRotation = Quaternion.Euler(resetData["rotation"]);
-		}
-
-		if (resetScale) {
-			transform.localScale = resetData["scale"];
-		}
-
-		if (hasRigidbody) {
-			if (resetVelocity) {
-				body.velocity = resetData["velocity"];
+		public void FullReset() {
+			if (resetPosition) {
+				transform.localPosition = resetData["position"];
 			}
 
-			if (resetAngularVelocity) {
-				body.angularVelocity = resetData["rotVelocity"];
+			if (resetRotation) {
+				transform.localRotation = Quaternion.Euler(resetData["rotation"]);
+			}
+
+			if (resetScale) {
+				transform.localScale = resetData["scale"];
+			}
+
+			if (hasRigidbody) {
+				if (resetVelocity) {
+					body.velocity = resetData["velocity"];
+				}
+
+				if (resetAngularVelocity) {
+					body.angularVelocity = resetData["rotVelocity"];
+				}
 			}
 		}
 	}

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+
 using Valve.VR;
 
 namespace DungeonRaid.Characters.Bosses.Interactables {
@@ -58,7 +59,7 @@ namespace DungeonRaid.Characters.Bosses.Interactables {
 
 		private void OnTriggerEnter(Collider other) {
             Grabable component = other.GetComponent<Grabable>();
-            if (component != null) {
+            if (component != null && component.IsInteractable) {
                 SetGrabable(component);
 			}
 		}

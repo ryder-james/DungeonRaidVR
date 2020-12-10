@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
 using DungeonRaid.Characters;
-using DungeonRaid.Characters.Heroes;
 
 namespace DungeonRaid.Abilities.Effects {
 	[CreateAssetMenu(fileName = "ChanceToApply", menuName = SuperEffectMenuPrefix + "Chance to Apply Effect")]

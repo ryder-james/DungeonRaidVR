@@ -2,11 +2,12 @@
 
 using UnityEngine;
 using UnityEngine.UI;
+
 using TMPro;
 
 using DungeonRaid.Abilities;
 
-namespace DeungonRaid.UI {
+namespace DungeonRaid.UI {
 	public class AbilityHUD : MonoBehaviour{
 		[SerializeField] private Slider cooldownSlider = null;
 		[SerializeField] private TMP_Text cooldownText = null;
@@ -14,6 +15,7 @@ namespace DeungonRaid.UI {
 		[SerializeField] private Image channelingWarning = null;
 
 		private Ability ability;
+		private bool isEnabled = true;
 
 		public Ability Ability { 
 			get => ability;
@@ -25,12 +27,25 @@ namespace DeungonRaid.UI {
 		}
 
 		public void StartCasting() {
-			channelingWarning.enabled = true;
+			if (isEnabled) {
+				channelingWarning.enabled = true;
+			}
 		}
 
 		public void StartCooldown() {
+			if (isEnabled) {
+				channelingWarning.enabled = false;
+				StartCoroutine(nameof(RunCooldownAsync), Ability.Cooldown);
+			}
+		}
+
+		public void Disable() {
+			isEnabled = false;
+			StopAllCoroutines();
+			cooldownSlider.value = 1;
+			cooldownText.enabled = false;
 			channelingWarning.enabled = false;
-			StartCoroutine(nameof(RunCooldownAsync), Ability.Cooldown);
+			tooExpensiveWarning.enabled = false;
 		}
 
 		private void Update() {
@@ -40,11 +55,13 @@ namespace DeungonRaid.UI {
 		private IEnumerator RunCooldownAsync(float time) {
 			cooldownSlider.value = 1;
 			cooldownText.enabled = true;
+
 			for (float t = time; t >= 0; t -= Time.deltaTime) {
 				cooldownText.text = Mathf.CeilToInt(t).ToString();
 				cooldownSlider.value = t / time;
-				yield return null;
+				yield return new WaitForEndOfFrame();
 			}
+
 			cooldownText.enabled = false;
 			cooldownSlider.value = 0;
 		}

@@ -1,28 +1,32 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
-public class BehaviourButton : TriggerBehaviourToggle {
-	[SerializeField] private float pressSpeed = 2;
-	[SerializeField] private Vector3 pressOffset = Vector3.down;
+using DungeonRaid.Characters.Bosses.Interactables;
 
-	protected override IEnumerator ChangeState(bool toActiveState) {
-		yield return new WaitUntil(() => toggleState != ToggleState.Transitioning);
+namespace DungeonRaid.Characters.Bosses.Behaviours {
+	public class BehaviourButton : TriggerBehaviourToggle {
+		[SerializeField] private float pressSpeed = 2;
+		[SerializeField] private Vector3 pressOffset = Vector3.down;
 
-		toggleState = ToggleState.Transitioning;
+		protected override IEnumerator ChangeState(bool toActiveState) {
+			yield return new WaitUntil(() => toggleState != ToggleState.Transitioning);
 
-		Vector3 start = transform.position;
-		Vector3 end = transform.position + (toActiveState ? pressOffset : -pressOffset);
+			toggleState = ToggleState.Transitioning;
 
-		//Debug.Log(end);
+			Vector3 start = transform.position;
+			Vector3 end = transform.position + (toActiveState ? pressOffset : -pressOffset);
 
-		for (float t = 0; t < 1; t += Time.deltaTime * pressSpeed) {
-			transform.position = Vector3.Lerp(start, end, t);
-			yield return new WaitForEndOfFrame();
+			//Debug.Log(end);
+
+			for (float t = 0; t < 1; t += Time.deltaTime * pressSpeed) {
+				transform.position = Vector3.Lerp(start, end, t);
+				yield return new WaitForEndOfFrame();
+			}
+
+			transform.position = end;
+
+			toggleState = toActiveState ? ToggleState.On : ToggleState.Off;
 		}
-
-		transform.position = end;
-
-		toggleState = toActiveState ? ToggleState.On : ToggleState.Off;
 	}
 }

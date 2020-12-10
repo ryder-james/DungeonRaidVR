@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+
+using UnityEngine;
 using UnityEngine.UI;
 
 using Sirenix.OdinInspector;
 
 using DungeonRaid.Collections;
 using DungeonRaid.Characters.Bosses;
-using System.Collections;
 
 namespace DungeonRaid.UI {
 	public class MeterUI : MonoBehaviour {
